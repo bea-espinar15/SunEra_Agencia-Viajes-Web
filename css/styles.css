@@ -1,0 +1,53 @@
+/* --- GENERAL --- */
+
+* {
+    text-decoration: none;
+    font-family: "Helvetica";
+}
+
+h1 {
+    font-weight: bold;
+    color: white;
+}
+
+h2 {
+    font-weight: normal;
+    color: white;
+    font-size: 20px;    
+}
+
+input {
+    border: none;
+    border-radius: 5px;
+    padding: 8px 5px;
+    color: purple;
+}
+::placeholder {
+    color: purple;
+}
+
+/* --- ACCOUNT --- */
+
+#sign-up-p {
+    color: white;
+}
+
+.change-button {
+    font-weight: bold;
+    font-family: "Helvetica";
+    font-size: 16px;
+    border: none;
+    border-radius: 15px;
+    padding: 7px 23px;
+}
+
+.submit-button {
+    background-color: purple;
+    color: white;
+    font-weight: bold;
+    font-family: "Helvetica";
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 35px;
+}
