@@ -5,49 +5,64 @@
     font-family: "Helvetica";
 }
 
-h1 {
-    font-weight: bold;
+body {
+    background-color: #bedfbe;
     color: white;
 }
 
+h1 {
+    font-weight: bold;
+    font-size: 50px;
+}
+
 h2 {
-    font-weight: normal;
-    color: white;
-    font-size: 20px;    
+    font-weight: bold;
+    font-size: 2em;    
 }
 
 input {
     border: none;
-    border-radius: 5px;
-    padding: 8px 5px;
-    color: purple;
+    border-radius: 17px;
+    padding: 8px 15px;
+    color: #07531d;
 }
 ::placeholder {
-    color: purple;
+    color: #07531d;
 }
 
 /* --- ACCOUNT --- */
 
-#sign-up-p {
-    color: white;
+.general-box {
+    height: 75%;
+    box-shadow: #07531d 0px 0px 80px 10px;
+}
+
+#left-box {
+    border-radius: 20px 0px 0px 20px;    
+    background-color: #07531d;
+}
+
+#right-box {
+    border-radius: 0px 20px 20px 0px;
+    background-color: #3b9554;
+}
+
+#big-title {
+    font-size: 70px;
 }
 
 .change-button {
     font-weight: bold;
     font-family: "Helvetica";
-    font-size: 16px;
     border: none;
-    border-radius: 15px;
-    padding: 7px 23px;
+    padding: 7px 30px;
 }
 
 .submit-button {
-    background-color: purple;
+    background-color: #07531d;
     color: white;
     font-weight: bold;
     font-family: "Helvetica";
-    font-size: 16px;
     border: none;
-    border-radius: 25px;
     padding: 12px 35px;
 }

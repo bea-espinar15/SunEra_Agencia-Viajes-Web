@@ -6,33 +6,39 @@
     <!-- [!] CAMBIAR A NOMBRE DE EMPRESA -->
     <title>Agencia de viajes</title>
     <!-- Importar css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
-    <!-- Principal -->
-    <div style="background-color: chartreuse;">
-        <!-- Columna Login -->
-        <div style="background-color: red;">
-            <!-- [!] CAMBIAR A NOMBRE DE EMPRESA, IMPORTAR LOGO -->
-            <img src="/img/logo.png" alt="Logo Agencia">
-            <h2>Already have an account?</h2>
-            <button onclick="location.href='/account/login.html'" class="change-button">Sign In</button>
+        <!-- Principal -->
+        <div class="col-8 offset-2 d-flex align-items-center vh-100">
+            <!-- Columna Login -->
+            <div id="left-box" class="general-box col-5 d-none d-lg-flex flex-column justify-content-center text-center">
+                <!-- [!] CAMBIAR A NOMBRE DE EMPRESA, IMPORTAR LOGO -->
+                <div class="align-self-start mt-4 ms-4">
+                    <img src="/img/logo.png" alt="Logo Agencia" width="90">
+                </div>
+                <div class="h-100 mb-5 d-flex flex-column justify-content-center align-items-center">
+                    <h2 class="mx-3">Already have an account?</h2>
+                    <button onclick="location.href='/account/login.html'" class="rounded-pill change-button mt-4">Sign In</button>
+                </div>            
+            </div>
+            <!-- Columna Sign Up -->
+            <div id="right-box" class="general-box col-12 col-lg-7 d-flex flex-column justify-content-center align-items-center text-center">
+                <h1>Create an account</h1>
+                <form class="d-flex flex-column my-4 w-50">
+                    <input type="text" placeholder="Name" class="my-1">
+                    <input type="text" placeholder="Username" class="my-1">
+                    <input type="mail" placeholder="Email" class="my-1">
+                    <input type="password" placeholder="Password" class="my-1">
+                    <input type="password" placeholder="Repeat password" class="my-1">
+                    <input type="submit" hidden="true" value="Sign Up" class="submit-button">
+                </form>
+                <!-- BORRAR -->
+                <button onclick="location.href='/index.html'" class="rounded-pill submit-button mt-4">Sign Up</button>
+            </div>
         </div>
-        <!-- Columna Sign Up -->
-        <div style="background-color: blue;">
-            <h1>Create an account</h1>
-            <form>
-                <input type="text" placeholder="Name">
-                <input type="text" placeholder="Username">
-                <input type="mail" placeholder="Email">
-                <input type="password" placeholder="Password">
-                <input type="password" placeholder="Repeat password">
-                <input type="submit" value="Sign Up" class="submit-button">
-            </form>
-        </div>
-    </div>
-
 </body>
 
 </html>
