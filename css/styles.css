@@ -6,7 +6,7 @@
 }
 
 body {
-    background-color: #bedfbe;
+    background: radial-gradient(circle, #1b631b 0%, #60b460 87%, #8dd18d 100%);
     color: white;
 }
 
@@ -48,7 +48,7 @@ input {
 }
 
 #big-title {
-    font-size: 70px;
+    font-size: 45px;
 }
 
 .change-button {
