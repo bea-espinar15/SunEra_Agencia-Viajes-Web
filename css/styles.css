@@ -6,7 +6,7 @@
 }
 
 body {
-    background: radial-gradient(circle, #1b631b 0%, #60b460 87%, #8dd18d 100%);
+    background: radial-gradient(circle, #e9c949 0%, #ddbf7a 80%, #d4c49d 100%);
     color: white;
 }
 
@@ -24,27 +24,27 @@ input {
     border: none;
     border-radius: 17px;
     padding: 8px 15px;
-    color: #07531d;
+    color: #724907;
 }
 ::placeholder {
-    color: #07531d;
+    color: #724907;
 }
 
 /* --- ACCOUNT --- */
 
 .general-box {
     height: 75%;
-    box-shadow: #07531d 0px 0px 80px 10px;
+    box-shadow: #724907 0px 0px 80px 10px;
 }
 
 #left-box {
     border-radius: 20px 0px 0px 20px;    
-    background-color: #07531d;
+    background-color: #724907;
 }
 
 #right-box {
     border-radius: 0px 20px 20px 0px;
-    background-color: #3b9554;
+    background-color: #e6b909;
 }
 
 #big-title {
@@ -59,7 +59,7 @@ input {
 }
 
 .submit-button {
-    background-color: #07531d;
+    background-color: #724907;
     color: white;
     font-weight: bold;
     font-family: "Helvetica";
