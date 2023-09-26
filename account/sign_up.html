@@ -12,23 +12,26 @@
 </head>
 
 <body>
-        <!-- Principal -->
-        <div class="col-8 offset-2 d-flex align-items-center vh-100">
-            <!-- Columna Login -->
-            <div id="left-box" class="general-box col-5 d-none d-lg-flex flex-column justify-content-center text-center">
-                <!-- [!] CAMBIAR A NOMBRE DE EMPRESA, IMPORTAR LOGO -->
-                <div class="align-self-start mt-4 ms-4">
-                    <img src="/img/logo.png" alt="Logo Agencia" width="110">
-                </div>
-                <div class="h-100 mb-5 d-flex flex-column justify-content-center align-items-center">
-                    <h2 class="mx-3">¿Tienes ya una cuenta?</h2>
-                    <button onclick="location.href='/account/login.html'" class="rounded-pill change-button mt-4">Inicia sesión</button>
-                </div>            
+    <!-- Principal -->
+    <div class="col-8 offset-2 d-flex align-items-center vh-100">
+        <!-- Columna Login -->
+        <div id="left-box" class="general-box col-5 d-none d-lg-flex flex-column justify-content-center text-center">
+            <div class="align-self-start mt-4 ms-4">
+                <img src="/img/logo.png" alt="Logo SunEra" width="110">
             </div>
-            <!-- Columna Sign Up -->
-            <div id="right-box" class="general-box col-12 col-lg-7 d-flex flex-column justify-content-center align-items-center text-center">
+            <div class="h-100 mb-5 d-flex flex-column justify-content-center align-items-center">
+                <h2 class="mx-3">¿Tienes ya una cuenta?</h2>
+                <button onclick="location.href='/account/login.html'" class="rounded-pill change-button mt-4">Inicia sesión</button>
+            </div>
+        </div>
+        <!-- Columna Sign Up -->
+        <div id="right-box" class="general-box col-12 col-lg-7 d-flex flex-column justify-content-center align-items-center text-center">
+            <div class="align-self-start mt-4 ms-4 d-lg-none">
+                <img src="/img/logo.png" alt="Logo SunEra" width="110">
+            </div>
+            <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center">
                 <h1>Crea una cuenta</h1>
-                <form class="d-flex flex-column my-4 w-50">
+                <form class="d-flex flex-column my-2 my-lg-4 w-50">
                     <input type="text" placeholder="Nombre completo" class="my-1">
                     <input type="text" placeholder="Nombre de usuario" class="my-1">
                     <input type="mail" placeholder="Correo" class="my-1">
@@ -37,9 +40,11 @@
                     <input type="submit" hidden="true" value="Regístrate" class="submit-button">
                 </form>
                 <!-- BORRAR -->
-                <button onclick="location.href='/index.html'" class="rounded-pill submit-button mt-4">Regístrate</button>
+                <button onclick="location.href='/index.html'" class="rounded-pill submit-button mt-3 mt-lg-4">Regístrate</button>
+                <p class="d-lg-none pt-2">¿Tienes ya una cuenta? <a class="link" href="./login.html">Inicia sesión</a></p>
             </div>
         </div>
+    </div>
 </body>
 
 </html>

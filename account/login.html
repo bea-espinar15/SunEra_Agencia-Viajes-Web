@@ -16,26 +16,31 @@
     <div class="col-8 offset-2 d-flex align-items-center vh-100">
         <!-- Columna Sign Up -->
         <div id="left-box" class="general-box col-5 d-none d-lg-flex flex-column justify-content-center text-center">
-            <!-- [!] CAMBIAR A NOMBRE DE EMPRESA, IMPORTAR LOGO -->
             <div class="align-self-start mt-4 ms-4">
-                <img src="/img/logo.png" alt="Logo Agencia" width="110">
+                <img src="/img/logo.png" alt="Logo SunEra" width="110">
             </div>
             <div class="h-100 mb-5 d-flex flex-column justify-content-center align-items-center">
                 <h2 id="big-title" class="mx-3">¿Nuevo por aquí?</h2>
                 <p class="mx-5 my-3">Regístrate gratis y empieza a reservar escapadas inolvidables con tus amigos, creando recuerdos que durarán toda la vida!</p>
                 <button onclick="location.href='/account/sign_up.html'" class="rounded-pill change-button mt-4">Regístrate</button>
-            </div>            
+            </div>
         </div>
         <!-- Columna Login -->
         <div id="right-box" class="general-box col-12 col-lg-7 d-flex flex-column justify-content-center align-items-center text-center">
-            <h1>Inicia sesión</h1>
-            <form class="d-flex flex-column py-4 w-50">
-                <input type="text" placeholder="Nombre de usuario" class="my-3">
-                <input type="password" placeholder="Contraseña">
-                <input type="submit" hidden="true" value="Inicia sesión" class="rounded-pill submit-button">
-            </form>
-            <!-- BORRAR -->
-            <button onclick="location.href='/index.html'" class="rounded-pill submit-button mt-4">Acceder</button>
+            <div class="align-self-start mt-4 ms-4 d-lg-none">
+                <img src="/img/logo.png" alt="Logo SunEra" width="110">
+            </div>
+            <div class="h-100 w-100 d-flex flex-column justify-content-center align-items-center">
+                <h1>Inicia sesión</h1>
+                <form class="d-flex flex-column py-4 w-50">
+                    <input type="text" placeholder="Nombre de usuario" class="my-3">
+                    <input type="password" placeholder="Contraseña">
+                    <input type="submit" hidden="true" value="Inicia sesión" class="rounded-pill submit-button">
+                </form>
+                <!-- BORRAR -->
+                <button onclick="location.href='/index.html'" class="rounded-pill submit-button mt-4">Acceder</button>
+                <p class="d-lg-none pt-2">¿Nuevo por aquí? <a class="link" href="./sign_up.html">Regístrate</a></p>
+            </div>
         </div>
     </div>
 
