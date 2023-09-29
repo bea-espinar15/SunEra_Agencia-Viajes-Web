@@ -1,0 +1,85 @@
+/* --- GENERAL --- */
+
+* {
+    text-decoration: none;
+    font-family: sans-serif;
+}
+
+body {
+    background-image: url(/img/background.png);
+    backdrop-filter: blur(15px);
+    background-size: cover;
+    color: white;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 3.2em;
+}
+
+h2 {
+    font-weight: bold;
+    font-size: 2em;    
+}
+
+input {
+    border: none;
+    border-radius: 17px;
+    padding: 8px 15px;
+    color: #435724;
+}
+::placeholder {
+    color: #435724;
+}
+
+/* --- ACCOUNT --- */
+
+.general-box {
+    height: 75%;
+    box-shadow: #435724 0px 0px 80px 10px;
+}
+
+#left-box {
+    border-radius: 20px 0px 0px 20px;    
+    background-color: #435724;
+}
+
+#right-box {
+    border-radius: 20px 20px 20px 20px;
+    background-color: #435724;
+}
+
+#big-title {
+    font-size: 40px;
+}
+
+.change-button {
+    font-weight: bold;
+    font-family: "Helvetica";
+    border: none;
+    padding: 7px 30px;
+}
+
+.submit-button {
+    font-weight: bold;
+    font-family: "Helvetica";
+    border: none;
+    padding: 12px 35px;
+}
+
+.link {
+    color: #e6b909;
+}
+
+/* --- RESPONSIVE --- */
+@media (min-width: 992px) {
+    #right-box {
+        border-radius: 0px 20px 20px 0px;
+        background-color: #659418;
+    }
+
+    .submit-button {
+        background-color: #435724;
+        color: white;
+    }
+}
