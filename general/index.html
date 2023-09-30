@@ -12,11 +12,11 @@
 </head>
 
 <body>
-    <!-- NAV -->
+    <!-- BARRA DE NAVEGACIÓN -->
     <nav id="nav-bar" class="d-flex align-items-center">
         <a href="/general/index.html">
-            <img src="/img/icon.png" alt="Logo SunEra" height="50">
-            <img src="/img/sunera.png" alt="SunEra" height="40" class="ps-2">
+            <img src="/img/icon.png" alt="Logo SunEra" class="h-50">
+            <img src="/img/sunera.png" alt="SunEra" class="ps-2 h-40">
         </a>
         <ul id="list-nav" class="d-flex">
             <li><a href="/general/index.html">Inicio</a></li>
@@ -26,16 +26,69 @@
         </ul>
         <div id="div-end">
             <a href="/account/user.html">
-                <img id="profile-pic" src="/img/profile.png" alt="Foto Perfil" height="40">
+                <img src="/img/profile.png" alt="Foto Perfil" class="h-40">
             </a>
             <!-- [!] Cambiar a button para tener action-->
             <a href="/account/login.html">
-                <img id="logout-pic" src="/img/logout.png" alt="Cerrar sesion" height="40">
+                <img id="logout-pic" src="/img/logout.png" alt="Cerrar sesion" class="h-40">
             </a>
         </div>
     </nav>
 
-    <!-- CONTENT -->
+    <!-- CONTENIDO -->
+    <!-- BÚSQUEDA -->
+    <div id="search-bar" class="d-flex align-items-center">
+        <form>
+            <input id="search-field" type="search" class="rounded" placeholder="Buscar destino..."/>
+            <span id="search-button" class="ms-2 search-button rounded">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                </svg>
+            </span>
+        </form>
+    </div>
+    <hr>
+    <div id="div-content" class="d-flex">
+        <!-- FILTROS -->
+        <div class="col-2 d-flex flex-column">
+            <h2>Filtros de búsqueda</h2>
+            <form class="d-flex flex-column">
+                <!-- Fecha inicio -->
+                <div class="filter d-flex flex-column">
+                    <label for="date-ini">¿Cuándo te vas?</label>
+                    <input id="date-ini" type="date" name="date-ini">
+                </div>
+                <!-- Fecha fin -->
+                <div class="filter d-flex flex-column">
+                    <label for="date-fin">¿Cuándo vuelves?</label>
+                    <input id="date-fin" type="date" name="date-fin">
+                </div>
+                <!-- Nº personas -->
+                <div class="d-resp filter d-flex flex-column">
+                    <label for="n-people">Viajeros</label>
+                    <input id="n-people" type="number" name="n-people" value="0" min="0" max="50">
+                </div>
+                <!-- Precio/noche -->
+                <div class="filter d-flex flex-column">
+                    <label for="price">Precio (€/noche)</label>
+                    <input id="price" type="range" name="price" value="150" min="0" max="300">
+                </div>
+                <!-- Valoración -->
+                <div class="d-resp filter d-flex flex-column">
+                    <label for="rate">Valoración</label>
+                    <input id="rate" type="number" name="rate" value="0" min="0" max="5">
+                </div>
+                <!-- Submit -->
+                <div id="submit-button" class="mt-4">
+                    <input type="submit" value="Filtrar" class="submit-button rounded-pill">
+                </div>
+            </form>
+        </div>
+        <!-- RESULTADOS -->
+        <div id="results" class="col-10">
+            
+        </div>
+    </div>
 </body>
 
 </html>
