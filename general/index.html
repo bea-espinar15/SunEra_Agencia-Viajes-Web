@@ -35,7 +35,8 @@
         </div>
     </nav>
 
-    <!-- CONTENIDO -->
+    <!-- PRINCIPAL -->
+
     <!-- BÚSQUEDA -->
     <div id="search-bar" class="d-flex align-items-center">
         <form>
@@ -47,21 +48,19 @@
             </span>
         </form>
     </div>
+
     <hr>
+
+    <!-- CONTENIDO -->
     <div id="div-content" class="d-flex">
         <!-- FILTROS -->
         <div class="col-2 d-flex flex-column">
             <h2>Filtros de búsqueda</h2>
             <form class="d-flex flex-column">
-                <!-- Fecha inicio -->
-                <div class="filter d-flex flex-column">
-                    <label for="date-ini">¿Cuándo te vas?</label>
-                    <input id="date-ini" type="date" name="date-ini">
-                </div>
-                <!-- Fecha fin -->
-                <div class="filter d-flex flex-column">
-                    <label for="date-fin">¿Cuándo vuelves?</label>
-                    <input id="date-fin" type="date" name="date-fin">
+                <!-- Días -->
+                <div class="d-resp filter d-flex flex-column">
+                    <label for="days">¿Cuánto tiempo quieres irte?</label>
+                    <input id="days" type="number" name="days" value="0" min="0" max="50">
                 </div>
                 <!-- Nº personas -->
                 <div class="d-resp filter d-flex flex-column">
@@ -70,7 +69,7 @@
                 </div>
                 <!-- Precio/noche -->
                 <div class="filter d-flex flex-column">
-                    <label for="price">Precio (€/noche)</label>
+                    <label for="price">Precio (€/persona)</label>
                     <input id="price" type="range" name="price" value="150" min="0" max="300">
                 </div>
                 <!-- Valoración -->
@@ -86,7 +85,123 @@
         </div>
         <!-- RESULTADOS -->
         <div id="results" class="col-10">
-            
+            <div class="d-flex align-items-center justify-content-end mx-5 mb-3">
+                <p id="num-results">Ver 8 resultados</p>
+                <p class="filter-pill">10 días</p>
+                <p class="filter-pill">4 viajeros</p>
+                <p class="filter-pill">≤ 60€/persona</p>
+                <p class="filter-pill">≥ 3 estrellas</p>
+            </div>
+            <div>
+                <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-4 mx-3">
+                    <a href="/general/destination.html">   
+                        <div class="card my-3 mx-2">
+                            <img src="/img/toscana.png" class="card-img-top" alt="Imagen principal destino">
+                            <div class="card-body">
+                                <h3 class="card-title">Viaje por la Toscana</h3>
+                                <p class="card-text">Italia</p>
+                                <div class="d-flex">
+                                    <img src="/img/rate.png" class="card-rate" alt="Valoración destino" height="20">
+                                    <p class="card-price">50€/p</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a> 
+                    <!-- [!] BORRAR, SON COPIAS -->
+                    <a href="/general/destination.html">   
+                        <div class="card my-3 mx-2">
+                            <img src="/img/toscana.png" class="card-img-top" alt="Imagen principal destino">
+                            <div class="card-body">
+                                <h3 class="card-title">Viaje por la Toscana</h3>
+                                <p class="card-text">Italia</p>
+                                <div class="d-flex">
+                                    <img src="/img/rate.png" class="card-rate" alt="Valoración destino" height="20">
+                                    <p class="card-price">50€/p</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/general/destination.html">   
+                        <div class="card my-3 mx-2">
+                            <img src="/img/toscana.png" class="card-img-top" alt="Imagen principal destino">
+                            <div class="card-body">
+                                <h3 class="card-title">Viaje por la Toscana</h3>
+                                <p class="card-text">Italia</p>
+                                <div class="d-flex">
+                                    <img src="/img/rate.png" class="card-rate" alt="Valoración destino" height="20">
+                                    <p class="card-price">50€/p</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/general/destination.html">   
+                        <div class="card my-3 mx-2">
+                            <img src="/img/toscana.png" class="card-img-top" alt="Imagen principal destino">
+                            <div class="card-body">
+                                <h3 class="card-title">Viaje por la Toscana</h3>
+                                <p class="card-text">Italia</p>
+                                <div class="d-flex">
+                                    <img src="/img/rate.png" class="card-rate" alt="Valoración destino" height="20">
+                                    <p class="card-price">50€/p</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/general/destination.html">   
+                        <div class="card my-3 mx-2">
+                            <img src="/img/toscana.png" class="card-img-top" alt="Imagen principal destino">
+                            <div class="card-body">
+                                <h3 class="card-title">Viaje por la Toscana</h3>
+                                <p class="card-text">Italia</p>
+                                <div class="d-flex">
+                                    <img src="/img/rate.png" class="card-rate" alt="Valoración destino" height="20">
+                                    <p class="card-price">50€/p</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/general/destination.html">   
+                        <div class="card my-3 mx-2">
+                            <img src="/img/toscana.png" class="card-img-top" alt="Imagen principal destino">
+                            <div class="card-body">
+                                <h3 class="card-title">Viaje por la Toscana</h3>
+                                <p class="card-text">Italia</p>
+                                <div class="d-flex">
+                                    <img src="/img/rate.png" class="card-rate" alt="Valoración destino" height="20">
+                                    <p class="card-price">50€/p</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/general/destination.html">   
+                        <div class="card my-3 mx-2">
+                            <img src="/img/toscana.png" class="card-img-top" alt="Imagen principal destino">
+                            <div class="card-body">
+                                <h3 class="card-title">Viaje por la Toscana</h3>
+                                <p class="card-text">Italia</p>
+                                <div class="d-flex">
+                                    <img src="/img/rate.png" class="card-rate" alt="Valoración destino" height="20">
+                                    <p class="card-price">50€/p</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="/general/destination.html">   
+                        <div class="card my-3 mx-2">
+                            <img src="/img/toscana.png" class="card-img-top" alt="Imagen principal destino">
+                            <div class="card-body">
+                                <h3 class="card-title">Viaje por la Toscana</h3>
+                                <p class="card-text">Italia</p>
+                                <div class="d-flex">
+                                    <img src="/img/rate.png" class="card-rate" alt="Valoración destino" height="20">
+                                    <p class="card-price">50€/p</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <!-- [!] BORRAR, SON COPIAS -->
+                </div>
+            </div>
         </div>
     </div>
 </body>

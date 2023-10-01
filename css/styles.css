@@ -16,6 +16,10 @@ body {
     background-color: #f6fded;
 }
 
+a {
+    text-decoration: none;
+}
+
 /* --- BARRA DE NAVEGACIÓN --- */
 
 #nav-bar {
@@ -33,7 +37,6 @@ body {
 
 #list-nav a {
     color: white;
-    text-decoration: none;
 }
 
 #list-nav a:hover {
@@ -103,12 +106,8 @@ h2 {
     margin-top: 0.2em;
 }
 
-#n-people {
+.d-resp input {
     width: 4em;
-}
-
-#rate {
-    width: 4em;    
 }
 
 #submit-button {
@@ -129,6 +128,51 @@ h2 {
 #results {
     margin: 0em 2em;
     border-left: 1px solid #bebebe;
+}
+
+#num-results {
+    margin-right: auto;
+    font-size: 1em;
+}
+
+.filter-pill {
+    background-color: #658b27;
+    color: white;
+    border-radius: 20px;
+    padding: 0.4em 1em;
+    margin: 0em 0.5em;
+}
+
+.card {
+    border: 1px solid #778d57;
+    box-shadow: 2px 2px 10px 1px #dae9c3;
+}
+
+.card-img-top {
+    height: 12.5em;
+    object-fit: cover;
+}
+
+.card h3 {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.card-text {
+    font-size: 0.8em;
+    color: #616161;
+}
+
+.card-rate {
+    align-self: center;
+}
+
+.card-price {
+    align-self: end;
+    margin-left: auto;
+    background-color: #c6d6ad;
+    border-radius: 10px;
+    padding: 0.3em 0.5em;
 }
 
 /* --- RESPONSIVE --- */
