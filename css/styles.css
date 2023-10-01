@@ -175,6 +175,12 @@ h2 {
     padding: 0.3em 0.5em;
 }
 
+/* -- TENDENCIAS -- */
+
+#trending-text {
+    color: #2a3a13;
+}
+
 /* --- RESPONSIVE --- */
 @media (min-width: 992px) {
     .d-resp {
