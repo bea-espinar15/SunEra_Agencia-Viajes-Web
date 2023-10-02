@@ -35,13 +35,17 @@ input {
 /* --- ACCOUNT --- */
 
 .general-box {
-    height: 75%;
+    height: 90%;
     box-shadow: #435724 0px 0px 80px 10px;
 }
 
 #left-box {
     border-radius: 20px 0px 0px 20px;    
     background-color: #435724;
+}
+
+#sign-up-title {
+    font-size: 2.8em;
 }
 
 #right-box {
@@ -81,5 +85,11 @@ input {
     .submit-button {
         background-color: #435724;
         color: white;
+    }  
+}
+
+@media (min-width: 1200px) {
+    .general-box {
+        height: 75%;
     }
 }
