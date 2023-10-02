@@ -41,11 +41,11 @@
     <div id="search-bar" class="d-flex align-items-center">
         <form>
             <input id="search-field" type="search" class="rounded" placeholder="Buscar destino..."/>
-            <span id="search-button" class="ms-2 search-button rounded">
+            <button id="search-button" class="ms-2 search-button rounded">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                 </svg>
-            </span>
+            </button>
         </form>
     </div>
 
@@ -78,7 +78,7 @@
                     <input id="rate" type="number" name="rate" value="0" min="0" max="5">
                 </div>
                 <!-- Submit -->
-                <div id="submit-button" class="mt-4">
+                <div id="sb-filter" class="mt-4">
                     <input type="submit" value="Filtrar" class="submit-button rounded-pill">
                 </div>
             </form>
@@ -93,7 +93,7 @@
                 <p class="filter-pill">≥ 3 estrellas</p>
             </div>
             <div>
-                <div class="row row-cols-2 row-cols-lg-3 row-cols-xl-4 mx-3">
+                <div id="results-table" class="row row-cols-2 row-cols-lg-3 row-cols-xl-4 mx-3">
                     <a href="/general/destination.html">   
                         <div class="card my-3 mx-2">
                             <img src="/img/toscana.png" class="card-img-top" alt="Imagen principal destino">
