@@ -214,6 +214,7 @@ h2 {
 
 .reservation {
     box-shadow: 2px 2px 10px 1px #687c49;
+    background-color: #d2e2bf;
 }
 
 .accordion-button {
@@ -225,8 +226,33 @@ h2 {
 }
 
 .accordion-button:not(.collapsed) {
-    background-color: #d2e2bf !important;
+    background-color: #ffffff !important;
+    color: #2a3a13;
 }
+
+#separator{
+    border: dashed;
+    margin: auto;
+}
+
+.old{
+    background-color: #dddddd;
+}
+
+.old.accordion-button:not(.collapsed){
+    background-color: #dddddd !important;
+}
+
+#div-buttons{
+    width: 100%;
+}
+
+#cancel{
+    margin-left: auto;
+    width: 12em !important;
+    background-color: #3a1313;
+}
+
 
 /* --- RESPONSIVE --- */
 /* LG */
