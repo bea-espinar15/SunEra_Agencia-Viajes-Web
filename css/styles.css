@@ -253,6 +253,36 @@ h2 {
     background-color: #922c2c;
 }
 
+/* --- FOOTER --- */
+
+#footer{
+    background-color: #2a3a13;
+}
+
+#sunera-div{
+    margin: 1em 2em 1em auto;
+}
+
+#list-footer {
+    justify-content: space-between;
+    list-style-type: none;
+    margin: auto 1em;
+    width: 80em;
+}
+
+#list-footer a,li {
+    color: white;
+}
+
+#list-footer a:hover {
+    color: #bed4a4;
+}
+
+/* --- CONTACT --- */
+
+#mail{
+    width: 12em !important;
+}
 
 /* --- RESPONSIVE --- */
 /* LG */
