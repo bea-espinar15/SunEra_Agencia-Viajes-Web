@@ -14,6 +14,7 @@
 
 <body>
     <!-- NAV -->
+    <!-- [!] BORRAR: importar nav.html -->
     <nav id="nav-bar" class="d-flex align-items-center">
         <a href="/general/index.html">
             <img src="/img/icon.png" alt="Logo SunEra" height="50">
@@ -29,7 +30,6 @@
             <a href="/account/user.html">
                 <img id="profile-pic" src="/img/profile.png" alt="Foto Perfil" height="40">
             </a>
-            <!-- [!] Cambiar a button para tener action-->
             <a href="/account/login.html">
                 <img id="logout-pic" src="/img/logout.png" alt="Cerrar sesion" height="40">
             </a>
@@ -86,17 +86,20 @@
             </div>
             <hr>
             <div id="reservations-table" class="accordion my-4 mx-5">
+                <!-- Card reserva -->
                 <div class="reservation accordion-item">
+                    <!-- Exterior -->
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            <img src="/img/toscana.png" alt="Foto Destino" height="90" class="p-0">
+                            <img src="/img/destinos/toscana.png" alt="Foto Destino" height="90" class="p-0">
                             <div class="d-flex flex-column ms-3">
                                 <h2>Viaje por la toscana</h2>
                                 <p class="mb-0">Italia</p>
                             </div>
                         </button>
                     </h2>
+                    <!-- Desplegable -->
                     <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
                             <div>
@@ -106,19 +109,21 @@
                             </div>
                             <div id="div-buttons" class=" d-flex mr-4">
                                 <button class="submit-button rounded-pill" onclick="location.href='/general/destination.html'">Ver destino</button>
+                                <!-- Abre modal de cancelación -->
                                 <button class="submit-button cancel rounded-pill">Cancelar reserva</button>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- [!] BORRAR: son copias -->
                 <div class="reservation accordion-item my-4">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                            <img src="/img/toscana.png" alt="Foto Destino" height="90" class="p-0">
+                            <img src="/img/destinos/viena.png" alt="Foto Destino" height="90" class="p-0">
                             <div class="d-flex flex-column ms-3">
-                                <h2>Viaje por la toscana</h2>
-                                <p class="mb-0">Italia</p>
+                                <h2>Viena Barroca</h2>
+                                <p class="mb-0">Austria</p>
                             </div>
                         </button>
                     </h2>
@@ -135,10 +140,10 @@
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed old" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                            <img src="/img/toscana.png" alt="Foto Destino" height="90" class="p-0">
+                            <img src="/img/destinos/canarias.png" alt="Foto Destino" height="90" class="p-0">
                             <div class="d-flex flex-column ms-3">
-                                <h2>Viaje por la toscana</h2>
-                                <p class="mb-0">Italia</p>
+                                <h2>Visita Canarias</h2>
+                                <p class="mb-0">España</p>
                             </div>
                         </button>
                     </h2>
@@ -152,10 +157,10 @@
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed old" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
-                            <img src="/img/toscana.png" alt="Foto Destino" height="90" class="p-0">
+                            <img src="/img/destinos/berlín.png" alt="Foto Destino" height="90" class="p-0">
                             <div class="d-flex flex-column ms-3">
-                                <h2>Viaje por la toscana</h2>
-                                <p class="mb-0">Italia</p>
+                                <h2>Explora Berlín</h2>
+                                <p class="mb-0">Alemania</p>
                             </div>
                         </button>
                     </h2>
@@ -169,10 +174,10 @@
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed old" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
-                            <img src="/img/toscana.png" alt="Foto Destino" height="90" class="p-0">
+                            <img src="/img/destinos/cádiz.png" alt="Foto Destino" height="90" class="p-0">
                             <div class="d-flex flex-column ms-3">
-                                <h2>Viaje por la toscana</h2>
-                                <p class="mb-0">Italia</p>
+                                <h2>Disfruta Cádiz</h2>
+                                <p class="mb-0">España</p>
                             </div>
                         </button>
                     </h2>
@@ -186,10 +191,10 @@
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed old" type="button" data-bs-toggle="collapse"
                             data-bs-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
-                            <img src="/img/toscana.png" alt="Foto Destino" height="90" class="p-0">
+                            <img src="/img/destinos/noruega.png" alt="Foto Destino" height="90" class="p-0">
                             <div class="d-flex flex-column ms-3">
-                                <h2>Viaje por la toscana</h2>
-                                <p class="mb-0">Italia</p>
+                                <h2>Pasea por los fiordos</h2>
+                                <p class="mb-0">Noruega</p>
                             </div>
                         </button>
                     </h2>
