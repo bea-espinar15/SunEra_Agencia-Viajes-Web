@@ -32,7 +32,7 @@ a {
     position: fixed;
     width: 100%;
     top: 0;
-    z-index: 1;
+    z-index: 4;
 }
 
 #list-nav {
@@ -230,6 +230,12 @@ h2 {
     background-color: #d2e2bf;
 }
 
+.accordion-img {
+    height: 5.5em;
+    width: 9em;
+    object-fit: cover;
+}
+
 .accordion-button {
     color: #2a3a13;
 }
@@ -243,7 +249,7 @@ h2 {
     color: #2a3a13;
 }
 
-#separator{
+#separator {
     border: dashed;
     margin: auto;
 }
