@@ -283,6 +283,8 @@ h2 {
 #footer h3 {
     font-size: 0.8em;
     margin: 0em;
+    color: #acb4a0;
+    font-weight: bold;
 }
 
 #footer a {
@@ -291,6 +293,11 @@ h2 {
 
 #footer a:hover {
     color: #89aa5d;
+}
+
+#footer p {
+    font-size: 0.8em;
+    margin: 0em;
 }
 
 .list-footer {
