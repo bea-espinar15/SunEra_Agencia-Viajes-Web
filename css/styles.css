@@ -14,6 +14,9 @@
 
 body {
     background-color: #f6fded;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 a {
@@ -26,6 +29,10 @@ a {
     background-color: #2a3a13;
     padding: 10px;
     padding-bottom: 12px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1;
 }
 
 #list-nav {
@@ -63,7 +70,7 @@ a {
 
 #search-bar {
     height: 5em;
-    padding-left: 2em;
+    padding: 7em 0em 2.6em 2em;
 }
 
 #search-field {
@@ -179,9 +186,14 @@ h2 {
 
 #trending-text {
     color: #2a3a13;
+    padding-top: 1.2em;
 }
 
 /* --- USER --- */
+#box-user{
+    margin-top: 5em;
+}
+
 #profile {
     background-color: #d2e2bf;
     border-radius: 20px;
@@ -256,22 +268,24 @@ h2 {
 /* --- FOOTER --- */
 
 #footer{
-    background-color: #2a3a13;
+    background-color: #19230b;
+    margin-top: auto;
 }
 
 #sunera-div{
-    margin: 1em 2em 1em auto;
+    margin: 1em 2em;
 }
 
 #list-footer {
     justify-content: space-between;
     list-style-type: none;
-    margin: auto 1em;
+    margin-top: 2em;
     width: 80em;
 }
 
 #list-footer a,li {
-    color: white;
+    color: #5d7c35;
+    font-size: 90%;
 }
 
 #list-footer a:hover {
@@ -282,6 +296,10 @@ h2 {
 
 #mail{
     width: 12em !important;
+}
+
+#box-contact{
+    margin-top: 2em;
 }
 
 /* --- RESPONSIVE --- */
