@@ -28,7 +28,7 @@ h2 {
 }
 
 .submit-button {
-    font-family: "Helvetica";
+    font-family: sans-serif;
     border: none;
     background-color: #435724;
     color: white;
@@ -115,6 +115,14 @@ hr {
 #footer p {
     font-size: 0.8em;
     margin: 0em;
+}
+
+.list-footer {
+    list-style-type: none;
+}
+
+.list-footer li {
+    margin: 0.4em;
 }
 
 /* --- CONTACTO --- */

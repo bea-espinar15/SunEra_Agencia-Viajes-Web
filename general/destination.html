@@ -40,6 +40,150 @@
     </nav>
 
     <!-- CONTENT -->
+    <div class="div-content d-flex justify-content-center mx-4">
+        <!-- Botón atrás -->
+        <div class="h-100 my-4 me-auto">
+            <button id="back-button" onclick="history.back()" class="d-flex align-items-center rounded pe-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="30" fill="white" class="bi bi-arrow-left-short" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z"/>
+                  </svg>
+                Atrás
+            </button>
+        </div>
+        <!-- DESTINO -->
+        <div class="d-flex flex-column w-50 my-5 me-auto">
+            <!-- Detalles -->
+            <div>
+                <div class="row row-cols-1 row-cols-xl-2">
+                    <!-- Fotos -->
+                    <div class="col">
+                        <!-- Carousel -->
+                        <div id="carousel-dest" class="carousel slide">
+                            <div class="carousel-indicators">
+                              <button type="button" data-bs-target="#carousel-dest" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                              <button type="button" data-bs-target="#carousel-dest" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                              <button type="button" data-bs-target="#carousel-dest" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            </div>
+                            <div class="carousel-inner">
+                              <div class="carousel-item active">
+                                <img src="/img/destinos/toscana.png" class="d-block w-100 rounded" alt="Foto 1" height="400">
+                              </div>
+                              <div class="carousel-item">
+                                <img src="/img/destinos/toscana_2.png" class="d-block w-100 rounded" alt="Foto 2" height="400">
+                              </div>
+                              <div class="carousel-item">
+                                <img src="/img/destinos/toscana_3.png" class="d-block w-100 rounded" alt="Foto 3" height="400">
+                              </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-dest" data-bs-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Anterior</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carousel-dest" data-bs-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              <span class="visually-hidden">Siguiente</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Basic Info -->
+                    <div class="col d-flex flex-column pt-4 px-4">
+                        <div>
+                            <h1 class="mb-1">Viaje por la Toscana</h1>
+                            <h2>Italia</h2>
+                            <img src="/img/rate.png" alt="Valoración media" height="20">
+                            <p class="mt-5 mb-0"><strong>Capacidad:</strong> 20 personas</p>
+                            <p class="mb-4"><strong>Duración:</strong> 10 días</p>
+                            <p id="price-dest" class="d-inline">90€/persona</p>
+                            <button id="book-button" class="d-block rounded-pill mt-5">¡Reserva Ya!</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Desc -->
+                <div class="row mt-5">
+                    <p id="desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem, nesciunt earum dignissimos pariatur magnam incidunt cupiditate ipsa odio! Animi qui magnam neque sapiente dolorem inventore modi. Illum molestiae officia dolor. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem, nesciunt earum dignissimos pariatur magnam incidunt cupiditate ipsa odio! Animi qui magnam neque sapiente dolorem inventore modi. Illum molestiae officia dolor.</p>
+                </div>
+            </div>
+            <!-- Itinerario -->
+            <div class="bg-success">
+
+            </div>
+            <!-- Comentarios -->
+            <div id="div-comment" class="rounded mt-4">
+                <h2>Reseñas</h2>
+                <div class="row row-cols-1 row-cols-xl-2">
+                    <!-- Enviar comentario -->
+                    <div class="col px-3 py-2">
+                        <div class="card">
+                            <form class="card-body">
+                                <!-- Usuario -->
+                                <div class="d-flex align-items-center">
+                                    <img src="/img/profile.png" alt="Foto Usuario" height="30">
+                                    <p class="username-p m-0 ms-2">@jcaceres8</p>
+                                    <!-- [!] CAMBIAR, añadir funcionalidad -->
+                                    <img src="/img/rate.png" alt="Valoración Usuario" height="20" class="ms-auto">
+                                </div>
+                                <!-- Comentario -->
+                                <textarea name="comment" id="comment" placeholder="Escribe tu comentario..." rows="2" class="d-block mt-3 mb-1 w-100"></textarea>
+                                <!-- Submit -->
+                                <input id="comment-button" type="submit" value="Enviar comentario" class="mt-2 rounded-pill">
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Card comentario -->
+                    <div class="col px-3 py-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <img src="/img/profile.png" alt="Foto Usuario" height="30">
+                                    <p class="username-p m-0 ms-2">@alverdejo73</p>
+                                </div>
+                                <img src="/img/rate.png" alt="Valoración Usuario" height="15">
+                                <p class="card-text mt-2">Mi viaje por la Toscana fue simplemente encantador. Los paisajes toscanos son pintorescos, las ciudades medievales son fascinantes y la comida es deliciosa. Definitivamente, un lugar que no puedes perderte.</p>
+                              </div>
+                        </div>
+                    </div>
+                    <!-- [!] BORRAR, SON COPIAS -->                    
+                    <div class="col px-3 py-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <img src="/img/profile.png" alt="Foto Usuario" height="30">
+                                    <p class="username-p m-0 ms-2">@raquelWH</p>
+                                </div>
+                                <img src="/img/rate.png" alt="Valoración Usuario" height="15">
+                                <p class="card-text mt-2">Nuestro viaje por la Toscana fue simplemente perfecto. Desde las colinas ondulantes de la campiña toscana hasta las joyas culturales de Florencia, cada momento fue una delicia. Las degustaciones de vinos y la gastronomía local nos dejaron sin palabras. ¡No puedo esperar para volver!</p>
+                              </div>
+                        </div>
+                    </div>                    
+                    <div class="col px-3 py-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <img src="/img/profile.png" alt="Foto Usuario" height="30">
+                                    <p class="username-p m-0 ms-2">@anavarro_dpcs</p>
+                                </div>
+                                <img src="/img/rate.png" alt="Valoración Usuario" height="15">
+                                <p class="card-text mt-2">Recomiendo mucho la experiencia. Mi pareja y yo nos lo pasamos genial, repetimos seguro!</p>
+                              </div>
+                        </div>
+                    </div>
+                    <div class="col px-3 py-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <img src="/img/profile.png" alt="Foto Usuario" height="30">
+                                    <p class="username-p m-0 ms-2">@__gonpaj</p>
+                                </div>
+                                <img src="/img/rate.png" alt="Valoración Usuario" height="15">
+                                <p class="card-text mt-2">Todo perfecto.</p>
+                              </div>
+                        </div>
+                    </div>
+                    <!-- [!] BORRAR, SON COPIAS -->
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- FOOTER -->
     <!-- [!] BORRAR: importar footer.html -->

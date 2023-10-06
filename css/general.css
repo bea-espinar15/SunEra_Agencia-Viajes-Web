@@ -104,6 +104,60 @@
     padding: 0.3em 0.5em;
 }
 
+/* ---------- DESTINATION ---------- */
+
+#back-button {
+    border: none;
+    background-color: #ad6e07;
+    color: white;
+}
+
+.carousel img {
+    object-fit: cover;
+}
+
+#book-button {
+    font-family: sans-serif;
+    border: none;
+    background-color: #ad6e07;
+    color: white;
+    width: 9em !important;
+    height: 2.5em;
+}
+
+#price-dest {
+    font-size: 1.1em;
+    background-color: #f7e1b8;
+    border-radius: 5px;
+    padding: 0.5em 1em;
+}
+
+#desc {
+    text-align: justify;
+}
+
+#div-comment .card {
+    height: 11em;
+    overflow-y: auto;
+}
+
+.username-p {
+    color: #575757;
+}
+
+#comment {
+    resize: none;
+}
+
+#comment-button {
+    font-family: sans-serif;
+    border: none;
+    background-color: #ad6e07;
+    color: white;
+    width: 9.5em !important;
+    height: 1.7em;
+}
+
 /* ---------- TENDENCIAS ---------- */
 
 #trending-text {
@@ -119,7 +173,7 @@
     color: #2a3a13;
 }
 
-/* --- faw --- */
+/* --- FAQ --- */
 #faq {
     overflow-y: scroll;
     height: 30em;
