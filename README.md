@@ -22,7 +22,7 @@
 Por último, tenemos la carpeta doc/, donde se encuentra toda la documentación utilizada en esta primera práctica. Esta consiste en:
 - Modelo_Datos : Modelo que seguirá la BBDD, con las tablas y sus correspondientes atributos
 - Modelo_Dominio : Modelo del dominio inicial con las entidades y sus atributos
-- Diseño_SRS : Será la Especificación de Requisitos Software (SRS) conforme avance el proyecto. De momento, incluye un primer diseño inicial que se hizo de cada vista
+- Diseño_SRS : Será la Especificación de Requisitos Software (SRS) conforme avance el proyecto. De momento, incluye un primer diseño inicial que se hizo de cada vista (excepto contact y destination)
 - TO-DO : Lista de tareas realizada en Excel para facilitar la organización y reparto de tareas en el equipo
 
 ### Vistas
