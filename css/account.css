@@ -1,4 +1,4 @@
-/* --- GENERAL --- */
+/* ---------- GENERAL ---------- */
 
 * {
     text-decoration: none;
@@ -32,24 +32,17 @@ input {
     color: #435724;
 }
 
-/* --- ACCOUNT --- */
+/* ---------- ACCOUNT ---------- */
 
+/* Divs izquierdo y derecho */
 .general-box {
     height: 90%;
     box-shadow: #435724 0px 0px 80px 10px;
 }
 
+/* --- LADO IZQUIERDO --- */
 #left-box {
     border-radius: 20px 0px 0px 20px;    
-    background-color: #435724;
-}
-
-#sign-up-title {
-    font-size: 2.8em;
-}
-
-#right-box {
-    border-radius: 20px 20px 20px 20px;
     background-color: #435724;
 }
 
@@ -64,6 +57,16 @@ input {
     padding: 7px 30px;
 }
 
+/* --- LADO DERECHO --- */
+#right-box {
+    border-radius: 20px 20px 20px 20px;
+    background-color: #435724;
+}
+
+#sign-up-title {
+    font-size: 2.8em;
+}
+
 .submit-button {
     font-weight: bold;
     font-family: "Helvetica";
@@ -71,11 +74,8 @@ input {
     padding: 12px 35px;
 }
 
-.link {
-    color: #e6b909;
-}
+/* ---------- RESPONSIVE ---------- */
 
-/* --- RESPONSIVE --- */
 @media (min-width: 992px) {
     #right-box {
         border-radius: 0px 20px 20px 0px;

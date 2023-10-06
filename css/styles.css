@@ -1,4 +1,4 @@
-/* --- GENERAL --- */
+/* ---------- GENERAL ---------- */
 
 * {
     font-family: sans-serif;
@@ -23,10 +23,31 @@ a {
     text-decoration: none;
 }
 
-/* --- BARRA DE NAVEGACIÓN --- */
+h2 {
+    font-size: 1.5em;
+}
+
+.submit-button {
+    font-family: "Helvetica";
+    border: none;
+    background-color: #435724;
+    color: white;
+    width: 8em !important;
+    height: 2.5em;
+}
+
+hr {
+    margin: 0em 1.5em;
+}
+
+.div-content {
+    margin-top: 5em;
+}
+
+/* ---------- BARRA DE NAVEGACIÓN ---------- */
 
 #nav-bar {
-    background-color: #2a3a13;
+    background-color: #354919;
     padding: 10px;
     padding-bottom: 12px;
     position: fixed;
@@ -35,6 +56,7 @@ a {
     z-index: 4;
 }
 
+/* --- NAVEGACIÓN PÁGINAS --- */
 #list-nav {
     justify-content: space-between;
     list-style-type: none;
@@ -50,6 +72,7 @@ a {
     color: #bed4a4;
 }
 
+/* --- PERFIL --- */
 #div-end {
     margin-left: auto;
 }
@@ -66,242 +89,10 @@ a {
     filter: invert() brightness(77%);
 }
 
-/* --- INDEX --- */
-
-#search-bar {
-    height: 5em;
-    padding: 7em 0em 2.6em 2em;
-}
-
-#search-field {
-    border: 1px solid #2a3a13;
-    width: 25em;
-    padding: 5px 10px;
-}
-
-#search-button {
-    border: 1px solid #2a3a13;
-    background-color: white;
-    padding: 5px 8px;
-}
-
-hr {
-    margin: 0em 1.5em;
-}
-
-#div-content {
-    padding: 2em 2em;    
-}
-
-/* -- FILTROS -- */
-
-h2 {
-    font-size: 1.5em;
-}
-
-.filter {
-    background-color: #e3eed6;
-    border-radius: 20px;
-    padding: 1em 1em;
-    margin: 0.5em 0em;
-}
-
-#div-content input {
-    border-radius: 7px;
-    border: none;
-    padding: 0.2em 0.3em;
-    margin-top: 0.2em;
-}
-
-.d-resp input {
-    width: 3.5em;
-}
-
-#sb-filter {
-    align-self: center;
-}
-
-.submit-button {
-    font-family: "Helvetica";
-    border: none;
-    background-color: #435724;
-    color: white;
-    width: 8em !important;
-    height: 2.5em;
-}
-
-/* -- RESULTADOS -- */
-
-#results {
-    margin: 0em 2em;
-    border-left: 1px solid #bebebe;
-}
-
-#num-results {
-    margin-right: auto;
-    font-size: 1em;
-}
-
-.filter-pill {
-    background-color: #658b27;
-    color: white;
-    border-radius: 20px;
-    padding: 0.4em 1em;
-    margin: 0em 0.5em;
-}
-
-.card {
-    border: 1px solid #778d57;
-    box-shadow: 2px 2px 10px 1px #dae9c3;
-}
-
-.card a {
-    color: black;
-}
-
-.card-img-top {
-    height: 12.5em;
-    object-fit: cover;
-}
-
-.card h3 {
-    font-weight: bold;
-    font-size: 1.2em;
-}
-
-.card-text {
-    font-size: 0.8em;
-    color: #616161;
-}
-
-.card-rate {
-    align-self: center;
-}
-
-.card-price {
-    align-self: end;
-    margin-left: auto;
-    background-color: #c6d6ad;
-    border-radius: 10px;
-    padding: 0.3em 0.5em;
-}
-
-/* -- TENDENCIAS -- */
-
-#trending-text {
-    color: #2a3a13;
-    margin-top: 1.2em;
-    font-size: 2.5em;
-}
-
-/* --- USER --- */
-#box-user{
-    margin-top: 5em;
-}
-
-#profile {
-    background-color: #d2e2bf;
-    border-radius: 20px;
-    margin: 2em 2em;
-    box-shadow: 2px 2px 10px 1px #687c49;
-}
-
-#profile h2 {
-    color: #2a3a13;
-}
-
-.form-profile {
-    display: flex;
-    flex-direction: column;
-    margin: 1.5em 1.7em;
-}
-
-#profile label {
-    color: #2a3a13;
-    font-size: 0.9em;
-    margin-top: 0.5em;
-}
-
-#profile input {
-    border-radius: 7px;
-    border: none;
-    padding: 0.2em 0.3em;
-    margin-top: 0.2em;
-}
-
-.reservation {
-    box-shadow: 2px 2px 10px 1px #687c49;
-    background-color: #d2e2bf;
-}
-
-.reservations {
-    overflow-y: scroll;
-    /* border: 2px solid #89aa5d;
-    border-radius: 1em;
-    box-shadow: 2px 2px 10px 1px #687c49; */
-}
-
-#active {
-    margin-bottom: 1.5em;
-    height: 15.5em;
-}
-
-#inactive {
-    margin-top: 1.5em;
-    height: 25.2em;
-}
-
-.accordion-img {
-    height: 4em;
-    width: 7em;
-    object-fit: cover;
-}
-
-.accordion-button {
-    color: #2a3a13;
-}
-
-.accordion-button:focus {
-    box-shadow: none;
-}
-
-.accordion-button:not(.collapsed) {
-    background-color: #ffffff !important;
-    color: #2a3a13;
-}
-
-#separator {
-    border-top: 0.1em dashed;
-    margin: auto;
-}
-
-.old {
-    background-color: #dddddd;
-}
-
-.old.accordion-button:not(.collapsed) {
-    background-color: #dddddd !important;
-}
-
-#div-buttons {
-    width: 100%;
-}
-
-.cancel {
-    margin-left: auto;
-    width: 12em !important;
-    background-color: #922c2c;
-}
-
-.comment-button {
-    width: 12em !important;
-    margin: 1em;
-}
-
-/* --- FOOTER --- */
+/* ---------- FOOTER ---------- */
 
 #footer {
-    background-color: #19230b;
+    background-color: #111807;
     margin-top: auto;
     color: #5d7c35;
 }
@@ -326,11 +117,13 @@ h2 {
     margin: 0em;
 }
 
+/* --- CONTACTO --- */
 #sub-list li {
     list-style-type: disc;
     margin: 0em;
 }
 
+/* --- RRSS --- */
 #rrss a {
     display: flex;
     align-items: center;
@@ -339,43 +132,4 @@ h2 {
 
 #rrss p {
     padding: 0em 0.5em;
-}
-
-/* --- CONTACT --- */
-
-#mail{
-    width: 12em !important;
-}
-
-#box-contact{
-    margin-top: 2em;
-}
-
-/* --- RESPONSIVE --- */
-/* LG */
-@media (min-width: 992px) {
-    .d-resp {
-        display: flex;
-        flex-direction: row !important;
-        align-items: center;
-    }
-
-    #days {
-        margin-left: auto;
-    }
-    
-    #n-people {
-        margin-left: auto;
-    }
-
-    #rate {
-        margin-left: auto;
-    }    
-}
-
-/* XL */
-@media (min-width: 1200px) {
-    .form-profile {
-        margin: 1.5em 2.5em;
-    }
 }

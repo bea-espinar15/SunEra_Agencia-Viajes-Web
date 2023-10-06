@@ -10,6 +10,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!-- Importar css -->
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/user.css">
     <!-- Importar bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
@@ -20,25 +21,20 @@
     <!-- NAV -->
     <!-- [!] BORRAR: importar nav.html -->
     <nav id="nav-bar" class="d-flex align-items-center">
-        <!-- Logo inicio -->
         <a href="/general/index.html">
             <img src="/img/icon.png" alt="Logo SunEra" height="50">
             <img src="/img/sunera.png" alt="SunEra" height="40" class="ps-2">
         </a>
-        <!-- Barra navegación -->
         <ul id="list-nav" class="d-flex">
             <li><a href="/general/index.html">Inicio</a></li>
             <li><a href="/general/trending.html">Tendencias</a></li>
             <li><a href="/general/about_us.html">Quiénes somos</a></li>
             <li><a href="/general/contact.html">Contáctanos</a></li>
         </ul>
-        <!-- Perfil + Cerrar sesión -->
         <div id="div-end">
-            <!-- [!] La foto de perfil tiene que recortarse a un círculo -->
             <a href="/account/user.html">
                 <img id="profile-pic" src="/img/profile.png" alt="Foto Perfil" height="40">
             </a>
-            <!-- [!] Cambiar a button para tener action-->
             <a href="/account/login.html">
                 <img id="logout-pic" src="/img/logout.png" alt="Cerrar sesion" height="40">
             </a>
@@ -46,13 +42,13 @@
     </nav>
 
     <!-- CONTENIDO -->
-    <div id="box-user" class="d-flex">
+    <div class="div-content d-flex">
         <!-- PERFIL -->
         <div class="col-3">
             <div id="profile" class="d-flex flex-column">
                 <img src="/img/profile.png" alt="Foto Perfil" width="130" class="align-self-center mt-4">
                 <!-- Editar perfil -->
-                <form class="form-profile">
+                <form id="edit-profile" class="form-profile">
                     <h2>Editar perfil</h2>
                     <div class="d-flex flex-column">
                         <label for="user-name">Nombre completo</label>
@@ -72,7 +68,7 @@
                 </form>
                 <hr>
                 <!-- Cambiar contraseña -->
-                <form class="form-profile">
+                <form id="change-password" class="form-profile">
                     <h2>Cambiar contraseña</h2>
                     <div class="d-flex flex-column">
                         <label for="password">Contraseña actual</label>
@@ -95,6 +91,7 @@
             </div>
             <hr>
             <div id="reservations-table" class="accordion my-4 mx-5">
+                <!-- ACTUALES -->
                 <div id="active"  class="reservations">
                     <!-- Card reserva -->
                     <div class="reservation accordion-item">
@@ -118,15 +115,15 @@
                                     <p class="m-1 mb-3">Importe Total: 200€</p>
                                 </div>
                                 <div id="div-buttons" class="d-flex mr-4">
+                                    <!-- Lleva a destination -->
                                     <button class="submit-button rounded-pill"
                                         onclick="location.href='/general/destination.html'">Ver destino</button>
-                                    <!-- Abre modal de cancelación -->
-                                    <button class="submit-button cancel rounded-pill">Cancelar reserva</button>
+                                    <!-- Modal de cancelación -->
+                                    <button class="submit-button cancel-button rounded-pill">Cancelar reserva</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <!-- [!] BORRAR: son copias -->
                     <div class="reservation accordion-item my-4">
                         <h2 class="accordion-header">
@@ -149,8 +146,7 @@
                                 <div id="div-buttons" class="d-flex mr-4">
                                     <button class="submit-button rounded-pill"
                                         onclick="location.href='/general/destination.html'">Ver destino</button>
-                                    <!-- Abre modal de cancelación -->
-                                    <button class="submit-button cancel rounded-pill">Cancelar reserva</button>
+                                    <button class="submit-button cancel-button rounded-pill">Cancelar reserva</button>
                                 </div>
                             </div>
                         </div>
@@ -176,21 +172,21 @@
                                 <div id="div-buttons" class="d-flex mr-4">
                                     <button class="submit-button rounded-pill"
                                         onclick="location.href='/general/destination.html'">Ver destino</button>
-                                    <!-- Abre modal de cancelación -->
-                                    <button class="submit-button cancel rounded-pill">Cancelar reserva</button>
+                                    <button class="submit-button cancel-button rounded-pill">Cancelar reserva</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- [!] BORRAR: son copias -->
                 </div>
-
 
                 <hr id="separator">
 
-
-                <!-- [!] BORRAR: son copias -->
+                <!-- PASADAS -->
                 <div id="inactive" class="reservations">
+                    <!-- Card reserva -->
                     <div class="reservation accordion-item">
+                        <!-- Exterior -->
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed old" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
@@ -201,6 +197,7 @@
                                 </div>
                             </button>
                         </h2>
+                        <!-- Desplegable -->
                         <div id="collapseEight" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                             <div class="accordion-body d-flex">
                                 <div>
@@ -209,12 +206,14 @@
                                     <p class="m-1 mb-3">Importe Total: 40€</p>
                                 </div>
                                 <div id="div-buttons" class="d-flex mr-4 align-items-end justify-content-end">
+                                    <!-- Lleva a destination - Sección de comentarios -->
                                     <button class="submit-button rounded-pill comment-button"
                                         onclick="location.href='/general/destination.html'">Deja tu comentario</button>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- [!] BORRAR: son copias -->
                     <div class="reservation accordion-item my-4">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed old" type="button" data-bs-toggle="collapse"
@@ -315,6 +314,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- [!] BORRAR: son copias -->
                 </div>
             </div>
         </div>
@@ -324,11 +324,9 @@
     <!-- [!] BORRAR: importar footer.html -->
     <footer id="footer">
         <div class="row m-4 align-items-start">
-            <!-- LOGO -->
             <div class="col-1">
                 <img src="/img/logo.png" alt="Logo SunEra" height="50">
             </div>
-            <!-- NAVEGACIÓN -->
             <ul class="col-2 list-footer">
                 <li>
                     <h3>NAVEGAR</h3>
@@ -343,7 +341,6 @@
                     <p><a href="/general/about_us.html">Quiénes somos</a></p>
                 </li>
             </ul>
-            <!-- CONTACTO -->
             <ul class="col-3 list-footer">
                 <li>
                     <h3>CONTACTO</h3>
@@ -365,32 +362,26 @@
                     </ul>
                 </li>
             </ul>
-            <!-- RRSS -->
             <div id="rrss" class="col-3 offset-3 align-self-end">
-                <!-- [!] Cambiar links a nuestras supuestas RRSS -->
                 <div class="list-footer row row-cols-xxl-2 row-cols-">
-                    <!-- Instagram -->
                     <div class="px-5">
                         <a target="_blank" href="https://www.instagram.com/">
                             <img src="/img/rrss/instagram.png" alt="Logo Instagram" height="25">
                             <p>@sunera_viajes</p>
                         </a>
                     </div>
-                    <!-- Twitter -->
                     <div class="px-5">
                         <a target="_blank" href="https://twitter.com/">
                             <img src="/img/rrss/twitter.png" alt="Logo X" height="25">
                             <p>@sunera</p>
                         </a>
                     </div>
-                    <!-- Tiktok -->
                     <div class="px-5">
                         <a target="_blank" href="https://www.tiktok.com/">
                             <img src="/img/rrss/tiktok.png" alt="Logo Tiktok" height="25">
                             <p>@sunera_viajes</p>
                         </a>
                     </div>
-                    <!-- Facebook -->
                     <div class="px-5">
                         <a target="_blank" href="https://www.facebook.com/">
                             <img src="/img/rrss/facebook.png" alt="Logo Facebook" height="25">
