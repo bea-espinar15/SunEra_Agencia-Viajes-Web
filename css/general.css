@@ -166,17 +166,112 @@
     font-size: 2.3em;
 }
 
-/* ---------- CONTACTO ---------- */
+/* ---------- QUIÉNES SOMOS ---------- */
 
-/* --- GENERAL --- */
-.contact-title {
+/* --- TÍTULO --- */
+#about-us-div h1 {
+    font-weight: bold;
+    font-size: 3.5em;
     color: #2a3a13;
 }
 
+#about-us-div h2 {
+    color: #111807;
+}
+
+/* --- QUÉ HACEMOS --- */
+#what-about-us {
+    background-color: #2a3a13;
+    color: white;
+}
+
+#what-about-us h2 {
+    font-size: 2.5em;
+    color: white;
+}
+
+#what-about-us div {
+    margin-left: 6em;
+    margin-right: 4em;
+}
+
+/* --- BRANDING --- */
+#brand-about-us h2 {
+    color: #2a3a13;
+    font-size: 2.5em;
+}
+
+/* --- QUIÉNES SOMOS --- */
+#who-about-us {
+    background-color: #aac980;
+}
+
+#who-about-us h2 {
+    color: #111807;
+    font-size: 2.5em;
+}
+
+#who-about-us p {
+    color: #111807;
+}
+
+/* ---------- CONTACTO ---------- */
+
 /* --- FAQ --- */
+#faq-title {
+    color: #2a3a13;
+}
+
 #faq {
     overflow-y: scroll;
     height: 30em;
+}
+
+#faq div {
+    background-color: #e3eed6;
+    border-radius: 20px;
+    padding: 1em 1em;
+    margin-bottom: 1em;
+    margin-right: 10em;
+}
+
+#faq h3 {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* --- INFO DE CONTACTO --- */
+#contact-box {
+    margin: 5em;
+    padding: 3em;
+    color: white;
+    background-color: #2a3a13;
+    border-radius: 1em;
+}
+
+#contact-title {
+    color: white;
+    font-size: 1.9em;
+}
+
+#email {
+    text-decoration: underline;
+    color: white;
+}
+
+#contact-box hr {
+    margin: 0em;
+    border-color: white;
+}
+
+#rrss-contact a {
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+#rrss-contact p {
+    margin: 0.3em 0.6em;
 }
 
 /* ---------- RESPONSIVE ---------- */
@@ -197,5 +292,9 @@
 
     #rate {
         margin-left: auto;
-    }    
+    }
+
+    #contact-div {
+        flex-direction: row !important;
+    }
 }
