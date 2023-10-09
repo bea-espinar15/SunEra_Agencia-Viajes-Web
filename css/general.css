@@ -141,10 +141,6 @@
     overflow-y: auto;
 }
 
-.username-p {
-    color: #575757;
-}
-
 #comment {
     resize: none;
 }
@@ -188,11 +184,6 @@
 #what-about-us h2 {
     font-size: 2.5em;
     color: white;
-}
-
-#what-about-us div {
-    margin-left: 6em;
-    margin-right: 4em;
 }
 
 /* --- BRANDING --- */
@@ -249,6 +240,10 @@
     border-radius: 1em;
 }
 
+#contact-box a:hover {
+    color: #89aa5d;
+}
+
 #contact-title {
     color: white;
     font-size: 1.9em;
@@ -296,5 +291,30 @@
 
     #contact-div {
         flex-direction: row !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    #what-about-us {
+        flex-direction: row !important;
+    }
+
+    #what-about-us div {
+        width: 50%;
+        margin: 0em 4em 0em 6em;
+    }
+}
+
+@media (min-width: 1400px) {
+    #brand-who-div {
+        flex-direction: row !important;
+    }
+
+    #brand-about-us {
+        width: 50%;
+    }
+
+    #who-about-us {
+        width: 50%;
     }
 }

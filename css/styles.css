@@ -44,6 +44,10 @@ hr {
     margin-top: 5em;
 }
 
+.gray-text {
+    color: #5e5e5e;
+}
+
 /* ---------- BARRA DE NAVEGACIÓN ---------- */
 
 #nav-bar {
