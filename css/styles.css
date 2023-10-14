@@ -86,11 +86,11 @@ hr {
 }
 
 #logout-pic {
-    filter: invert();
+    filter: invert(100%);
 }
 
 #logout-pic:hover {
-    filter: invert() brightness(77%);
+    filter: invert(100%) brightness(77%);
 }
 
 /* ---------- FOOTER ---------- */

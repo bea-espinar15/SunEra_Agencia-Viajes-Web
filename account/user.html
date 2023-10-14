@@ -62,8 +62,8 @@
                         <label for="user-email">Correo electrónico</label>
                         <input id="user-email" type="email" value="jcaceres@ucm.es">
                     </div>
-                    <div id="sb-profile" class="mt-4">
-                        <input type="submit" value="Guardar" class="sb-profile submit-button rounded-pill">
+                    <div class="mt-4">
+                        <input type="submit" value="Guardar" class="submit-button rounded-pill">
                     </div>
                 </form>
                 <hr>
@@ -78,8 +78,8 @@
                         <label for="rep-password">Nueva contraseña</label>
                         <input id="rep-password" type="password" value="">
                     </div>
-                    <div id="sb-profile" class="mt-4">
-                        <input type="submit" value="Cambiar" class="sb-profile submit-button rounded-pill">
+                    <div class="mt-4">
+                        <input type="submit" value="Cambiar" class="submit-button rounded-pill">
                     </div>
                 </form>
             </div>
@@ -98,7 +98,7 @@
                         <!-- Exterior -->
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                 <img src="/img/destinos/viena.png" alt="Foto Destino" class="accordion-img p-0">
                                 <div class="d-flex flex-column ms-3">
                                     <h2>Viena Barroca</h2>
@@ -107,7 +107,7 @@
                             </button>
                         </h2>
                         <!-- Desplegable -->
-                        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#reservations-table">
                             <div class="accordion-body">
                                 <div>
                                     <p class="m-1">Fechas: 21/12/2023 - 31/12/2023</p>
@@ -128,7 +128,7 @@
                     <div class="reservation accordion-item my-4">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                 <img src="/img/destinos/asturias.png" alt="Foto Destino" class="accordion-img p-0">
                                 <div class="d-flex flex-column ms-3">
                                     <h2>Conoce Asturias</h2>
@@ -136,7 +136,7 @@
                                 </div>
                             </button>
                         </h2>
-                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#reservations-table">
                             <div class="accordion-body">
                                 <div>
                                     <p class="m-1">Fechas: 25/05/2024 - 4/06/2024</p>
@@ -154,7 +154,7 @@
                     <div class="reservation accordion-item my-4">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                                 <img src="/img/destinos/toscana.png" alt="Foto Destino" class="accordion-img p-0">
                                 <div class="d-flex flex-column ms-3">
                                     <h2>Viaje por la toscana</h2>
@@ -162,7 +162,7 @@
                                 </div>
                             </button>
                         </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#reservations-table">
                             <div class="accordion-body">
                                 <div>
                                     <p class="m-1">Fechas: 18/06/2024 - 28/06/2024</p>
@@ -189,7 +189,7 @@
                         <!-- Exterior -->
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed old" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseEight" aria-expanded="true" aria-controls="collapseEight">
+                                data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
                                 <img src="/img/destinos/madrid.png" alt="Foto Destino" class="accordion-img p-0">
                                 <div class="d-flex flex-column ms-3">
                                     <h2>Descubre Madrid</h2>
@@ -198,7 +198,7 @@
                             </button>
                         </h2>
                         <!-- Desplegable -->
-                        <div id="collapseEight" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div id="collapseEight" class="accordion-collapse collapse" data-bs-parent="#reservations-table">
                             <div class="accordion-body d-flex">
                                 <div class="w-100">
                                     <p class="m-1">Fechas: 18/06/2023 - 28/06/2023</p>
@@ -217,7 +217,7 @@
                     <div class="reservation accordion-item my-4">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed old" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven">
+                                data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
                                 <img src="/img/destinos/noruega.png" alt="Foto Destino" class="accordion-img p-0">
                                 <div class="d-flex flex-column ms-3">
                                     <h2>Pasea por los fiordos</h2>
@@ -225,7 +225,7 @@
                                 </div>
                             </button>
                         </h2>
-                        <div id="collapseSeven" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div id="collapseSeven" class="accordion-collapse collapse" data-bs-parent="#reservations-table">
                             <div class="accordion-body d-flex">
                                 <div class="w-100">
                                     <p class="m-1">Fechas: 08/07/2019 - 18/07/2019</p>
@@ -242,7 +242,7 @@
                     <div class="reservation accordion-item my-4">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed old" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
+                                data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
                                 <img src="/img/destinos/cádiz.png" alt="Foto Destino" class="accordion-img p-0">
                                 <div class="d-flex flex-column ms-3">
                                     <h2>Disfruta Cádiz</h2>
@@ -250,7 +250,7 @@
                                 </div>
                             </button>
                         </h2>
-                        <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div id="collapseSix" class="accordion-collapse collapse" data-bs-parent="#reservations-table">
                             <div class="accordion-body d-flex">
                                 <div class="w-100">
                                     <p class="m-1">Fechas: 15/08/2015 - 25/08/2015</p>
@@ -267,7 +267,7 @@
                     <div class="reservation accordion-item my-4">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed old" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+                                data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
                                 <img src="/img/destinos/berlín.png" alt="Foto Destino" class="accordion-img p-0">
                                 <div class="d-flex flex-column ms-3">
                                     <h2>Explora Berlín</h2>
@@ -275,7 +275,7 @@
                                 </div>
                             </button>
                         </h2>
-                        <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div id="collapseFive" class="accordion-collapse collapse" data-bs-parent="#reservations-table">
                             <div class="accordion-body d-flex">
                                 <div class="w-100">
                                     <p class="m-1">Fechas: 25/09/2013 - 4/10/2013</p>
@@ -292,7 +292,7 @@
                     <div class="reservation accordion-item my-4">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed old" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+                                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
                                 <img src="/img/destinos/canarias.png" alt="Foto Destino" class="accordion-img p-0">
                                 <div class="d-flex flex-column ms-3">
                                     <h2>Visita Canarias</h2>
@@ -300,7 +300,7 @@
                                 </div>
                             </button>
                         </h2>
-                        <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                        <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#reservations-table">
                             <div class="accordion-body d-flex">
                                 <div class="w-100">
                                     <p class="m-1">Fechas: 25/06/2009 - 4/07/2009</p>
