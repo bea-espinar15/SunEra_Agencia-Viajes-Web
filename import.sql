@@ -25,10 +25,11 @@ CREATE TABLE destino (
 -- IMÁGENES
 CREATE TABLE imagen (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    img VARBINARY NOT NULL,
-    id_destino INT NOT NULL REFERENCES destino(id),
+    img VARCHAR(255) NOT NULL,
+    id_destino INT NOT NULL,
 
-    UNIQUE(img, id_destino)
+    CONSTRAINT UC_Imagen UNIQUE(img, id_destino),
+    FOREIGN KEY (id_destino) REFERENCES destino(id)
 );
 
 -- ITINERARIOS
@@ -37,9 +38,10 @@ CREATE TABLE itinerario (
     n_dia INT NOT NULL,
     ciudad VARCHAR(255) NOT NULL,
     descripción TEXT,
-    id_destino INT NOT NULL REFERENCES destino(id),
+    id_destino INT NOT NULL,
 
-    UNIQUE(n_dia, id_destino)
+    CONSTRAINT UC_Itinerario UNIQUE(n_dia, id_destino),
+    FOREIGN KEY (id_destino) REFERENCES destino(id)
 );
 
 -- RESERVAS
@@ -50,8 +52,11 @@ CREATE TABLE reserva (
     fecha_fin DATE NOT NULL,
     precio_total DECIMAL(10, 2) NOT NULL,
     n_personas INT NOT NULL,
-    id_usuario INT NOT NULL REFERENCES usuario(id),
-    id_destino INT NOT NULL REFERENCES destino(id)
+    id_usuario INT NOT NULL,
+    id_destino INT NOT NULL,
+    
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id),
+    FOREIGN KEY (id_destino) REFERENCES destino(id)
 );
 
 -- RESEÑAS
@@ -60,8 +65,10 @@ CREATE TABLE reseñas (
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     valoracion INT NOT NULL,
     comentario TEXT,
-    id_usuario INT NOT NULL REFERENCES usuario(id),
-    id_destino INT NOT NULL REFERENCES destino(id),
+    id_usuario INT NOT NULL,
+    id_destino INT NOT NULL,
 
-    UNIQUE(id_usuario, id_destino, fecha)
+    CONSTRAINT UC_Reseñas UNIQUE(id_usuario, id_destino, fecha),
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id),
+    FOREIGN KEY (id_destino) REFERENCES destino(id)
 );
