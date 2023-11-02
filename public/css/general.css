@@ -31,7 +31,7 @@
     margin: 0.5em 0em;
 }
 
-#div-content input {
+.div-content input {
     border-radius: 7px;
     border: none;
     padding: 0.2em 0.3em;
@@ -116,7 +116,7 @@
     object-fit: cover;
 }
 
-#book-button {
+.book-button {
     font-family: sans-serif;
     border: none;
     background-color: #ad6e07;
@@ -152,6 +152,34 @@
     color: white;
     width: 9.5em !important;
     height: 1.7em;
+}
+
+/*  --- MODAL --- */
+
+.modal-content {
+    background-color: #faf8ef;
+}
+
+.modal-header h1 {
+    font-size: 1.4em !important;
+}
+
+#summary {
+    padding: 0em 2em;
+    border-left: 1px solid #bebebe;
+}
+
+.cancel-button {
+    font-family: sans-serif;
+    border: none;
+    background-color: #922c2c;
+    color: white;
+    width: 9em !important;
+    height: 2.5em;
+}
+
+.filter-res {
+    background-color: #f7efcf;
 }
 
 /* ---------- TENDENCIAS ---------- */

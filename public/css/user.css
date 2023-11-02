@@ -74,6 +74,15 @@
     background-color: #922c2c;
 }
 
+/* - MODAL - */
+.modal-content {
+    background-color: #f6fded;
+}
+
+.modal-footer button {
+    width: 5em !important;
+}
+
 /* - PASADAS - */
 .old {
     background-color: #dddddd;
