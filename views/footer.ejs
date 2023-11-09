@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include("../public/head") %>
+    <!-- Importar css -->
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <footer id="footer">
+        <div class="row m-4 align-items-start">
+            <!-- LOGO -->
+            <div class="col-1">
+                <img src="/img/logo.png" alt="Logo SunEra" height="50">
+            </div>
+            <!-- NAVEGACIÓN -->
+            <ul class="col-2 list-footer">
+                <li><h3>NAVEGAR</h3></li>
+                <li><p><a href="/inicio">Inicio</a></p></li>
+                <li><p><a href="/tendencias">Tendencias</a></p></li>
+                <li><p><a href="/quienes_somos">Quiénes somos</a></p></li>
+            </ul>
+            <!-- CONTACTO -->
+            <ul class="col-3 list-footer">
+                <li><h3>CONTACTO</h3></li>
+                <li>
+                    <ul id="sub-list">
+                        <li><p><%= tlfApp %></p></li>
+                        <li><p><%= emailApp %></p></li>
+                        <li><a href="/contacto"><p>FAQ</p></a></li>
+                        <li><a href="/contacto"><p>Más información de contacto</p></a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- RRSS -->
+            <div id="rrss" class="col-3 offset-3 align-self-end">
+                <div class="list-footer row row-cols-xxl-2 row-cols-">
+                    <% rrssApp.forEach(rs => {  %>
+                        <div class="px-5">
+                            <a target="_blank" href="<%= rs.link %>">
+                                <img src="<%= rs.logo %>" alt="Logo <%= rs.name %>" height="25">
+                                <p><%= rs.username %></p>
+                            </a>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

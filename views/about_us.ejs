@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <%- include("../public/head") %>
+    <!-- Importar css -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/general.css">
+</head>
+
+<body>
+    <!-- NAV -->
+    <!-- [?] Pasar como parámetro foto de perfil -->
+    <%- include("nav") %>
+
+    <!-- CONTENT -->
+    <div id="about-us-div" class="div-content">
+        <!-- Título -->
+        <div class="d-flex flex-column align-items-center justify-content-center mt-5 mb-4">
+            <h1 class="mb-1">SunEra</h1>
+            <h2>Conoce un poco más este proyecto</h2>
+        </div>
+        <!-- Qué hacemos -->
+        <div id="what-about-us" class="d-flex flex-column align-items-center">
+            <img src="/img/about-us-travel.png" alt="Imagen playa" height="300">
+            <div class="w-75 my-5">
+                <h2>¿Qué hacemos?</h2>
+                <p class="mt-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi asperiores exercitationem similique! Tenetur, quo dignissimos. Debitis officia architecto qui odio eos quaerat dolorum deleniti nesciunt modi, nulla tenetur nostrum nisi!Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi asperiores exercitationem similique! Tenetur, quo dignissimos. Debitis officia architecto qui odio eos quaerat dolorum deleniti nesciunt modi, nulla tenetur nostrum nisi!</p>
+            </div>
+        </div>
+        <!-- Equipo & Branding -->
+        <div id="brand-who-div" class="d-flex flex-column align-items-start">
+            <!-- Branding -->
+            <div id="brand-about-us" class="p-5">
+                <h2>¿Por qué SunEra?</h2>
+                <div class="d-flex mt-4">
+                    <img src="/img/branding/logo.png" alt="Logo SunEra" height="200" class="me-5">
+                    <p class="mt-2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi asperiores exercitationem similique! Tenetur, quo dignissimos. Debitis officia architecto qui odio eos quaerat dolorum deleniti nesciunt modi, nulla tenetur nostrum nisi!Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi asperiores exercitationem similique! Tenetur, quo dignissimos. Debitis officia architecto qui odio eos quaerat dolorum deleniti nesciunt modi, nulla tenetur nostrum nisi! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque vel fugiat, blanditiis tenetur excepturi at reiciendis eius laboriosam corrupti eum illo architecto omnis accusantium libero molestias magni voluptate ad repudiandae.</p>
+                </div>
+                <div class="d-flex">
+                    <img src="/img/branding/draft.png" alt="Boceto Logo" height="150">
+                    <img src="/img/branding/color-palette.png" alt="Paleta Colores" height="65" class="ms-5 mt-5">
+                </div>
+            </div>
+            <!-- El equipo -->
+            <div id="who-about-us" class="p-5">
+                <h2>Conoce a nuestro equipo</h2>
+                <div class="d-flex mt-4">
+                    <p class="mt-2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi asperiores exercitationem similique! Tenetur, quo dignissimos. Debitis officia architecto qui odio eos quaerat dolorum deleniti nesciunt modi, nulla tenetur nostrum nisi!Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi asperiores exercitationem similique! Tenetur, quo dignissimos. Debitis officia architecto qui odio eos quaerat dolorum deleniti nesciunt modi, nulla tenetur nostrum nisi!</p>
+                    <img src="/img/ucm.png" alt="Logo UCM" height="120" class="ms-4">
+                </div>
+                <div class="d-flex">
+                    <img src="/img/teamwork.png" alt="Imagen Teamwork" height="250" class="me-2">
+                    <p class="mt-2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi asperiores exercitationem similique! Tenetur, quo dignissimos. Debitis officia architecto qui odio eos quaerat dolorum deleniti nesciunt modi, nulla tenetur nostrum nisi!Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi asperiores exercitationem similique! Tenetur, quo dignissimos. Debitis officia architecto qui odio eos quaerat dolorum deleniti nesciunt modi, nulla tenetur nostrum nisi! Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse minus ut cum beatae cumque odio, impedit nobis dolorem maxime vitae blanditiis, delectus quis provident quae harum, dolorum ullam. Tenetur, assumenda?</p>
+                </div>
+            </div>            
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <%- include("footer") %>
+</body>
+
+</html>

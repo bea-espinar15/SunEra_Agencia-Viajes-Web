@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <%- include("../public/head") %>
+    <!-- Importar css -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/general.css">
+</head>
+
+<body>
+    <!-- NAV -->
+    <!-- [?] Pasar como parámetro foto de perfil -->
+    <%- include("nav") %>
+
+    <!-- BARRA DE BÚSQUEDA -->
+    <div id="search-bar" class="d-flex align-items-center">
+        <form method="post" action="/search">
+            <input id="search-field" type="search" class="rounded" placeholder="Buscar destino...">
+            <button type="submit" id="search-button" class="ms-2 search-button rounded">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-search" viewBox="0 0 16 16">
+                    <path
+                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                </svg>
+            </button>
+        </form>
+    </div>
+
+    <hr>
+
+    <!-- CONTENIDO -->
+    <div id="div-content" class="d-flex div-content m-0">
+        <!-- FILTROS -->
+        <!-- [?] Posible cambio dinámico -->
+        <div class="col-2 d-flex flex-column">
+            <h2>Filtros de búsqueda</h2>
+            <form method="post" action="/filter" class="d-flex flex-column">
+                <!-- Fecha inicio -->
+                <div class="filter d-flex flex-column">
+                    <label for="date-ini">¿Cuándo te vas?</label>
+                    <input id="date-ini" type="date" name="date-ini">
+                </div>
+                <!-- Fecha fin -->
+                <div class="filter d-flex flex-column">
+                    <label for="date-fin">¿Cuándo vuelves?</label>
+                    <input id="date-fin" type="date" name="date-fin">
+                </div>
+                <!-- Días -->
+                <div class="d-resp filter d-flex flex-column">
+                    <label for="days">¿Cuánto tiempo quieres irte?</label>
+                    <input id="days" type="number" name="days" value="1" min="1" max="<%= maxDays %>">
+                </div>
+                <!-- Nº personas -->
+                <div class="d-resp filter d-flex flex-column">
+                    <label for="n-people">Viajeros</label>
+                    <input id="n-people" type="number" name="n-people" value="1" min="1" max="<%= maxNPeople %>">
+                </div>
+                <!-- Precio/noche -->
+                <div class="filter d-flex flex-column">
+                    <label for="price">Precio (€/persona)</label>
+                    <input id="price" type="range" name="price" value="<%= (maxPrice + minPrice) / 2 %>" min="<%= minPrice %>" max="<%= maxPrice %>">
+                </div>
+                <!-- Valoración -->
+                <div class="d-resp filter d-flex flex-column">
+                    <label for="rate">Valoración</label>
+                    <input id="rate" type="number" name="rate" value="0" min="0" max="5">
+                </div>
+                <!-- Submit -->
+                <div id="sb-filter" class="mt-4">
+                    <input type="submit" value="Filtrar" class="submit-button rounded-pill">
+                </div>
+            </form>
+        </div>
+        <!-- RESULTADOS -->
+        <div id="results" class="col-10">
+            <div class="d-flex align-items-center justify-content-end mx-5 mb-3">
+                <% if (destinations.length === 0) { %>
+                    <p id="num-results">No hay ningún resultado que coincida.</p>
+                <% } else  { %>
+                    <p id="num-results">Ver <%= destinations.length %> resultados.</p>
+                <% } %>                
+                <!-- Filtros aplicados -->
+                <% filters.forEach(f => { %>
+                    <p class="filter-pill"><%= f.range %> <%= f.value %><%= f.name %></p> 
+                <% }) %>
+            </div>
+            <!-- Resultados de búsqueda -->
+            <div id="results-table" class="row row-cols-2 row-cols-xl-3 row-cols-xxl-4 mx-3">
+                <% destinations.forEach(dest => { %>
+                    <%- include("card_destination", { d: dest }) %>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <%- include("footer") %>
+</body>
+
+</html>

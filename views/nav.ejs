@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <%- include("../public/head") %>
+    <!-- Importar css -->
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <nav id="nav-bar" class="d-flex align-items-center">
+        <!-- Logo inicio -->
+        <a href="/inicio">
+            <img src="/img//branding/icon.png" alt="Logo SunEra" height="50">
+            <img src="/img/branding/sunera.png" alt="SunEra" height="40" class="ps-2">
+        </a>
+        <!-- Barra navegación -->
+        <ul id="list-nav" class="d-flex">
+            <li><a href="/inicio">Inicio</a></li>
+            <li><a href="/tendencias">Tendencias</a></li>
+            <li><a href="/quienes_somos">Quiénes somos</a></li>
+            <li><a href="/contacto">Contáctanos</a></li>
+        </ul>
+        <!-- Perfil + Cerrar sesión -->
+        <div id="div-end">
+            <!-- [!] Cargar foto de perfil dinámicamente -->
+            <a href="/perfil">
+                <img id="profile-pic" src="/img/profile.png" alt="Foto Perfil" height="40">
+            </a>
+            <form method="post" action="/logout" >   
+                <button type="submit">
+                    <img id="logout-pic" src="/img/logout.png" alt="Cerrar sesión" height="40">
+                </button>
+            </form>
+        </div>
+    </nav>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <%- include("../public/head") %>
+    <!-- Importar css -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/general.css">
+</head>
+
+<body>
+    <!-- NAV -->
+    <!-- [?] Pasar como parámetro foto de perfil -->
+    <%- include("nav") %>
+
+    <!-- CONTENT -->
+
+    <!-- RESULTADOS -->
+    <div class="div-content">
+        <div class="d-flex align-items-center justify-content-center mx-5 mb-3">
+            <h1 id="trending-text">Explora nuestros destinos mejor valorados</h1>
+        </div>
+        <hr>
+        <div class="my-3">
+            <div class="row row-cols-3 row-cols-xl-4 row-cols-xxl-5 mx-5">
+                <% destinations.forEach(dest => { %>
+                    <%- include("card_destination", { d: dest }) %>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+    
+    <!-- FOOTER -->
+    <%- include("footer") %>
+</body>
+
+</html>

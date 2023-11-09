@@ -1,0 +1,15 @@
+<div class="px-4 my-3">
+    <div class="card p-0">
+        <a href="/destination/<%= d.id %>">
+            <img src="/img/destinos/<%= d.pics[0] %>" class="card-img-top" alt="Primera imagen del destino">
+            <div class="card-body">
+                <h3 class="card-title"><%= d.name %></h3>
+                <p class="card-text"><%= d.country %></p>
+                <div class="d-flex">
+                    <img src="/img/rate/<%= d.ratePic %>" class="card-rate" alt="Valoración destino" height="20">
+                    <p class="card-price"><%= d.price %>€/p</p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
