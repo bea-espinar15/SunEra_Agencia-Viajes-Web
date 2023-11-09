@@ -2,7 +2,6 @@
 <html lang="es">
 
 <head>
-    <%- include("../public/head") %>
     <!-- Importar css -->
     <link rel="stylesheet" href="/css/styles.css">
 </head>
@@ -22,13 +21,13 @@
             <li><a href="/contacto">Contáctanos</a></li>
         </ul>
         <!-- Perfil + Cerrar sesión -->
-        <div id="div-end">
+        <div id="div-end" class="d-flex">
             <!-- [!] Cargar foto de perfil dinámicamente -->
             <a href="/perfil">
                 <img id="profile-pic" src="/img/profile.png" alt="Foto Perfil" height="40">
             </a>
             <form method="post" action="/logout" >   
-                <button type="submit">
+                <button id="logout-button" type="submit">
                     <img id="logout-pic" src="/img/logout.png" alt="Cerrar sesión" height="40">
                 </button>
             </form>

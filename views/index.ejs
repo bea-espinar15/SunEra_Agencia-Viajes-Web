@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-    <%- include("../public/head") %>
+    <%- include("../public/head.html") %>
     <!-- Importar css -->
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/general.css">
@@ -25,6 +25,7 @@
             </button>
         </form>
     </div>
+
 
     <hr>
 
@@ -53,7 +54,7 @@
                 <!-- Nº personas -->
                 <div class="d-resp filter d-flex flex-column">
                     <label for="n-people">Viajeros</label>
-                    <input id="n-people" type="number" name="n-people" value="1" min="1" max="<%= params.maxNPeople %>">
+                    <input id="n-people" type="number" name="n-people" value="1" min="1" max="<%= params.maxCapacity %>">
                 </div>
                 <!-- Precio/noche -->
                 <div class="filter d-flex flex-column">
@@ -77,7 +78,7 @@
                 <% if (destinations.length === 0) { %>
                     <p id="num-results">No hay ningún resultado que coincida.</p>
                 <% } else  { %>
-                    <p id="num-results">Ver <%= destinations.length %> resultados.</p>
+                    <p id="num-results">Ver <%= destinations.length %> resultados</p>
                 <% } %>                
                 <!-- Filtros aplicados -->
                 <% filters.forEach(f => { %>

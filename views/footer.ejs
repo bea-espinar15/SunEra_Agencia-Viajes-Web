@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-    <%- include("../public/head") %>
     <!-- Importar css -->
     <link rel="stylesheet" href="/css/styles.css">
 </head>
@@ -12,7 +11,7 @@
         <div class="row m-4 align-items-start">
             <!-- LOGO -->
             <div class="col-1">
-                <img src="/img/logo.png" alt="Logo SunEra" height="50">
+                <img src="/img/branding/logo.png" alt="Logo SunEra" height="50">
             </div>
             <!-- NAVEGACIÓN -->
             <ul class="col-2 list-footer">
@@ -39,7 +38,7 @@
                     <% rrssApp.forEach(rs => {  %>
                         <div class="px-5">
                             <a target="_blank" href="<%= rs.link %>">
-                                <img src="<%= rs.logo %>" alt="Logo <%= rs.name %>" height="25">
+                                <img src="/img/rrss/<%= rs.logo %>" alt="Logo <%= rs.name %>" height="25">
                                 <p><%= rs.username %></p>
                             </a>
                         </div>

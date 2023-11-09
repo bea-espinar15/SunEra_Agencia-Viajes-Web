@@ -85,6 +85,11 @@ hr {
     padding: 0em 0.5em;
 }
 
+#logout-button {
+    background: none;
+    border: none;    
+}
+
 #logout-pic {
     filter: invert(100%);
 }

@@ -2,7 +2,7 @@
 <html lang="es">
 
 <head>
-    <%- include("../public/head") %>
+    <%- include("../public/head.html") %>
     <!-- Importar css -->
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/general.css">
@@ -34,17 +34,17 @@
                         <div id="carousel-dest" class="carousel slide">
                             <div class="carousel-indicators">
                                 <button type="button" data-bs-target="#carousel-dest" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Picture 1"></button>
-                                <% for (let i = 1; i < pictures.length; ++i) { %>
+                                <% for (let i = 1; i < dest.pictures.length; ++i) { %>
                                     <button type="button" data-bs-target="#carousel-dest" data-bs-slide-to="<%= i %>" aria-label="Picture <%= i %>"></button>
                                 <% } %>
                             </div>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img src="/img/destinos/<%= pictures[0]%>" class="d-block w-100 rounded" alt="Foto 1" height="400">
+                                    <img src="/img/destinos/<%= dest.pictures[0]%>" class="d-block w-100 rounded" alt="Foto 1" height="400">
                                 </div>
-                                <% for (let i = 1; i < pictures.length; ++i) { %>
+                                <% for (let i = 1; i < dest.pictures.length; ++i) { %>
                                     <div class="carousel-item">
-                                        <img src="/img/destinos/<%= pictures[i]%>" class="d-block w-100 rounded" alt="Foto <%= i %>" height="400">
+                                        <img src="/img/destinos/<%= dest.pictures[i]%>" class="d-block w-100 rounded" alt="Foto <%= i %>" height="400">
                                     </div>
                                 <% } %>
                             </div>
@@ -61,15 +61,15 @@
                     <!-- Basic Info -->
                     <div class="col d-flex flex-column pt-4 px-4">
                         <div>
-                            <h1 class="mb-1"><%= name %></h1>
-                            <h2><%= country %></h2>
+                            <h1 class="mb-1"><%= dest.name %></h1>
+                            <h2><%= dest.country %></h2>
                             <div class="d-flex">
-                                <img src="/img/rate/<%= ratePic %>" alt="Valoración media" height="20">
-                                <p class="gray-text my-0 ms-2"><%= numComments %> reseñas</p>
+                                <img src="/img/rate/<%= dest.ratePic %>" alt="Valoración media" height="20">
+                                <p class="gray-text my-0 ms-2"><%= comments.length %> reseñas</p>
                             </div>
-                            <p class="mt-5 mb-0"><strong>Capacidad:</strong> <%= capacity %> personas</p>
-                            <p class="mb-4"><strong>Duración:</strong> <%= days %> días</p>
-                            <p id="price-dest" class="d-inline"><%= price %>€/persona</p>
+                            <p class="mt-5 mb-0"><strong>Capacidad:</strong> <%= dest.capacity %> personas</p>
+                            <p class="mb-4"><strong>Duración:</strong> <%= dest.days %> días</p>
+                            <p id="price-dest" class="d-inline"><%= dest.price %>€/persona</p>
                             <button class="d-block book-button rounded-pill mt-5" data-bs-toggle="modal" data-bs-target="#reservationModal">¡Reserva Ya!</button>
                             <!-- MODAL RESERVA -->
                             <div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" aria-hidden="true">
@@ -90,11 +90,11 @@
                                                     <!-- Viajeros -->
                                                     <div class="d-resp filter filter-res d-flex flex-column">
                                                         <label for="n-people">¿Cuántos vais a ser?</label>
-                                                        <input id="n-people" type="number" name="n-people" value="1" min="1" max="<%= capacity %>">
+                                                        <input id="n-people" type="number" name="n-people" value="1" min="1" max="<%= dest.capacity %>">
                                                     </div>
                                                     <!-- Precio -->
                                                     <div class="d-resp filter filter-res d-flex flex-column">
-                                                        <p>Precio: <%= price %>€/persona</p>
+                                                        <p>Precio: <%= dest.price %>€/persona</p>
                                                     </div>
                                                 </form>
                                             </div>
@@ -103,7 +103,7 @@
                                                 <h2 class="mb-4">Resumen de tu viaje</h2>
                                                 <p>Oops! Parece que aún no podemos mostrar el resumen de tu viaje :&#40</p>
                                                 <p>Pásatelo genial!</p>
-                                                <!-- [!] Actualizar automáticamente JQuerry
+                                                <!-- [!] Actualizar automáticamente JQuery
                                                 <p class="m-0">Ida: 21/02/2001</p>
                                                 <p>Vuelta: 15/10/2001</p>
                                                 <p class="m-0">2 personas</p>
@@ -124,7 +124,7 @@
                 </div>
                 <!-- Desc -->
                 <div class="row mt-5">
-                    <p id="desc"><%= desc %></p>
+                    <p id="desc"><%= dest.desc %></p>
                 </div>
             </div>
             <!-- Itinerario -->

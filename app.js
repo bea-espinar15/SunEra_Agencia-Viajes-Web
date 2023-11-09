@@ -14,6 +14,9 @@ const morgan = require("morgan");
 // Fichero
 const mySQLconfig = require("./config");
 const errorTypes = require("./errorTypes");
+const DAODestinations = require("./dao/DAODestinations");
+const DAOReservations = require("./dao/DAOReservations");
+const DAOUsers = require("./dao/DAOUsers");
 const ASDestinations = require("./as/ASDestinations");
 const ASReservations = require("./as/ASReservations");
 const ASUsers = require("./as/ASUsers");
@@ -37,22 +40,26 @@ const mySQLStore = mySQLsession(session);
 const sessionStore = new mySQLStore(mySQLconfig.config);
 
 // Crear middleware de la sesión
-const middlewareSession = {
-    saveUnitialized: false,
+const middlewareSession = session({
+    saveUninitialized: false,
     secret: "sunera1806",
     resave: true,
     store: sessionStore
-}
+});
 app.use(middlewareSession);
 
 // Crear pool de conexiones
 const pool = mySQL.createPool(mySQLconfig.config);
 
-// --- AS ---
-// Crear instancias de los AS
-const ASDes = new ASDestinations(pool);
-const ASRes = new ASReservations(pool);
-const ASUse = new ASUsers(pool);
+// --- DAOs y ASs ---
+// Crear instancias de los DAOs
+const DAODes = new DAODestinations(pool);
+const DAORes = new DAOReservations(pool);
+const DAOUse = new DAOUsers(pool);
+// Crear instancias de los ASs
+const ASDes = new ASDestinations(DAODes);
+const ASRes = new ASReservations(DAORes);
+const ASUse = new ASUsers(DAOUse);
 
 // --- VARIABLES GLOBALES de plantilla ---
 app.locals.tlfApp = "+34 XXX XXX XXX" // Teléfono
@@ -75,12 +82,14 @@ app.locals.faqApp = [
     { question: "¿Qué destino recomendáis?", answer: "Te invitamos a que te sientas libre de explorar nuestra web para encontrar aquellos destinos que más se ajusten a ti. Puedes hacerlo visitando nuestra página de inicio o de tendencias. En la de inicio podrás filtrar para encontrar los destinos que más se ajusten a tus necesidades, mientras que en tendencias podrás ver aquellos mejor valorados por nuestros usuarios."}];
 
 // --- Middlewares ---
-// TODO
+function userLogged(request, response, next) {
+    
+};
 
 // --- Peticiones GET ---
 // Index [!] Middleware login
 app.get(["/", "/inicio"], (request, response, next) => {
-    ASDes.getDestinations((error, destinations) => {
+    ASDes.getAllDestinations((error, destinations) => {
         if (error) {
             next(error);
         }
@@ -99,20 +108,20 @@ app.get(["/", "/inicio"], (request, response, next) => {
 });
 
 // Login
-app.get("/login", (request, response) => {
+app.get("/login", (request, response, next) => {
     response.status(200);
     response.render("login");
 });
 
 // SignUp
-app.get("/sign_up", (request, response) => {
+app.get("/sign_up", (request, response, next) => {
     response.status(200);
     response.render("sign_up");
 });
 
 // Trending [!] Middleware login
 app.get("/tendencias", (request, response, next) => {
-    ASDes.getDestinations((error, destinations) => {
+    ASDes.getAllDestinations((error, destinations) => {
         if (error) {
             next(error);
         }
@@ -124,19 +133,19 @@ app.get("/tendencias", (request, response, next) => {
 });
 
 // About Us [!] Middleware login
-app.get("/quienes_somos", (request, response) => {
+app.get("/quienes_somos", (request, response, next) => {
     response.status(200);
     response.render("about_us");
 });
 
 // Contact [!] Middleware login
-app.get("/contacto", (request, response) => {
+app.get("/contacto", (request, response, next) => {
     response.status(200);
     response.render("contact");
 });
 
 // User [!] Middleware login y "es tu usuario"
-app.get("/perfil", (request, response) => {
+app.get("/perfil", (request, response, next) => {
     ASUse.getUser(request.session.currentUser.id, (error, user) => {
         if (error) {
             next(error);
@@ -156,7 +165,24 @@ app.get("/perfil", (request, response) => {
 });
 
 // Destination [!] Middleware login
-
+app.get("/destination/:id", (request, response, next) => {
+    ASDes.getDestination(request.params.id, (error, destination) => {
+        if (error) {
+            next(error);
+        }
+        else {
+            ASDes.getCommentsByDestination(destination.id, (error, comments) => {
+                if (error) {
+                    next(error);
+                }
+                else {
+                    response.status(200);
+                    response.render("destination", { dest: destination, comments: comments, user: { username: "BLABLA" }});
+                }
+            })
+        }
+    })
+});
 
 // --- Peticiones POST ---
 // TODO
