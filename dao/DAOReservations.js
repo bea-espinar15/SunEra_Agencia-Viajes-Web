@@ -14,7 +14,7 @@ class DAOReservations {
     readByUser(idUser, callback) {
         this.pool.getConnection((error, connection) => {
             if (error) {
-                callback(error);
+                callback(-1);
             }
             else {
                 let querySQLdest =  "SELECT * FROM destino JOIN (SELECT id_destino, MIN(id), img FROM Imagen GROUP BY id_destino)" + 
@@ -25,7 +25,7 @@ class DAOReservations {
                 connection.query(querySQL, [idUser], (error, rows) => {
                     connection.release();
                     if (error) {
-                        callback(error);
+                        callback(-1);
                     }
                     else {
                         let reservations = new Array();

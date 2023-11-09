@@ -13,7 +13,7 @@ const morgan = require("morgan");
 
 // Fichero
 const mySQLconfig = require("./config");
-const errorTypes = require("./errorTypes");
+const errorHandler = require("./errorHandler");
 const DAODestinations = require("./dao/DAODestinations");
 const DAOReservations = require("./dao/DAOReservations");
 const DAOUsers = require("./dao/DAOUsers");
@@ -85,6 +85,7 @@ app.locals.faqApp = [
     { question: "¿Qué destino recomendáis?", answer: "Te invitamos a que te sientas libre de explorar nuestra web para encontrar aquellos destinos que más se ajusten a ti. Puedes hacerlo visitando nuestra página de inicio o de tendencias. En la de inicio podrás filtrar para encontrar los destinos que más se ajusten a tus necesidades, mientras que en tendencias podrás ver aquellos mejor valorados por nuestros usuarios."}];
 
 // --- Middlewares ---
+// Comprobar que el usuario ha iniciado sesión
 function userLogged(request, response, next) {
     if (request.session.currentUser) {
         next();
@@ -99,12 +100,26 @@ function userLogged(request, response, next) {
 app.get(["/", "/inicio"], userLogged, (request, response, next) => {
     ASDes.getAllDestinations((error, destinations) => {
         if (error) {
-            next(error);
+            let errorObj = errorHandler.generateError(error);
+            if (error < 0) {
+                next(errorObj); // Redirigir a error.ejs
+            }
+            else {
+                // TODO: Mostrar error por pantalla
+                response.end(errorObj.message);
+            }
         }
         else {
             ASDes.getParams(destinations, (error, params) => {
                 if (error) {
-                    next(error);
+                    let errorObj = errorHandler.generateError(error);
+                    if (error < 0) {
+                        next(errorObj); // Redirigir a error.ejs
+                    }
+                    else {
+                        // TODO: Mostrar error por pantalla
+                        response.end(errorObj.message);
+                    }
                 }
                 else {
                     response.status(200);
@@ -131,7 +146,14 @@ app.get("/sign_up", (request, response, next) => {
 app.get("/tendencias", userLogged, (request, response, next) => {
     ASDes.getAllDestinations((error, destinations) => {
         if (error) {
-            next(error);
+            let errorObj = errorHandler.generateError(error);
+            if (error < 0) {
+                next(errorObj); // Redirigir a error.ejs
+            }
+            else {
+                // TODO: Mostrar error por pantalla
+                response.end(errorObj.message);
+            }
         }
         else {
             response.status(200);
@@ -156,12 +178,26 @@ app.get("/contacto", userLogged, (request, response, next) => {
 app.get("/perfil", userLogged, (request, response, next) => {
     ASUse.getUser(request.session.currentUser.id, (error, user) => {
         if (error) {
-            next(error);
+            let errorObj = errorHandler.generateError(error);
+            if (error < 0) {
+                next(errorObj); // Redirigir a error.ejs
+            }
+            else {
+                // TODO: Mostrar error por pantalla
+                response.end(errorObj.message);
+            }
         }
         else {
             ASRes.getReservationsByUser(user.id, (error, currentReservations, oldReservations) => {
                 if (error) {
-                    next(error);
+                    let errorObj = errorHandler.generateError(error);
+                    if (error < 0) {
+                        next(errorObj); // Redirigir a error.ejs
+                    }
+                    else {
+                        // TODO: Mostrar error por pantalla
+                        response.end(errorObj.message);
+                    }
                 }
                 else {
                     response.status(200);
@@ -176,12 +212,26 @@ app.get("/perfil", userLogged, (request, response, next) => {
 app.get("/destination/:id", userLogged, (request, response, next) => {
     ASDes.getDestination(request.params.id, (error, destination) => {
         if (error) {
-            next(error);
+            let errorObj = errorHandler.generateError(error);
+            if (error < 0) {
+                next(errorObj); // Redirigir a error.ejs
+            }
+            else {
+                // TODO: Mostrar error por pantalla
+                response.end(errorObj.message);
+            }
         }
         else {
             ASDes.getCommentsByDestination(destination.id, (error, comments) => {
                 if (error) {
-                    next(error);
+                    let errorObj = errorHandler.generateError(error);
+                    if (error < 0) {
+                        next(errorObj); // Redirigir a error.ejs
+                    }
+                    else {
+                        // TODO: Mostrar error por pantalla
+                        response.end(errorObj.message);
+                    }
                 }
                 else {
                     response.status(200);
@@ -197,7 +247,14 @@ app.get("/destination/:id", userLogged, (request, response, next) => {
 app.post("/login", (request, response, next) => {
     ASUse.login(request.body.username, request.body.password, (error, user) => {
         if (error) {
-            next(error);
+            let errorObj = errorHandler.generateError(error);
+            if (error < 0) {
+                next(errorObj); // Redirigir a error.ejs
+            }
+            else {
+                // TODO: Mostrar error por pantalla
+                response.end(errorObj.message);
+            }
         }
         else {
             request.session.currentUser = user;
@@ -214,28 +271,73 @@ app.post("/logout", userLogged, (request, response, next) => {
     response.redirect("/login");
 });
 
-//book
+// Hacer una reserva
+app.post("/book", userLogged, (request, response, next) => {
 
-//comment*
+});
 
-//search*
+// Dejar un comentario
+app.post("/comment", userLogged, (request, response, next) => {
 
-//filter*
+});
 
-//sign_up
+// Realizar una búsqueda
+app.post("/search", userLogged, (request, response, next) => {
 
-//edit_profile*
+});
 
-//change_password*
+// Aplicar filtros
+app.post("/filter", userLogged, (request, response, next) => {
 
-//cancel
+});
 
+// Registro usuario
+app.post("/sign_up", (request, response, next) => {
+    let newUser = { name: request.body.name, 
+                    username: request.body.username, 
+                    email: request.body.email, 
+                    password: request.body.password,
+                    repeatPass: request.body.repeatPassword }
+    ASUse.signUp(newUser, (error, user) =>{
+        if (error) {
+            let errorObj = errorHandler.generateError(error);
+            if (error < 0) {
+                next(errorObj); // Redirigir a error.ejs
+            }
+            else {
+                // TODO: Mostrar error por pantalla
+                response.end(errorObj.message);
+            }
+        }
+        else {
+            request.session.currentUser = user;
+            response.status(200);
+            response.redirect("/inicio");
+        }
+    });
+});
+
+// Editar perfil
+app.post("/edit_profile", userLogged, (request, response, next) => {
+
+});
+
+// Cambiar contraseña
+app.post("/change_password", userLogged, (request, response, next) => {
+
+});
+
+// Cancelar reserva
+app.post("/cancel", (request, response, next) => {
+
+});
 
 // --- Middlewares de error ---
 // Error 404
 app.use((request, response, next) => {
-    response.status(errorTypes.error404.code);
-    response.render("error", { error: errorTypes.error404 });
+    let error = errorHandler.generateError(-2);
+    response.status(error.code);
+    response.render("error", { error: error });
 });
 
 // General

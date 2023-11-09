@@ -47,13 +47,9 @@ class ASDestinations {
     }
 
     // Calcular parámetros
-    /*      - maxDays
-    *       - maxNPeople
-    *       - minPrice
-    *       - maxPrice
-    */
     getParams(destinations, callback) {
         let maxDays, maxCapacity, minPrice, maxPrice;
+        // Calcular máximos y mínimos
         destinations.forEach(dest => {
             if (!maxDays || dest.days > maxDays) {
                 maxDays = dest.days;
@@ -69,6 +65,7 @@ class ASDestinations {
             }
         });
 
+        // Resultado
         let params = { 
             maxDays: maxDays,
             maxCapacity: maxCapacity,
@@ -86,24 +83,17 @@ class ASDestinations {
                 callback(error);
             }
             else {
-                // Si no existe
-                if (!dest) {
-                    callback(-1);
-                }
-                // EOC
-                else {
-                    this.daoDes.readCommentsByDestination(dest.id, (error, comments) => {
-                        if (error) {
-                            callback(error);
-                        }
-                        else {
-                            comments.forEach(com => {
-                                com.ratePic = "rate-" + ASDestinations.rateCalculator(com.rate);
-                            });
-                            callback(null, comments);
-                        }
-                    });
-                }
+                this.daoDes.readCommentsByDestination(dest.id, (error, comments) => {
+                    if (error) {
+                        callback(error);
+                    }
+                    else {
+                        comments.forEach(com => {
+                            com.ratePic = "rate-" + ASDestinations.rateCalculator(com.rate);
+                        });
+                        callback(null, comments);
+                    }
+                });
             }
         });
     }

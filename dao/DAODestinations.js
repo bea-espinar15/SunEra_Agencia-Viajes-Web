@@ -14,21 +14,21 @@ class DAODestinations {
     read(idDest, callback) {
         this.pool.getConnection((error, connection) => {
             if (error) {
-                callback(error);
+                callback(-1);
             }
             else {
                 let querySQL = "SELECT * FROM destino WHERE id = ?";
                 connection.query(querySQL, [idDest], (error, rows) => {
                     connection.release();
                     if (error) {
-                        callback(error);
+                        callback(-1);
                     }
                     else {
-                        // No existe
+                        // No existe el destino
                         if (rows.length === 0) {
-                            callback(-1)
+                            callback(-3)
                         }
-                        // Error en la BBDD
+                        // Error en la BBDD, IDs duplicados
                         else if (rows.length > 1) {
                             callback(-1);
                         }
@@ -56,14 +56,14 @@ class DAODestinations {
     readImagesByDestination(idDest, callback) {
         this.pool.getConnection((error, connection) => {
             if (error) {
-                callback(error);
+                callback(-1);
             }
             else {
                 let querySQL = "SELECT * FROM imagen WHERE id_destino = ? ORDER BY id ASC";
                 connection.query(querySQL, [idDest], (error, rows) => {
                     connection.release();
                     if (error) {
-                        callback(error);
+                        callback(-1);
                     }
                     else {
                         let pictures = new Array();
@@ -82,7 +82,7 @@ class DAODestinations {
     readAll(callback) {
         this.pool.getConnection((error, connection) => {
             if (error) {
-                callback(error);
+                callback(-1);
             }
             else {
                 let querySQL = "SELECT * FROM destino JOIN (SELECT id_destino, MIN(id), img FROM Imagen GROUP BY id_destino)" + 
@@ -90,7 +90,7 @@ class DAODestinations {
                 connection.query(querySQL, (error, rows) => {
                     connection.release();
                     if (error) {
-                        callback(error);
+                        callback(-1);
                     }
                     else {
                         let destinations = new Array();
@@ -120,14 +120,14 @@ class DAODestinations {
     readCommentsByDestination(idDest, callback) {
         this.pool.getConnection((error, connection) => {
             if (error) {
-                callback(error);
+                callback(-1);
             }
             else {
                 let querySQL = "SELECT reseña.*, usuario.nombre_usuario AS username FROM reseña JOIN usuario ON reseña.id_usuario = usuario.id WHERE id_destino = ? ORDER BY fecha DESC";
                 connection.query(querySQL, [idDest], (error, rows) => {
                     connection.release();
                     if (error) {
-                        callback(error);
+                        callback(-1);
                     }
                     else {
                         let comments = new Array();
