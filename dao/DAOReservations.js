@@ -20,7 +20,8 @@ class DAOReservations {
                 let querySQLdest =  "SELECT * FROM destino JOIN (SELECT id_destino, MIN(id), img FROM Imagen GROUP BY id_destino)" + 
                                     "AS subquery2 ON destino.id = subquery2.id_destino ORDER BY valoración_media DESC";
                 let querySQL = "SELECT reserva.*, subquery.id, subquery.nombre, subquery.país, subquery.img FROM reserva JOIN (" + querySQLdest +
-                                ") AS subquery ON reserva.id_destino = destino.id WHERE id_usuario = ? ORDER BY fecha_ini DESC";
+                                ") AS subquery ON reserva.id_destino = subquery.id_destino WHERE id_usuario = ? ORDER BY fecha_ini DESC";
+
                 connection.query(querySQL, [idUser], (error, rows) => {
                     connection.release();
                     if (error) {
@@ -37,12 +38,14 @@ class DAOReservations {
                                 totalPrice: row.precio_total ,
                                 nPeople: row.n_personas,
                                 // Info del destino:
-                                name: row.subquery.nombre,
-                                country: row.subquery.país,
-                                idDest: row.subquery.id,
-                                pic: row.subquery.img
+                                idDest: row.id_destino,
+                                name: row.nombre,
+                                country: row.país,                                
+                                pic: row.img
                             }
+                            reservations.push(res);
                         });
+                        callback(null, reservations);
                     }
                 });
             }

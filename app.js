@@ -28,6 +28,9 @@ const app = express();
 app.set("view engine", "ejs"); // Configurar EJS como motor de plantillas
 app.set("views", path.join(__dirname, "views")); // Definir el directorio de plantillas
 
+// --- BodyParser (Express) ---
+app.use(express.urlencoded({extended: true}));
+
 // --- Static ---
 app.use(express.static(path.join(__dirname, "public"))); // Gestionar ficheros estáticos con static
 
@@ -83,12 +86,17 @@ app.locals.faqApp = [
 
 // --- Middlewares ---
 function userLogged(request, response, next) {
-    
+    if (request.session.currentUser) {
+        next();
+    }
+    else {
+        response.redirect("/login");
+    }
 };
 
 // --- Peticiones GET ---
-// Index [!] Middleware login
-app.get(["/", "/inicio"], (request, response, next) => {
+// Index
+app.get(["/", "/inicio"], userLogged, (request, response, next) => {
     ASDes.getAllDestinations((error, destinations) => {
         if (error) {
             next(error);
@@ -119,8 +127,8 @@ app.get("/sign_up", (request, response, next) => {
     response.render("sign_up");
 });
 
-// Trending [!] Middleware login
-app.get("/tendencias", (request, response, next) => {
+// Trending
+app.get("/tendencias", userLogged, (request, response, next) => {
     ASDes.getAllDestinations((error, destinations) => {
         if (error) {
             next(error);
@@ -132,20 +140,20 @@ app.get("/tendencias", (request, response, next) => {
     });
 });
 
-// About Us [!] Middleware login
-app.get("/quienes_somos", (request, response, next) => {
+// About Us
+app.get("/quienes_somos", userLogged, (request, response, next) => {
     response.status(200);
     response.render("about_us");
 });
 
-// Contact [!] Middleware login
-app.get("/contacto", (request, response, next) => {
+// Contact
+app.get("/contacto", userLogged, (request, response, next) => {
     response.status(200);
     response.render("contact");
 });
 
-// User [!] Middleware login y "es tu usuario"
-app.get("/perfil", (request, response, next) => {
+// User [!] Middleware "es tu usuario"
+app.get("/perfil", userLogged, (request, response, next) => {
     ASUse.getUser(request.session.currentUser.id, (error, user) => {
         if (error) {
             next(error);
@@ -164,8 +172,8 @@ app.get("/perfil", (request, response, next) => {
     })
 });
 
-// Destination [!] Middleware login
-app.get("/destination/:id", (request, response, next) => {
+// Destination
+app.get("/destination/:id", userLogged, (request, response, next) => {
     ASDes.getDestination(request.params.id, (error, destination) => {
         if (error) {
             next(error);
@@ -177,7 +185,7 @@ app.get("/destination/:id", (request, response, next) => {
                 }
                 else {
                     response.status(200);
-                    response.render("destination", { dest: destination, comments: comments, user: { username: "BLABLA" }});
+                    response.render("destination", { dest: destination, comments: comments, user: { username: request.session.currentUser.username }});
                 }
             })
         }
@@ -185,7 +193,43 @@ app.get("/destination/:id", (request, response, next) => {
 });
 
 // --- Peticiones POST ---
-// TODO
+// Inicio de sesión
+app.post("/login", (request, response, next) => {
+    ASUse.login(request.body.username, request.body.password, (error, user) => {
+        if (error) {
+            next(error);
+        }
+        else {
+            request.session.currentUser = user;
+            response.status(200);
+            response.redirect("/inicio");
+        }
+    });
+});
+
+// Cierre de sesión
+app.post("/logout", userLogged, (request, response, next) => {
+    delete(request.session.currentUser);
+    response.status(200);
+    response.redirect("/login");
+});
+
+//book
+
+//comment*
+
+//search*
+
+//filter*
+
+//sign_up
+
+//edit_profile*
+
+//change_password*
+
+//cancel
+
 
 // --- Middlewares de error ---
 // Error 404

@@ -21,6 +21,24 @@ class ASUsers {
             }
         });
     }
+    
+    // Inicio de sesión
+    login(username, password, callback) {
+        this.daoUse.readByUsername(username, (error, user) => {
+            if (error) {
+                callback(error);
+            }
+            else {
+                if (user.password !== password) {
+                    callback(-1);
+                }
+                else {
+                    delete (user.password);
+                    callback(null, user);
+                }
+            }
+        });
+    }
 }
 
 module.exports = ASUsers;

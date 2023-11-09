@@ -83,6 +83,7 @@ INSERT INTO usuario (nombre, correo, nombre_usuario, contraseña) VALUES
 ('Usuario3', 'usuario3@email.com', 'user3', 'contraseña3'),
 ('Usuario4', 'usuario4@email.com', 'user4', 'contraseña4'),
 ('Usuario5', 'usuario5@email.com', 'user5', 'contraseña5');
+('Usuario6', 'usuario6@email.com', 'a', 'a');
 
 -- DESTINOS
 INSERT INTO destino (nombre, descripción, precio, aforo, valoración_media, país, días) VALUES
@@ -153,10 +154,10 @@ INSERT INTO imagen (img, id_destino) VALUES
 
 -- RESERVAS
 INSERT INTO reserva (activo, fecha_ini, fecha_fin, precio_total, n_personas, id_usuario, id_destino) VALUES
-(1, '2023-12-01', '2023-12-10', 2500.00, 2, 1, 1),
-(1, '2023-11-15', '2023-11-22', 3500.00, 3, 1, 5),
-(0, '2024-01-05', '2024-01-15', 4200.00, 4, 1, 7),
-(1, '2023-10-01', '2023-10-08', 1800.00, 2, 1, 3),
-(0, '2023-12-10', '2023-12-20', 2800.00, 3, 1, 6);
+(1, '2023-12-01', '2023-12-10', 2500.00, 2, 6, 1),
+(1, '2023-11-15', '2023-11-22', 3500.00, 3, 6, 5),
+(0, '2024-01-05', '2024-01-15', 4200.00, 4, 6, 7),
+(1, '2023-10-01', '2023-10-08', 1800.00, 2, 6, 3),
+(0, '2023-12-10', '2023-12-20', 2800.00, 3, 6, 6);
 
 -- RESEÑAS

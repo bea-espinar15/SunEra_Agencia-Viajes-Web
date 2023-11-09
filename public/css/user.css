@@ -69,6 +69,10 @@
 }
 
 .cancel-button {
+    font-family: sans-serif;
+    border: none;
+    color: white;
+    height: 2.5em;
     margin-left: auto;
     width: 12em !important;
     background-color: #922c2c;
@@ -93,7 +97,12 @@
 }
 
 .comment-button {
+    font-family: sans-serif;
+    border: none;
+    background-color: #435724;
+    color: white;
     width: 12em !important;
+    height: 2.5em;
 }
 
 /* ---------- RESPONSIVE ---------- */

@@ -75,7 +75,6 @@ class ASDestinations {
             minPrice: minPrice,
             maxPrice: maxPrice
         }
-        console.log(params);
         callback(null, params);
     }
 

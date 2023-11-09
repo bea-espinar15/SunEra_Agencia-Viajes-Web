@@ -26,11 +26,11 @@ class DAODestinations {
                     else {
                         // No existe
                         if (rows.length === 0) {
-                            callback(error)
+                            callback(-1)
                         }
                         // Error en la BBDD
                         else if (rows.length > 1) {
-                            callback(error);
+                            callback(-1);
                         }
                         else {
                             // Construir destino
