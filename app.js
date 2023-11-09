@@ -14,9 +14,9 @@ const morgan = require("morgan");
 // Fichero
 const mySQLconfig = require("./config");
 const errorTypes = require("./errorTypes");
-const ASDestinos = require("./as/ASDestinos");
-const ASReservas = require("./as/ASReservas");
-const ASUsuarios = require("./as/ASUsuarios");
+const ASDestinations = require("./as/ASDestinations");
+const ASReservations = require("./as/ASReservations");
+const ASUsers = require("./as/ASUsers");
 
 // --- Crear aplicación Express ---
 const app = express();
@@ -50,9 +50,9 @@ const pool = mySQL.createPool(mySQLconfig.config);
 
 // --- AS ---
 // Crear instancias de los AS
-const ASDes = new ASDestinos(pool);
-const ASRes = new ASReservas(pool);
-const ASUsu = new ASUsuarios(pool);
+const ASDes = new ASDestinations(pool);
+const ASRes = new ASReservations(pool);
+const ASUse = new ASUsers(pool);
 
 // --- VARIABLES GLOBALES de plantilla ---
 app.locals.tlfApp = "+34 XXX XXX XXX" // Teléfono
@@ -78,7 +78,85 @@ app.locals.faqApp = [
 // TODO
 
 // --- Peticiones GET ---
-// TODO
+// Index [!] Middleware login
+app.get(["/", "/inicio"], (request, response, next) => {
+    ASDes.getDestinations((error, destinations) => {
+        if (error) {
+            next(error);
+        }
+        else {
+            ASDes.getParams(destinations, (error, params) => {
+                if (error) {
+                    next(error);
+                }
+                else {
+                    response.status(200);
+                    response.render("index", { destinations: destinations, params: params, filters: [] });
+                }
+            });
+        }
+    });
+});
+
+// Login
+app.get("/login", (request, response) => {
+    response.status(200);
+    response.render("login");
+});
+
+// SignUp
+app.get("/sign_up", (request, response) => {
+    response.status(200);
+    response.render("sign_up");
+});
+
+// Trending [!] Middleware login
+app.get("/tendencias", (request, response, next) => {
+    ASDes.getDestinations((error, destinations) => {
+        if (error) {
+            next(error);
+        }
+        else {
+            response.status(200);
+            response.render("trending", { destinations: destinations });
+        }
+    });
+});
+
+// About Us [!] Middleware login
+app.get("/quienes_somos", (request, response) => {
+    response.status(200);
+    response.render("about_us");
+});
+
+// Contact [!] Middleware login
+app.get("/contacto", (request, response) => {
+    response.status(200);
+    response.render("contact");
+});
+
+// User [!] Middleware login y "es tu usuario"
+app.get("/perfil", (request, response) => {
+    ASUse.getUser(request.session.currentUser.id, (error, user) => {
+        if (error) {
+            next(error);
+        }
+        else {
+            ASRes.getReservationsByUser(user.id, (error, currentReservations, oldReservations) => {
+                if (error) {
+                    next(error);
+                }
+                else {
+                    response.status(200);
+                    response.render("user", { user: user, currentReservations: currentReservations, oldReservations: oldReservations });
+                }
+            })
+        }
+    })
+});
+
+// Destination [!] Middleware login
+
 
 // --- Peticiones POST ---
 // TODO

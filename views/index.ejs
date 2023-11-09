@@ -48,17 +48,17 @@
                 <!-- Días -->
                 <div class="d-resp filter d-flex flex-column">
                     <label for="days">¿Cuánto tiempo quieres irte?</label>
-                    <input id="days" type="number" name="days" value="1" min="1" max="<%= maxDays %>">
+                    <input id="days" type="number" name="days" value="1" min="1" max="<%= params.maxDays %>">
                 </div>
                 <!-- Nº personas -->
                 <div class="d-resp filter d-flex flex-column">
                     <label for="n-people">Viajeros</label>
-                    <input id="n-people" type="number" name="n-people" value="1" min="1" max="<%= maxNPeople %>">
+                    <input id="n-people" type="number" name="n-people" value="1" min="1" max="<%= params.maxNPeople %>">
                 </div>
                 <!-- Precio/noche -->
                 <div class="filter d-flex flex-column">
                     <label for="price">Precio (€/persona)</label>
-                    <input id="price" type="range" name="price" value="<%= (maxPrice + minPrice) / 2 %>" min="<%= minPrice %>" max="<%= maxPrice %>">
+                    <input id="price" type="range" name="price" value="<%= (params.maxPrice + params.minPrice) / 2 %>" min="<%= params.minPrice %>" max="<%= params.maxPrice %>">
                 </div>
                 <!-- Valoración -->
                 <div class="d-resp filter d-flex flex-column">
