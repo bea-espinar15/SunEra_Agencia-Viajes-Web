@@ -101,34 +101,34 @@ class ASDestinations {
     // --- Métodos estáticos ---
     static rateCalculator(num) {
         let rate;
-        if (num < 0.25){
+        if (num < 0.2){
             rate = "0";
         }
-        else if (num < 0.75){
+        else if (num >= 0.2 && num < 0.7){
             rate = "0_5";
         }
-        else if (num < 1.25){
+        else if (num >= 0.7 && num < 1.2){
             rate = "1";
         }
-        else if (num < 1.75){
+        else if (num >= 1.2 && num < 1.7){
             rate = "1_5";
         }
-        else if (num < 2.25){
+        else if (num >= 1.7 && num < 2.2){
             rate = "2";
         }
-        else if (num < 2.75){
+        else if (num >= 2.2 && num < 2.7){
             rate = "2_5";
         }
-        else if (num < 3.25){
+        else if (num >= 2.7 && num < 3.2){
             rate = "3";
         }
-        else if (num < 3.75){
+        else if (num >= 3.2 && num < 3.7){
             rate = "3_5";
         }
-        else if (num < 4.25){
+        else if (num >= 3.7 && num < 4.2){
             rate = "4";
         }
-        else if (num < 4.75){
+        else if (num >= 4.2 && num < 4.7){
             rate = "4_5";
         }
         else {
