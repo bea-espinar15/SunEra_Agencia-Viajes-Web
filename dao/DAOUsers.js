@@ -24,12 +24,7 @@ class DAOUsers {
                         callback(-1);
                     }
                     else {
-                        // Construir nuevo usuario
-                        let user = {
-                            id: rows.insertId,
-                            username: rows.nombre_usuario
-                        }
-                        callback(null, user);
+                        callback(null);
                     }
                 });
             }
@@ -104,6 +99,27 @@ class DAOUsers {
                             }
                             callback(null, user);
                         }
+                    }
+                });
+            }
+        });
+    }
+
+    // Actualizar usuario
+    update(newUser, callback) {
+        this.pool.getConnection((error, connection) => {
+            if (error) {
+                callback(-1);
+            }
+            else {
+                let querySQL = "UPDATE usuario SET nombre = ?, correo = ?, nombre_usuario = ?, contraseña = ? WHERE id = ?";
+                connection.query(querySQL, [newUser.name, newUser.email, newUser.username, newUser.password, newUser.id], (error) => {
+                    connection.release();
+                    if (error) {
+                        callback(-1);
+                    }
+                    else {
+                        callback(null);
                     }
                 });
             }

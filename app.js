@@ -170,17 +170,11 @@ app.get("/perfil", userLogged, (request, response, next) => {
                     next(errorObj); // Redirigir a error.ejs
                 }
                 else {
-                    // Si hay que mostrar un modal
-                    if (request.session.msg) {
-                        let msg = request.session.msg; 
-                        delete(request.session.msg);                     
-                        response.status(msg.code);
-                        response.render("user", { user: user, currentReservations: currentReservations, oldReservations: oldReservations, msg: msg });
-                    }
-                    else {
-                        response.status(200);
-                        response.render("user", { user: user, currentReservations: currentReservations, oldReservations: oldReservations, msg: undefined });
-                    }
+                    request.session.currentUser = user;
+                    request.session.currentReservations = currentReservations;
+                    request.session.oldReservations = oldReservations;
+                    response.status(200);
+                    response.render("user", { user: user, currentReservations: currentReservations, oldReservations: oldReservations, msg: undefined });
                 }
             })
         }
@@ -200,19 +194,11 @@ app.get("/destino/:id", userLogged, (request, response, next) => {
                     let errorObj = responseHandler.generateRes(error);
                     next(errorObj); // Redirigir a error.ejs
                 }
-                else {
-                    // Si hay que mostrar un modal
-                    if (request.session.msg) {
-                        let msg = request.session.msg; 
-                        delete(request.session.msg);                     
-                        response.status(msg.code);
-                        response.render("destination", { dest: destination, comments: comments, user: { username: request.session.currentUser.username }, msg: msg });
-                    }
-                    else {
-                        response.status(200);
-                        response.render("destination", { dest: destination, comments: comments, user: { username: request.session.currentUser.username }, msg: undefined});
-                    }
-                    
+                else {            
+                    request.session.destination = destination;
+                    request.session.comments = comments;       
+                    response.status(200);
+                    response.render("destination", { dest: destination, comments: comments, user: { username: request.session.currentUser.username }, msg: undefined});
                 }
             })
         }
@@ -228,7 +214,7 @@ app.post("/sign_up", (request, response, next) => {
                     password: request.body.password,
                     repeatPass: request.body.repeatPassword };
     
-    ASUse.signUp(newUser, (error, user) =>{
+    ASUse.signUp(newUser, (error) =>{
         if (error) {
             let errorObj = responseHandler.generateRes(error);
             if (error < 0) {
@@ -273,18 +259,23 @@ app.post("/login", (request, response, next) => {
 
 // Cierre de sesión
 app.post("/logout", userLogged, (request, response, next) => {
+    // Eliminar variables de sesión
     delete(request.session.currentUser);
+    delete(request.session.currentReservations);
+    delete(request.session.oldReservations);
+    delete(request.session.destination);
+    delete(request.session.comments);
     response.status(200);
     response.redirect("/login");
 });
 
-// Realizar una búsqueda
+// Realizar una búsqueda - TODO
 app.post("/search", userLogged, (request, response, next) => {
     let errorObj = responseHandler.generateRes(-5);
     next(errorObj);
 });
 
-// Aplicar filtros
+// Aplicar filtros - TODO
 app.post("/filter", userLogged, (request, response, next) => {
     let errorObj = responseHandler.generateRes(-5);
     next(errorObj);
@@ -305,8 +296,11 @@ app.post("/book", userLogged, (request, response, next) => {
                 next(errorObj); // Redirigir a error.ejs
             }
             else {
-                request.session.msg = errorObj;
-                response.redirect(`/destino/${params.idDest}`);
+                response.render("destination", { 
+                    dest: request.session.destination, 
+                    comments: request.session.comments, 
+                    user: { username: request.session.currentUser.username }, 
+                    msg: errorObj});
             }
         }
         else {
@@ -316,51 +310,131 @@ app.post("/book", userLogged, (request, response, next) => {
                 message: `Se ha completado la reserva con éxito, por un total de ${totalPrice}€`
             }
             let msgObj = responseHandler.generateRes(msg.cod, msg.title, msg.message);
-            request.session.msg = msgObj;
-            response.redirect(`/destino/${params.idDest}`);
+            response.render("destination", { 
+                dest: request.session.destination, 
+                comments: request.session.comments, 
+                user: { username: request.session.currentUser.username }, 
+                msg: msgObj});
         }
     });
 });
 
 // Editar perfil
 app.post("/edit_profile", userLogged, (request, response, next) => {
-    let errorObj = responseHandler.generateRes(-5);
-    next(errorObj);
-});
+    let newUser = {
+        id: request.session.currentUser.id,
+        name: request.body.name,
+        username: request.body.username,
+        email: request.body.email
+    };
 
-// Cambiar contraseña
-app.post("/change_password", userLogged, (request, response, next) => {
-    let errorObj = responseHandler.generateRes(-5);
-    next(errorObj);
-});
-
-// Cancelar reserva
-app.post("/cancel", (request, response, next) => {
-    ASRes.cancel(request.body.idRes, request.session.currentUser.id, (error) =>{
+    ASUse.updateUser(newUser, (error, user) => {
         if (error) {
             let errorObj = responseHandler.generateRes(error);
             if (error < 0) {
                 next(errorObj); // Redirigir a error.ejs
             }
             else {
-                request.session.msg = errorObj;
-                response.redirect("/perfil");
+                response.render("user", { 
+                    user: request.session.currentUser, 
+                    currentReservations: request.session.currentReservations, 
+                    oldReservations: request.session.oldReservations, 
+                    msg: errorObj });
             }
         }
         else {
-            let msg = {
+            let res = {
                 cod: 0,
-                title: "Reserva cancelada",
-                message: `Se ha cancelado la reserva correctamente`
+                title: "Perfil actualizado",
+                message: "Tus datos han sido actualizados con éxito :)"
             }
-            let msgObj = responseHandler.generateRes(msg.cod, msg.title, msg.message);
-            request.session.msg = msgObj;
-            response.redirect("/perfil");
+            let msgObj = responseHandler.generateRes(res.cod, res.title, res.message);
+            response.status(200);
+            request.session.currentUser = user;
+            response.render("user", { 
+                user: user, 
+                currentReservations: request.session.currentReservations, 
+                oldReservations: request.session.oldReservations, 
+                msg: msgObj });
         }
     });
 });
 
-// Dejar un comentario
+// Cambiar contraseña - TODO
+app.post("/change_password", userLogged, (request, response, next) => {
+    let passwords = {
+        id: request.session.currentUser.id,
+        oldPass: request.body.oldPassword,
+        newPass: request.body.newPassword
+    };
+
+    ASUse.changePassword(passwords, (error, user) => {
+        if (error) {
+            let errorObj = responseHandler.generateRes(error);
+            if (error < 0) {
+                next(errorObj); // Redirigir a error.ejs
+            }
+            else {
+                response.render("user", { 
+                    user: request.session.currentUser, 
+                    currentReservations: request.session.currentReservations, 
+                    oldReservations: request.session.oldReservations, 
+                    msg: errorObj });
+            }
+        }
+        else {
+            let res = {
+                cod: 0,
+                title: "Contraseña modificada",
+                message: "Tu contraseña ha sido modificada con éxito :)"
+            }
+            let msgObj = responseHandler.generateRes(res.cod, res.title, res.message);
+            response.status(200);
+            request.session.currentUser = user;
+            response.render("user", { 
+                user: user, 
+                currentReservations: request.session.currentReservations, 
+                oldReservations: request.session.oldReservations, 
+                msg: msgObj });
+        }
+    });
+});
+
+// Cancelar reserva
+app.post("/cancel", (request, response, next) => {
+    ASRes.cancel(request.body.idRes, request.session.currentUser.id, (error, idRes) =>{
+        if (error) {
+            let errorObj = responseHandler.generateRes(error);
+            if (error < 0) {
+                next(errorObj); // Redirigir a error.ejs
+            }
+            else {
+                lresponse.render("user", { 
+                    user: request.session.currentUser, 
+                    currentReservations: request.session.currentReservations, 
+                    oldReservations: request.session.oldReservations, 
+                    msg: errorObj });
+            }
+        }
+        else {
+            let res = {
+                cod: 0,
+                title: "Reserva cancelada",
+                message: `Se ha cancelado la reserva correctamente`
+            }
+            let msgObj = responseHandler.generateRes(res.cod, res.title, res.message);
+            response.status(200);
+            request.session.currentReservations = request.session.currentReservations.filter((r) => r.id != idRes);
+            response.render("user", { 
+                user: request.session.currentUser, 
+                currentReservations: request.session.currentReservations, 
+                oldReservations: request.session.oldReservations, 
+                msg: msgObj });
+        }
+    });
+});
+
+// Dejar un comentario - TODO
 app.post("/comment", userLogged, (request, response, next) => {
     let errorObj = responseHandler.generateRes(-5);
     next(errorObj);

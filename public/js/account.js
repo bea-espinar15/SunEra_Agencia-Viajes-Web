@@ -29,27 +29,52 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Campos no vacíos
             if (name === "" || username === "" || email === "" || password === "" || repeatPass === "") {
-                alert("¡ATENCIÓN! Asegúrate de haber completado todos los campos para poder completar el registro.");
+                Swal.fire({
+                    icon: "error",
+                    title: "¡Atención!",
+                    text: "Asegúrate de haber completado todos los campos para poder completar el registro.",
+                    confirmButtonClass: "sweet-alert-button"
+                });
                 return false;
             }
             // Username válido
             else if (!usernameRegex.test(username)) {
-                alert("¡ATENCIÓN! El nombre de usuario no puede contener espacios en blanco ni empezar por un número, y debe tener entre 4 y 16 caracteres.");
+                Swal.fire({
+                    icon: "error",
+                    title: "¡Atención!",
+                    text: "El nombre de usuario no puede contener espacios en blanco ni empezar por un número, y debe tener entre 4 y 16 caracteres.",
+                    confirmButtonClass: "sweet-alert-button"
+                });
                 return false;
             }
             // Correo válido
             else if (!emailRegex.test(email)) {
-                alert("¡ATENCIÓN! Por favor, introduce una dirección válida de correo electrónico.");
+                Swal.fire({
+                    icon: "error",
+                    title: "¡Atención!",
+                    text: "Por favor, introduce una dirección válida de correo electrónico.",
+                    confirmButtonClass: "sweet-alert-button"
+                });
                 return false;
             }
             // Contraseñas coinciden
-            else if (user.password !== repeatPass) {
-                alert("¡ATENCIÓN! Las contraseñas no coinciden.");
+            else if (password !== repeatPass) {
+                Swal.fire({
+                    icon: "error",
+                    title: "¡Atención!",
+                    text: "Las contraseñas no coinciden.",
+                    confirmButtonClass: "sweet-alert-button"
+                });
                 return false;
             }
             // Contraseña válida:
             else if (!passRegex.test(password)) {
-                alert("¡ATENCIÓN! La contraseña debe ser de, al menos, 8 caracteres, y contener al menos 1 letra y 1 número.");
+                Swal.fire({
+                    icon: "error",
+                    title: "¡Atención!",
+                    text: "La contraseña debe ser de, al menos, 8 caracteres, y contener al menos 1 letra y 1 número.",
+                    confirmButtonClass: "sweet-alert-button"
+                });
                 return false;
             }
             else {
@@ -77,7 +102,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Campos no vacíos
             if (username === "" || password === "") {
-                alert("¡ATENCIÓN! Asegúrate de haber completado todos los campos para iniciar sesión.");
+                Swal.fire({
+                    icon: "error",
+                    title: "¡Atención!",
+                    text: "Asegúrate de haber completado todos los campos para iniciar sesión.",
+                    confirmButtonClass: "sweet-alert-button"
+                });
                 return false;
             }
             else {

@@ -40,21 +40,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Campos no vacíos
         if (!dateStart) {
-            alert("¡ATENCIÓN! Asegúrate de seleccionar qué día te irás.");
+            Swal.fire({
+                icon: "error",
+                title: "¡Atención!",
+                text: "Asegúrate de seleccionar qué día te irás.",
+                confirmButtonClass: "sweet-alert-button"
+            });
             return false;
         }
         else if (!nPeople) {
-            alert("¡ATENCIÓN! Asegúrate de introducir cuántos vais a viajar.");
+            Swal.fire({
+                icon: "error",
+                title: "¡Atención!",
+                text: "Asegúrate de introducir cuántos vais a viajar.",
+                confirmButtonClass: "sweet-alert-button"
+            });
             return false;
         }
         // Fecha tiene que ser posterior a la actual
         else if (new Date(dateStart) < new Date()) {
-            alert("¡ATENCIÓN! La reserva debe ser de hoy en adelante.");
+            Swal.fire({
+                icon: "error",
+                title: "¡Atención!",
+                text: "La reserva debe ser de hoy en adelante.",
+                confirmButtonClass: "sweet-alert-button"
+            });
             return false;
         }
         // Número de viajeros tiene que estar entre 1 y el máximo
         else if (nPeople < minPeople || nPeople > maxPeople) {
-            alert(`¡ATENCIÓN! Sólo podéis viajar entre ${minPeople} y ${maxPeople} personas.`);
+            Swal.fire({
+                icon: "error",
+                title: "¡Atención!",
+                text: `Sólo podéis viajar entre ${minPeople} y ${maxPeople} personas.`,
+                confirmButtonClass: "sweet-alert-button"
+            });
             return false;
         }
         else {

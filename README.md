@@ -81,11 +81,11 @@ Para esta segunda entrega de la práctica se han implementado las siguientes fun
 - Logout : El usuario puede cerrar su sesión y volver a la página de login
 - Book : El usuario puede hacer una reserva de un destino, y esta se mostrará en su perfil con las demás reservas
 - Cancel : El usuario puede cancelar una reserva que aún no haya sucedido
+- EditProfile : El usuario puede modificar sus datos personales
 
 Esto implica que han quedado sin implementar las siguientes funcionalidades:
 - Search : Aún no se puede buscar un destino en la página de Inicio
 - Filter : Aún no funcionan los filtros de la página de Inicio
-- EditProfile : Aún no puede modificar sus datos personales un usuario
 - ChangePass : Aún no puede modificar su contraseña un usuario
 - Comment : Aún no puede hacer una reseña en un destino un usuario
 - *Foto de perfil : Aún no puede ponerse (ni cambiar su) foto de perfil el usuario

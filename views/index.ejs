@@ -52,22 +52,22 @@
                 </div>
                 <!-- Días -->
                 <div class="d-resp filter d-flex flex-column">
-                    <label for="days">¿Cuánto tiempo quieres irte?</label>
+                    <label class="me-2" for="days">¿Cuántos días quieres irte? (1-<%= params.maxDays %>)</label>
                     <input id="days" type="number" name="days" value="1" min="1" max="<%= params.maxDays %>">
                 </div>
                 <!-- Nº personas -->
                 <div class="d-resp filter d-flex flex-column">
-                    <label for="n-people">Viajeros</label>
+                    <label for="n-people">Viajeros (1-<%= params.maxCapacity %>)</label>
                     <input id="n-people" type="number" name="n-people" value="1" min="1" max="<%= params.maxCapacity %>">
                 </div>
                 <!-- Precio/noche -->
                 <div class="filter d-flex flex-column">
-                    <label for="price">Precio (€/persona)</label>
+                    <label for="price">Precio/persona (<%= params.minPrice %>€-<%= params.maxPrice %>€)</label>
                     <input id="price" type="range" name="price" value="<%= (params.maxPrice + params.minPrice) / 2 %>" min="<%= params.minPrice %>" max="<%= params.maxPrice %>">
                 </div>
                 <!-- Valoración -->
                 <div class="d-resp filter d-flex flex-column">
-                    <label for="rate">Valoración</label>
+                    <label for="rate">Valoración (1-5)</label>
                     <input id="rate" type="number" name="rate" value="0" min="0" max="5">
                 </div>
                 <!-- Submit -->

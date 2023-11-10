@@ -97,7 +97,7 @@
                                                     </div>
                                                     <!-- Viajeros -->
                                                     <div class="d-resp filter filter-res d-flex flex-column">
-                                                        <label for="n-people">¿Cuántos vais a ser?</label>
+                                                        <label for="n-people">¿Cuántos vais a ser? (1-<%= dest.capacity %>)</label>
                                                         <input id="n-people" type="number" name="nPeople" value="1" min="1" max="<%= dest.capacity %>">
                                                     </div>
                                                     <!-- Precio -->
@@ -141,7 +141,7 @@
                 <!-- [!] TODO -->
             </div>
             <!-- Comentarios -->
-            <div id="div-comment" class="rounded mt-4">
+            <div id="#div-comment" class="rounded mt-4">
                 <h2>Reseñas</h2>
                 <div class="row row-cols-1 row-cols-xl-2">
                     <!-- Enviar comentario -->

@@ -131,7 +131,7 @@ class ASReservations {
                             callback(error);
                         }
                         else {
-                            callback(null);
+                            callback(null, idRes);
                         }
                     });
                 }                

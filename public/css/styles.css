@@ -48,6 +48,18 @@ hr {
     color: #5e5e5e;
 }
 
+.sweet-alert-button {
+    font-family: sans-serif;
+    background-color: #435724 !important;
+    width: 5em;
+    height: 2.5em;
+    border-radius: 1em !important;
+}
+
+.sweet-alert-button:focus {
+    box-shadow: none;
+}
+
 /* ---------- BARRA DE NAVEGACIÓN ---------- */
 
 #nav-bar {

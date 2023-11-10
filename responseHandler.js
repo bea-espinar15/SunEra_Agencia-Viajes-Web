@@ -89,12 +89,17 @@ function generateRes(cod, title="", message ="") {
         case 11: {
             code = 400;
             title = "Campos vacíos";
-            message = "Asegúrate de haber completado todos los campos para poder completar el registro.";
+            message = "Asegúrate de haber completado todos los campos para poder tener tu perfil.";
         } break;
         case 12: {
             code = 400;
             title = "Nombre de usuario no válido";
             message = "El nombre de usuario no puede contener espacios en blanco ni empezar por un número, y debe tener entre 4 y 16 caracteres.";
+        } break;
+        case 13: {
+            code = 400;
+            title = "Contraseña igual";
+            message = "Las dos contraseñas que estás introduciendo son iguales.";
         } break;
         default: {
             code = 500;
