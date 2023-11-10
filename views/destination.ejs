@@ -69,7 +69,11 @@
                             <h2><%= dest.country %></h2>
                             <div class="d-flex">
                                 <img src="/img/rate/<%= dest.ratePic %>" alt="Valoración media" height="20">
-                                <p class="gray-text my-0 ms-2"><%= comments.length %> reseñas</p>
+                                <% if(comments.length === 1) { %>
+                                    <p class="gray-text my-0 ms-2"><%= comments.length %> reseña</p>
+                                <% } else { %>
+                                    <p class="gray-text my-0 ms-2"><%= comments.length %> reseñas</p>
+                                <% } %>
                             </div>
                             <p class="mt-5 mb-0"><strong>Capacidad:</strong> <%= dest.capacity %> personas</p>
                             <p class="mb-4"><strong>Duración:</strong> <%= dest.days %> días</p>
@@ -85,7 +89,7 @@
                                         </div>
                                         <div class="modal-body d-flex">
                                             <div class="col my-1 mx-3">
-                                                <form method="post" action="/book" id="reservation-form" class="d-flex flex-column">
+                                                <form id="formBook" method="post" action="/book" class="d-flex flex-column">
                                                     <!-- Fecha inicio -->
                                                     <div class="filter filter-res d-flex flex-column mb-3">
                                                         <label for="date-ini">¿Qué día te vas?</label>
@@ -119,7 +123,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="cancel-button rounded-pill" data-bs-dismiss="modal">Cancelar</button>
-                                            <button type="submit" class="book-button rounded-pill ms-3" form="reservation-form">Reservar</button>
+                                            <button type="submit" class="book-button rounded-pill ms-3" form="formBook">Reservar</button>
                                         </div>
                                     </div>
                                 </div>
