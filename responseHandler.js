@@ -105,6 +105,11 @@ function generateRes(cod, title="", message ="") {
             title = "Contraseña igual";
             message = "Las dos contraseñas que estás introduciendo son iguales.";
         } break;
+        case 14: {
+            code = 400;
+            title = "Datos no modificados";
+            message = "No se ha modificado ninguno de tus datos.";
+        } break;
         default: {
             code = 500;
             title = "Error desconocido";

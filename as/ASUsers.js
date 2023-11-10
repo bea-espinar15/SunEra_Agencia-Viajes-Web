@@ -96,44 +96,50 @@ class ASUsers {
                     callback(error);
                 }
                 else {
-                    newUser.password = user.password; // Su contraseña no cambia
-                    // Comprobar si el nuevo nombre de usuario está repetido
-                    if (newUser.username !== user.username) {
-                        this.daoUse.readByUsername(newUser.username, (error, repeatUser) => {
-                            if (error) {
-                                callback(error);
-                            }
-                            else {
-                                // Existe usuario con ese username
-                                if (repeatUser) {
-                                    callback(3);
+                    // Comprobar que algo ha cambiado
+                    if (newUser.name === user.name && newUser.username === user.username && newUser.email === user.email) {
+                        callback(14);
+                    }
+                    else {
+                        newUser.password = user.password; // Su contraseña no cambia
+                        // Comprobar si el nuevo nombre de usuario está repetido
+                        if (newUser.username !== user.username) {
+                            this.daoUse.readByUsername(newUser.username, (error, repeatUser) => {
+                                if (error) {
+                                    callback(error);
                                 }
                                 else {
-                                    // Actualizar usuario
-                                    this.daoUse.update(newUser, (error) => {
-                                        if (error) {
-                                            callback(error);
-                                        }
-                                        else {
-                                            callback(null, newUser);
-                                        }
-                                    });
+                                    // Existe usuario con ese username
+                                    if (repeatUser) {
+                                        callback(3);
+                                    }
+                                    else {
+                                        // Actualizar usuario
+                                        this.daoUse.update(newUser, (error) => {
+                                            if (error) {
+                                                callback(error);
+                                            }
+                                            else {
+                                                callback(null, newUser);
+                                            }
+                                        });
+                                    }
                                 }
-                            }
-                        });
-                    }
-                    // Si no ha cambiado el username, directamente actualizar (ahorramos llamada BBDD)
-                    else {
-                        // Actualizar usuario
-                        this.daoUse.update(newUser, (error) => {
-                            if (error) {
-                                callback(error);
-                            }
-                            else {
-                                callback(null, newUser);
-                            }
-                        });
-                    }
+                            });
+                        }
+                        // Si no ha cambiado el username, directamente actualizar (ahorramos llamada BBDD)
+                        else {
+                            // Actualizar usuario
+                            this.daoUse.update(newUser, (error) => {
+                                if (error) {
+                                    callback(error);
+                                }
+                                else {
+                                    callback(null, newUser);
+                                }
+                            });
+                        }
+                    }                    
                 }
             });
         }
