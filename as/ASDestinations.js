@@ -18,12 +18,13 @@ class ASDestinations {
             }
             else {
                 dest.ratePic = "rate-" + ASDestinations.rateCalculator(dest.rate);
+                // Obtener imágenes del destino
                 this.daoDes.readImagesByDestination(dest.id, (error, imgs) => {
                     if (error) {
                         callback(error);
                     }
                     else {
-                        dest.pictures = imgs;
+                        dest.pictures = imgs; // Añadir fotos al objeto destino
                         callback(null, dest);
                     }
                 });
@@ -38,6 +39,7 @@ class ASDestinations {
                 callback(error);
             }
             else {
+                // Construir la ruta (imagen valoración) de cada destino
                 destinations.forEach(dest => {
                     dest.ratePic = "rate-" + ASDestinations.rateCalculator(dest.rate);
                 });
@@ -46,7 +48,7 @@ class ASDestinations {
         });
     }
 
-    // Calcular parámetros
+    // Calcular parámetros máximos y mínimos (filtros Inicio)
     getParams(destinations, callback) {
         let maxDays, maxCapacity, minPrice, maxPrice;
         // Calcular máximos y mínimos
@@ -83,11 +85,13 @@ class ASDestinations {
                 callback(error);
             }
             else {
+                // Obtener sus reseñas
                 this.daoDes.readCommentsByDestination(dest.id, (error, comments) => {
                     if (error) {
                         callback(error);
                     }
                     else {
+                        // Construir la ruta (imagen valoración) de cada reseña
                         comments.forEach(com => {
                             com.ratePic = "rate-" + ASDestinations.rateCalculator(com.rate);
                         });
@@ -98,7 +102,8 @@ class ASDestinations {
         });
     }
 
-    // --- Métodos estáticos ---
+    // --- Métodos estáticos auxiliares ---
+    // Aproximar a .00 o .50 y construir ruta imagen
     static rateCalculator(num) {
         let rate;
         if (num < 0.2){

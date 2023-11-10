@@ -98,12 +98,14 @@ function userLogged(request, response, next) {
 // --- Peticiones GET ---
 // Index
 app.get(["/", "/inicio"], userLogged, (request, response, next) => {
+    // Obtener destinos
     ASDes.getAllDestinations((error, destinations) => {
         if (error) {
             let errorObj = responseHandler.generateRes(error);
             next(errorObj); // Redirigir a error.ejs
         }
         else {
+            // Obtener valores máximos y mínimos para los filtros
             ASDes.getParams(destinations, (error, params) => {
                 if (error) {
                     let errorObj = responseHandler.generateRes(error);
@@ -158,21 +160,24 @@ app.get("/contacto", userLogged, (request, response, next) => {
 
 // User
 app.get("/perfil", userLogged, (request, response, next) => {
+    // Obtener info del usuario
     ASUse.getUser(request.session.currentUser.id, (error, user) => {
         if (error) {
             let errorObj = responseHandler.generateRes(error);
             next(errorObj); // Redirigir a error.ejs
         }
         else {
+            // Obtener reservas del usuario
             ASRes.getReservationsByUser(user.id, (error, currentReservations, oldReservations) => {
                 if (error) {
                     let errorObj = responseHandler.generateRes(error);
                     next(errorObj); // Redirigir a error.ejs
                 }
                 else {
-                    request.session.currentUser = user;
+                    // Actualizamos las variables de sesión con la info actual del usuario
                     request.session.currentReservations = currentReservations;
                     request.session.oldReservations = oldReservations;
+                    // Renderizar
                     response.status(200);
                     response.render("user", { user: user, currentReservations: currentReservations, oldReservations: oldReservations, msg: undefined });
                 }
@@ -183,20 +188,24 @@ app.get("/perfil", userLogged, (request, response, next) => {
 
 // Destination
 app.get("/destino/:id", userLogged, (request, response, next) => {
+    // Obtener el destino
     ASDes.getDestination(request.params.id, (error, destination) => {
         if (error) {
             let errorObj = responseHandler.generateRes(error);
             next(errorObj); // Redirigir a error.ejs
         }
         else {
+            // Obtener las reseñas del destino
             ASDes.getCommentsByDestination(destination.id, (error, comments) => {
                 if (error) {
                     let errorObj = responseHandler.generateRes(error);
                     next(errorObj); // Redirigir a error.ejs
                 }
-                else {            
+                else {     
+                    // Actualizar la variable de sesión con la info del destino       
                     request.session.destination = destination;
-                    request.session.comments = comments;       
+                    request.session.comments = comments;
+                    // Renderizar   
                     response.status(200);
                     response.render("destination", { dest: destination, comments: comments, user: { username: request.session.currentUser.username }, msg: undefined});
                 }
@@ -208,6 +217,7 @@ app.get("/destino/:id", userLogged, (request, response, next) => {
 // --- Peticiones POST ---
 // Registro usuario
 app.post("/sign_up", (request, response, next) => {
+    // Coger parámetros de entrada
     let newUser = { name: request.body.name, 
                     username: request.body.username, 
                     email: request.body.email, 
@@ -225,11 +235,13 @@ app.post("/sign_up", (request, response, next) => {
             }
         }
         else {
+            // Crear mensaje de respuesta y llevarte al login
             let res = {
                 cod: 0,
                 title: "Registro completado",
                 message: "Tu cuenta ha sido creada con éxito! Ya puedes logearte, bienvenido :)"
             }
+
             let msgObj = responseHandler.generateRes(res.cod, res.title, res.message);
             response.status(200);
             response.render("login", { msg: msgObj });
@@ -269,13 +281,13 @@ app.post("/logout", userLogged, (request, response, next) => {
     response.redirect("/login");
 });
 
-// Realizar una búsqueda - TODO
+// Realizar una búsqueda - TODO (por ahora, 501)
 app.post("/search", userLogged, (request, response, next) => {
     let errorObj = responseHandler.generateRes(-5);
     next(errorObj);
 });
 
-// Aplicar filtros - TODO
+// Aplicar filtros - TODO (por ahora, 501)
 app.post("/filter", userLogged, (request, response, next) => {
     let errorObj = responseHandler.generateRes(-5);
     next(errorObj);
@@ -283,12 +295,14 @@ app.post("/filter", userLogged, (request, response, next) => {
 
 // Hacer una reserva
 app.post("/book", userLogged, (request, response, next) => {
+    // Obtener parámetros de entrada
     let params = {
         idUser: request.session.currentUser.id,
         date: new Date(request.body.dateIni),
         nPeople: request.body.nPeople,
         idDest: request.body.idDest
     };
+
     ASRes.book(params, (error, totalPrice) => {
         if (error) {
             let errorObj = responseHandler.generateRes(error);
@@ -296,6 +310,7 @@ app.post("/book", userLogged, (request, response, next) => {
                 next(errorObj); // Redirigir a error.ejs
             }
             else {
+                // Renderizar con las variables de sesión
                 response.render("destination", { 
                     dest: request.session.destination, 
                     comments: request.session.comments, 
@@ -304,12 +319,15 @@ app.post("/book", userLogged, (request, response, next) => {
             }
         }
         else {
+            // Crear mensaje de respuesta y volver al destino
             let msg = {
                 cod: 0,
                 title: "Reserva realizada",
                 message: `Se ha completado la reserva con éxito, por un total de ${totalPrice}€`
             }
+
             let msgObj = responseHandler.generateRes(msg.cod, msg.title, msg.message);
+            // Renderizar con las variables de sesión
             response.render("destination", { 
                 dest: request.session.destination, 
                 comments: request.session.comments, 
@@ -321,6 +339,7 @@ app.post("/book", userLogged, (request, response, next) => {
 
 // Editar perfil
 app.post("/edit_profile", userLogged, (request, response, next) => {
+    // Obtener parámetros de entrada
     let newUser = {
         id: request.session.currentUser.id,
         name: request.body.name,
@@ -335,6 +354,7 @@ app.post("/edit_profile", userLogged, (request, response, next) => {
                 next(errorObj); // Redirigir a error.ejs
             }
             else {
+                // Renderizar con las variables de sesión
                 response.render("user", { 
                     user: request.session.currentUser, 
                     currentReservations: request.session.currentReservations, 
@@ -343,14 +363,18 @@ app.post("/edit_profile", userLogged, (request, response, next) => {
             }
         }
         else {
+            // Crear mensaje de respuesta y volver al perfil
             let res = {
                 cod: 0,
                 title: "Perfil actualizado",
                 message: "Tus datos han sido actualizados con éxito :)"
             }
+
             let msgObj = responseHandler.generateRes(res.cod, res.title, res.message);
             response.status(200);
+            // Actualizar variable de sesión con la nueva info del usuario
             request.session.currentUser = user;
+            // Renderizar con las variables de sesión
             response.render("user", { 
                 user: user, 
                 currentReservations: request.session.currentReservations, 
@@ -362,6 +386,7 @@ app.post("/edit_profile", userLogged, (request, response, next) => {
 
 // Cambiar contraseña - TODO
 app.post("/change_password", userLogged, (request, response, next) => {
+    // Obtener parámetros de entrada
     let passwords = {
         id: request.session.currentUser.id,
         oldPass: request.body.oldPassword,
@@ -375,6 +400,7 @@ app.post("/change_password", userLogged, (request, response, next) => {
                 next(errorObj); // Redirigir a error.ejs
             }
             else {
+                // Renderizar con las variables de sesión
                 response.render("user", { 
                     user: request.session.currentUser, 
                     currentReservations: request.session.currentReservations, 
@@ -383,14 +409,18 @@ app.post("/change_password", userLogged, (request, response, next) => {
             }
         }
         else {
+            // Crear mensaje de respuesta y volver al perfil
             let res = {
                 cod: 0,
                 title: "Contraseña modificada",
                 message: "Tu contraseña ha sido modificada con éxito :)"
             }
+
             let msgObj = responseHandler.generateRes(res.cod, res.title, res.message);
             response.status(200);
+            // Actualizar variable de sesión con la nueva info del usuario
             request.session.currentUser = user;
+            // Renderizar con las variables de sesión
             response.render("user", { 
                 user: user, 
                 currentReservations: request.session.currentReservations, 
@@ -409,7 +439,8 @@ app.post("/cancel", (request, response, next) => {
                 next(errorObj); // Redirigir a error.ejs
             }
             else {
-                lresponse.render("user", { 
+                // Renderizar con las variables de sesión
+                response.render("user", { 
                     user: request.session.currentUser, 
                     currentReservations: request.session.currentReservations, 
                     oldReservations: request.session.oldReservations, 
@@ -417,14 +448,18 @@ app.post("/cancel", (request, response, next) => {
             }
         }
         else {
+            // Crear mensaje de respuesta y volver al perfil
             let res = {
                 cod: 0,
                 title: "Reserva cancelada",
                 message: `Se ha cancelado la reserva correctamente`
             }
+
             let msgObj = responseHandler.generateRes(res.cod, res.title, res.message);
             response.status(200);
+            // Actualizar la variable de sesión quitando la reserva que acaba de cancelarse
             request.session.currentReservations = request.session.currentReservations.filter((r) => r.id != idRes);
+            // Renderizar con las variables de sesión
             response.render("user", { 
                 user: request.session.currentUser, 
                 currentReservations: request.session.currentReservations, 
@@ -434,7 +469,7 @@ app.post("/cancel", (request, response, next) => {
     });
 });
 
-// Dejar un comentario - TODO
+// Dejar un comentario - TODO (por ahora, 501)
 app.post("/comment", userLogged, (request, response, next) => {
     let errorObj = responseHandler.generateRes(-5);
     next(errorObj);

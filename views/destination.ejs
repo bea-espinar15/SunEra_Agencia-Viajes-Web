@@ -36,13 +36,16 @@
                     <div class="col">
                         <!-- Carousel -->
                         <div id="carousel-dest" class="carousel slide">
+                            <!-- Símbolos de abajo para moverse -->
                             <div class="carousel-indicators">
                                 <button type="button" data-bs-target="#carousel-dest" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Picture 1"></button>
                                 <% for (let i = 1; i < dest.pictures.length; ++i) { %>
                                     <button type="button" data-bs-target="#carousel-dest" data-bs-slide-to="<%= i %>" aria-label="Picture <%= i %>"></button>
                                 <% } %>
                             </div>
+                            <!-- Imágenes -->
                             <div class="carousel-inner">
+                                <!-- La primera está activa -->
                                 <div class="carousel-item active">
                                     <img src="/img/destinos/<%= dest.pictures[0]%>" class="d-block w-100 rounded" alt="Foto 1" height="400">
                                 </div>
@@ -52,6 +55,7 @@
                                     </div>
                                 <% } %>
                             </div>
+                            <!-- Botones de flechas -->
                             <button id="p" class="carousel-control-prev" type="button" data-bs-target="#carousel-dest" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Anterior</span>
@@ -83,10 +87,12 @@
                             <div class="modal fade" id="reservationModal" tabindex="-1" aria-labelledby="reservationModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg modal-dialog-centered">
                                     <div class="modal-content">
+                                        <!-- Header -->
                                         <div class="modal-header">
                                             <h1 class="modal-title fs-5" id="reservationModalLabel">Termina tu reserva</h1>
                                             <img src="/img/branding/icon.png" alt="Logo SunEra" height="40">
                                         </div>
+                                        <!-- Body -->
                                         <div class="modal-body d-flex">
                                             <div class="col my-1 mx-3">
                                                 <form id="formBook" method="post" action="/book" class="d-flex flex-column">
@@ -121,6 +127,7 @@
                                                 -->
                                             </div>
                                         </div>
+                                        <!-- Footer -->
                                         <div class="modal-footer">
                                             <button type="button" class="cancel-button rounded-pill" data-bs-dismiss="modal">Cancelar</button>
                                             <button type="submit" class="book-button rounded-pill ms-3" form="formBook">Reservar</button>
@@ -163,7 +170,7 @@
                             </form>
                         </div>
                     </div>
-                    <!-- Card comentario -->
+                    <!-- Cards comentarios -->
                     <% comments.forEach(comment => { %>
                         <div class="col px-3 py-2">
                             <div class="card">

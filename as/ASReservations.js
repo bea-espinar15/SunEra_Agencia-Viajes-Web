@@ -25,7 +25,9 @@ class ASReservations {
                 let curr = new Array();
                 let old = new Array();
                 reservations.forEach(res => {
+                    // Es actual si fecha_fin es posterior a hoy
                     let current = new Date(res.dateEnd) >= new Date();
+                    // Formatear fechas
                     res.dateStart = ASReservations.formatDate(res.dateStart);
                     res.dateEnd = ASReservations.formatDate(res.dateEnd);
                     if (current) {
@@ -42,6 +44,7 @@ class ASReservations {
 
     // Hacer reserva
     book(params, callback) {
+        // Parsear entrada
         let idUser = params.idUser;
         let dateStart = params.date;
         let nPeople = params.nPeople;
@@ -63,12 +66,13 @@ class ASReservations {
                             callback(error);
                         }
                         else {
-                            // Comprobar que hay hueco
+                            // Obtenemos las plazas ocupadas en el destino durante esas fechas
                             this.daoRes.getBookedPlaces(dest.id, dateStart, dest.days, (error, bookedPlaces) => {
                                 if (error) {
                                     callback(error);
                                 }
                                 else {
+                                    // Comprobar que hay hueco
                                     if (nPeople > (dest.capacity - bookedPlaces)) {
                                         callback(6);
                                     }
@@ -126,6 +130,7 @@ class ASReservations {
                     callback(8);
                 }
                 else {
+                    // Dar de baja (lógica)
                     this.daoRes.delete(idRes, (error) => {
                         if (error) {
                             callback(error);
@@ -139,7 +144,7 @@ class ASReservations {
         });
     }
 
-    // Formatear fechas
+    // Formatear fechas - Cogido de Internet
     static formatDate(date) {
         const day = date.getDate().toString().padStart(2, '0');
         const month = (date.getMonth() + 1).toString().padStart(2, '0'); // En JavaScript los meses van de 0 a 11

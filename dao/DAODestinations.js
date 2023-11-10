@@ -66,6 +66,7 @@ class DAODestinations {
                         callback(-1);
                     }
                     else {
+                        // Quedarse sólo con la ruta (lo demás no hace falta)
                         let pictures = new Array();
                         rows.forEach(row => {
                             let pic = row.img;
@@ -85,6 +86,7 @@ class DAODestinations {
                 callback(-1);
             }
             else {
+                // Hay que traerse el destino y también su imagen principal (la que tenga el ID más pequeño)
                 let querySQL = "SELECT * FROM destino JOIN (SELECT id_destino, MIN(id), img FROM Imagen GROUP BY id_destino)" + 
                                "AS subquery ON destino.id = subquery.id_destino ORDER BY valoración_media DESC";
                 connection.query(querySQL, (error, rows) => {
@@ -95,7 +97,7 @@ class DAODestinations {
                     else {
                         let destinations = new Array();
                         rows.forEach(row => {
-                            // Construir destino
+                            // Construir cada destino
                             let dest = {
                                 id: row.id,
                                 name: row.nombre,
@@ -123,6 +125,7 @@ class DAODestinations {
                 callback(-1);
             }
             else {
+                // Cogemos también el nombre_usuario para no tener que llamar a daoUser.read()
                 let querySQL = "SELECT reseña.*, usuario.nombre_usuario AS username FROM reseña JOIN usuario ON reseña.id_usuario = usuario.id WHERE id_destino = ? ORDER BY fecha DESC";
                 connection.query(querySQL, [idDest], (error, rows) => {
                     connection.release();
@@ -132,6 +135,7 @@ class DAODestinations {
                     else {
                         let comments = new Array();
                         rows.forEach(row => {
+                            // Reconstruimos cada comentario
                             let comment = {
                                  username: row.username,
                                  rate: row.valoracion,

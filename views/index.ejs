@@ -52,7 +52,7 @@
                 </div>
                 <!-- Días -->
                 <div class="d-resp filter d-flex flex-column">
-                    <label class="me-2" for="days">¿Cuántos días quieres irte? (1-<%= params.maxDays %>)</label>
+                    <label class="me-2" for="days">¿Cuántos días quieres irte?<br>(1-<%= params.maxDays %>)</label>
                     <input id="days" type="number" name="days" value="1" min="1" max="<%= params.maxDays %>">
                 </div>
                 <!-- Nº personas -->
@@ -79,6 +79,7 @@
         <!-- RESULTADOS -->
         <div id="results" class="col-10">
             <div class="d-flex align-items-center justify-content-end mx-5 mb-3">
+                <!-- Mensaje Nº resultados -->
                 <% if (destinations.length === 0) { %>
                     <p id="num-results">No hay ningún resultado que coincida.</p>
                 <% } else  { %>

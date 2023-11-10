@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     formBook.addEventListener("submit", function (event) {
         event.preventDefault();
-
         if (validateReservation()) {
             formBook.submit();
         }
@@ -33,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Validar entrada Login
     function validateReservation() {
+        // Obtener inputs
         let dateStart = document.getElementById("date-ini").value;
         let nPeople = parseInt(document.getElementById("n-people").value);
         let minPeople = parseInt(document.getElementById("n-people").min);

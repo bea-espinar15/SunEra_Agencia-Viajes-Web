@@ -7,6 +7,7 @@
 </head>
 
 <body>
+    <!-- Si hay algún mensaje que mostrar -->
     <% if (msg) { %>
     <button id="b" type="button" hidden="true" data-bs-toggle="modal" data-bs-target="#infoModal"></button>
     <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
@@ -14,6 +15,7 @@
             <div class="modal-content">
                 <!-- Header -->
                 <div class="modal-header d-flex">
+                    <!-- Icono de error o éxito -->
                     <div>
                         <% if (msg.code !== 200) { %>
                             <img src="/img/error.png" alt="Error" height="30">
@@ -21,7 +23,9 @@
                             <img src="/img/success.png" alt="Éxito" height="30">
                         <% } %>
                     </div>
+                    <!-- Título del error/mensaje -->
                     <h1 class="modal-title fs-5 ms-2" id="infoModalLabel"><%= msg.title %></h1>
+                    <!-- Botón para cerrar el modal -->
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" height="20" class="bi bi-x-lg" viewBox="0 0 16 16">
                             <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
@@ -32,6 +36,7 @@
                 <div class="modal-body"> 
                     <p><%= msg.message %></p>
                 </div>
+                <!-- Footer -->
                 <div class="modal-footer d-flex justify-content-center">
                     <button type="button" class="ok-button rounded-pill" data-bs-dismiss="modal">OK</button>
                 </div>
@@ -39,6 +44,8 @@
         </div>
     </div>
 
+    <!-- Al cargarse el modal se muestra automáticamente -->
+    <!-- [!] Mirar si conseguimos hacerlo desde un JS -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             let button = document.getElementById('b');

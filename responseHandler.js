@@ -3,6 +3,7 @@
 function generateRes(cod, title="", message ="") {
     let code;
     switch (cod) {
+        // Errores que redirigen a la página de error
         case -1: {
             code = 500;
             title = "Error con la Base de Datos";
@@ -33,9 +34,12 @@ function generateRes(cod, title="", message ="") {
             title = "Acción no permitida";
             message = "No sé qué estabas intentando hacer, pero esta reserva no es tuya!";
         } break;
+        // Todo correcto
         case 0: {
             code = 200;
+            // title y message se pasarán como parámetros
         } break;
+        // Errores que muestran modales al usuario
         case 1: {
             code = 400;
             title = "Usuario inexistente";
@@ -94,7 +98,7 @@ function generateRes(cod, title="", message ="") {
         case 12: {
             code = 400;
             title = "Nombre de usuario no válido";
-            message = "El nombre de usuario no puede contener espacios en blanco ni empezar por un número, y debe tener entre 4 y 16 caracteres.";
+            message = "El nombre de usuario no puede contener espacios en blanco ni mayúsculas, ni empezar por un número, y debe tener entre 4 y 16 caracteres.";
         } break;
         case 13: {
             code = 400;
@@ -108,6 +112,7 @@ function generateRes(cod, title="", message ="") {
         }
     }
 
+    // Creamos mensaje de respuesta
     let res = {
         code: code,
         title: title,

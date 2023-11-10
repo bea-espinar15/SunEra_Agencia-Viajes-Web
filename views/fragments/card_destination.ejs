@@ -8,10 +8,13 @@
 </head>
 
 <body>
+    <!-- Tarjeta de un destino -->
     <div class="px-4 my-3">
         <div class="card p-0">
             <a href="/destino/<%= d.id %>">
+                <!-- Imagen del destino -->
                 <img src="/img/destinos/<%= d.pic %>" class="card-img-top" alt="Primera imagen del destino">
+                <!-- Información del destino -->
                 <div class="card-body">
                     <h3 class="card-title">
                         <%= d.name %>

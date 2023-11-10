@@ -54,7 +54,7 @@ class DAOUsers {
                             callback(-1);
                         }
                         else {
-                            // Construir destino
+                            // Construir usuario
                             let user = {
                                 id: rows[0].id,
                                 name: rows[0].nombre,
@@ -84,10 +84,12 @@ class DAOUsers {
                         callback(-1);
                     }
                     else {
+                        // Error en la BBDD
                         if (rows.length > 1) {
                             callback(-1);
                         }
                         else {
+                            // Lo devolvemos exista o no (sign_up y edit_profile quieren que no exista, login que sí)
                             let user;
                             if (rows.length > 0) {
                                 // Reconstruir usuario

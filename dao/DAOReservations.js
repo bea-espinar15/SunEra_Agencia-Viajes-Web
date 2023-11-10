@@ -56,7 +56,7 @@ class DAOReservations {
                             callback(-1);
                         }
                         else {
-                            // Construir destino
+                            // Construir reserva
                             let res = {
                                 id: rows[0].id,
                                 enabled: rows[0].activo,
@@ -82,10 +82,11 @@ class DAOReservations {
                 callback(-1);
             }
             else {
+                // Hace falta la info de la reserva pero también la de su destino, y la imagen principal de ese destino
                 let querySQLdest =  "SELECT * FROM destino JOIN (SELECT id_destino, MIN(id), img FROM Imagen GROUP BY id_destino)" + 
                                     "AS subquery2 ON destino.id = subquery2.id_destino ORDER BY valoración_media DESC";
                 let querySQL = "SELECT reserva.*, subquery.nombre, subquery.país, subquery.img FROM reserva JOIN (" + querySQLdest +
-                                ") AS subquery ON reserva.id_destino = subquery.id_destino WHERE id_usuario = ? AND activo = true ORDER BY fecha_ini DESC";
+                                ") AS subquery ON reserva.id_destino = subquery.id_destino WHERE id_usuario = ? AND activo = true ORDER BY fecha_ini ASC";
 
                 connection.query(querySQL, [idUser], (error, rows) => {
                     connection.release();
@@ -95,6 +96,7 @@ class DAOReservations {
                     else {
                         let reservations = new Array();
                         rows.forEach(row => {
+                            // Reconstruir "reserva"
                             let res = {
                                 id: row.id,
                                 dateStart: row.fecha_ini,
@@ -116,7 +118,7 @@ class DAOReservations {
         });
     }
 
-    // Dar de baja
+    // Dar de baja (LÓGICA)
     delete(id, callback) {
         this.pool.getConnection((error, connection) => {
             if (error) {
@@ -144,8 +146,10 @@ class DAOReservations {
                 callback(-1);
             }
             else {
+                // Calcular fecha_fin
                 let dateEnd = new Date();
                 dateEnd.setDate(dateStart.getDate() + days);
+                // Query
                 let querySQL = "SELECT SUM(n_personas) AS bookedPlaces FROM reserva WHERE id_destino = ? AND activo = true AND (fecha_ini BETWEEN ? AND ? OR fecha_fin BETWEEN ? AND ?)";
 
                 connection.query(querySQL, [idDest, dateStart, dateEnd, dateStart, dateEnd], (error, rows) => {

@@ -12,6 +12,7 @@ class ASUsers {
     // --- Métodos ---
     // Registro usuario
     signUp(newUser, callback) {
+        // Parsear entrada
         let valid = ASUsers.validateParams(newUser, true);
         if (valid !== 0) {
             callback(valid);
@@ -23,10 +24,12 @@ class ASUsers {
                     callback(error);
                 }
                 else {
+                    // Existe un usuario con ese username
                     if (user) {
                         callback(3);
                     }
                     else {
+                        // Insertar usuario en la BBDD
                         this.daoUse.create(newUser, (error) => {
                             if (error) {
                                 callback(error);
@@ -43,12 +46,13 @@ class ASUsers {
 
     // Inicio de sesión
     login(username, password, callback) {
+        // Comprobar que existe el usuario
         this.daoUse.readByUsername(username, (error, user) => {
             if (error) {
                 callback(error);
             }
             else {
-                // Existe el usuario?
+                // No existe
                 if (!user) {
                     callback(1);
                 }
@@ -58,6 +62,7 @@ class ASUsers {
                         callback(2);
                     }
                     else {
+                        // A cliente no mandamos la contraseña
                         delete (user.password);
                         callback(null, user);
                     }
@@ -91,7 +96,7 @@ class ASUsers {
                     callback(error);
                 }
                 else {
-                    newUser.password = user.password;
+                    newUser.password = user.password; // Su contraseña no cambia
                     // Comprobar si el nuevo nombre de usuario está repetido
                     if (newUser.username !== user.username) {
                         this.daoUse.readByUsername(newUser.username, (error, repeatUser) => {
@@ -99,6 +104,7 @@ class ASUsers {
                                 callback(error);
                             }
                             else {
+                                // Existe usuario con ese username
                                 if (repeatUser) {
                                     callback(3);
                                 }
@@ -116,6 +122,7 @@ class ASUsers {
                             }
                         });
                     }
+                    // Si no ha cambiado el username, directamente actualizar (ahorramos llamada BBDD)
                     else {
                         // Actualizar usuario
                         this.daoUse.update(newUser, (error) => {
@@ -152,10 +159,12 @@ class ASUsers {
                         callback(error);
                     }
                     else {
+                        // La contraseña actual no es correcta
                         if (passwords.oldPass !== user.password) {
                             callback(2);
                         }
                         else {
+                            // Actualizamos contraseña del usuario
                             user.password = passwords.newPass;
                             this.daoUse.update(user, (error) => {
                                 if (error) {
@@ -174,7 +183,7 @@ class ASUsers {
 
     // Validar parámetros de registro de usuario y editar perfil
     static validateParams(user, signup) {
-        let usernameRegex = /^[a-zA-Z_][a-zA-Z0-9_]{3,15}$/;
+        let usernameRegex = /^[a-z_][a-z0-9_]{3,15}$/;
         let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         let passRegex = /(?=.*[A-Za-z])(?=.*\d).{8,}/;
 

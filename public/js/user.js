@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let email = document.getElementById("user-email").value;
 
         // Expresiones Regex    
-        let usernameRegex = /^[a-zA-Z_][a-zA-Z0-9_]{3,15}$/;
+        let usernameRegex = /^[a-z_][a-z0-9_]{3,15}$/;
         let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         // Campos no vacíos
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
             Swal.fire({
                 icon: "error",
                 title: "¡Atención!",
-                text: "El nombre de usuario no puede contener espacios en blanco ni empezar por un número, y debe tener entre 4 y 16 caracteres.",
+                text: "El nombre de usuario no puede contener espacios en blanco ni mayúsculas, ni empezar por un número, y debe tener entre 4 y 16 caracteres.",
                 confirmButtonClass: "sweet-alert-button"
             });
             return false;

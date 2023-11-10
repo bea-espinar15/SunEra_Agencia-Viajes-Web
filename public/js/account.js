@@ -5,9 +5,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // Validación formulario Registro
     const formSignUp = document.getElementById("formSignUp");
 
+    // Si estamos en sign_up.ejs
     if (formSignUp !== null) {
         formSignUp.addEventListener("submit", function (event) {
             event.preventDefault();
+            // Si todo es correcto hacemos POST
             if (validateParamsSignUp()) {
                 formSignUp.submit();
             }
@@ -23,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let repeatPass = document.getElementById("repeatPassSignUp").value;
 
             // Expresiones Regex    
-            let usernameRegex = /^[a-zA-Z_][a-zA-Z0-9_]{3,15}$/;
+            let usernameRegex = /^[a-z_][a-z0-9_]{3,15}$/;
             let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             let passRegex = /(?=.*[A-Za-z])(?=.*\d).{8,}/;
 
@@ -42,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 Swal.fire({
                     icon: "error",
                     title: "¡Atención!",
-                    text: "El nombre de usuario no puede contener espacios en blanco ni empezar por un número, y debe tener entre 4 y 16 caracteres.",
+                    text: "El nombre de usuario no puede contener espacios en blanco ni mayúsculas, ni empezar por un número, y debe tener entre 4 y 16 caracteres.",
                     confirmButtonClass: "sweet-alert-button"
                 });
                 return false;
@@ -86,10 +88,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // Validación formulario Login
     const formLogin = document.getElementById("formLogin");
 
+    // Si estamos en login.ejs
     if (formLogin !== null) {
         formLogin.addEventListener("submit", function (event) {
             event.preventDefault();
-
             if (validateParamsLogin()) {
                 formLogin.submit();
             }
@@ -97,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Validar entrada Login
         function validateParamsLogin() {
+            // Obtener inputs
             let username = document.getElementById("usernameLogin").value;
             let password = document.getElementById("passwordLogin").value;
 

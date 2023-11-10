@@ -30,7 +30,7 @@ En esta carpeta se encuentran las vistas y los recursos estáticos. Incluye los 
     - account : JS que valida el formulario de registro de usuario
     - destination : JS que valida el formulario de reserva y el formulario de hacer una reseña (este último aún no implementado)
     - index : JS que valida los formularios de búsqueda y filtros (aún no implementado)
-    - user : JS que valida los formularios de editar perfil y cambiar contraseña (aún no implementado)
+    - user : JS que valida los formularios de editar perfil y cambiar contraseña
 
 #### SERVIDOR
 __AS__
@@ -82,10 +82,10 @@ Para esta segunda entrega de la práctica se han implementado las siguientes fun
 - Book : El usuario puede hacer una reserva de un destino, y esta se mostrará en su perfil con las demás reservas
 - Cancel : El usuario puede cancelar una reserva que aún no haya sucedido
 - EditProfile : El usuario puede modificar sus datos personales
+- ChangePass : El usuario puede modificar su contraseña
 
 Esto implica que han quedado sin implementar las siguientes funcionalidades:
 - Search : Aún no se puede buscar un destino en la página de Inicio
 - Filter : Aún no funcionan los filtros de la página de Inicio
-- ChangePass : Aún no puede modificar su contraseña un usuario
 - Comment : Aún no puede hacer una reseña en un destino un usuario
 - *Foto de perfil : Aún no puede ponerse (ni cambiar su) foto de perfil el usuario
