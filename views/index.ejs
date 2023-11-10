@@ -6,12 +6,16 @@
     <!-- Importar css -->
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/general.css">
+    <!-- Importar JS -->
+    <script src="/js/index.js"></script>
 </head>
 
 <body>
     <!-- NAV -->
     <!-- [?] Pasar como parámetro foto de perfil -->
-    <%- include("nav") %>
+    <%- include("fragments/nav") %>
+    <!-- Modal avisos -->
+    <%- include("fragments/modal", { msg: msg }) %>
 
     <!-- BARRA DE BÚSQUEDA -->
     <div id="search-bar" class="d-flex align-items-center">
@@ -88,14 +92,14 @@
             <!-- Resultados de búsqueda -->
             <div id="results-table" class="row row-cols-2 row-cols-xl-3 row-cols-xxl-4 mx-3">
                 <% destinations.forEach(dest => { %>
-                    <%- include("card_destination", { d: dest }) %>
+                    <%- include("fragments/card_destination", { d: dest }) %>
                 <% }) %>
             </div>
         </div>
     </div>
 
     <!-- FOOTER -->
-    <%- include("footer") %>
+    <%- include("fragments/footer") %>
 </body>
 
 </html>

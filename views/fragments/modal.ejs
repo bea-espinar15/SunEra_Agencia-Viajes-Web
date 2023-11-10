@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!-- Importar css -->
+    <link rel="stylesheet" href="/css/modal.css">
+</head>
+
+<body>
+    <% if (msg) { %>
+    <button id="b" type="button" hidden="true" data-bs-toggle="modal" data-bs-target="#infoModal"></button>
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-header d-flex">
+                    <div>
+                        <% if (msg.code !== 200) { %>
+                            <img src="/img/error.png" alt="Error" height="30">
+                        <% } else { %>
+                            <img src="/img/success.png" alt="Éxito" height="30">
+                        <% } %>
+                    </div>
+                    <h1 class="modal-title fs-5 ms-2" id="infoModalLabel"><%= msg.title %></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- Body -->
+                <div class="modal-body"> 
+                    <p><%= msg.message %></p>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="ok-button rounded-pill" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let button = document.getElementById('b');
+            button.click();
+        });
+    </script>
+    <% } %>
+</body>
+
+</html>

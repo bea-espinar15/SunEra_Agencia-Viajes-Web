@@ -3,6 +3,7 @@
 let prev = document.getElementById('p');
 let next = document.getElementById('n');
 
+// Navegar por las imágenes con las teclas izq-dcha
 window.addEventListener('keydow', (e) => {
     switch (e.key) {
         case 'ArroRight':

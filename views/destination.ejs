@@ -6,13 +6,16 @@
     <!-- Importar css -->
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/general.css">
+    <!-- Importar JS -->
     <script src="/js/destination.js"></script>
 </head>
 
 <body id="d">
     <!-- NAV -->
     <!-- [?] Pasar como parámetro foto de perfil -->
-    <%- include("nav") %>
+    <%- include("fragments/nav") %>
+    <!-- Modal avisos -->
+    <%- include("fragments/modal", { msg: msg }) %>
 
     <!-- CONTENT -->
     <div class="div-content d-flex justify-content-center mx-4">
@@ -86,17 +89,18 @@
                                                     <!-- Fecha inicio -->
                                                     <div class="filter filter-res d-flex flex-column mb-3">
                                                         <label for="date-ini">¿Qué día te vas?</label>
-                                                        <input id="date-ini" type="date" name="date-ini">
+                                                        <input id="date-ini" type="date" name="dateIni">
                                                     </div>
                                                     <!-- Viajeros -->
                                                     <div class="d-resp filter filter-res d-flex flex-column">
                                                         <label for="n-people">¿Cuántos vais a ser?</label>
-                                                        <input id="n-people" type="number" name="n-people" value="1" min="1" max="<%= dest.capacity %>">
+                                                        <input id="n-people" type="number" name="nPeople" value="1" min="1" max="<%= dest.capacity %>">
                                                     </div>
                                                     <!-- Precio -->
                                                     <div class="d-resp filter filter-res d-flex flex-column">
                                                         <p>Precio: <%= dest.price %>€/persona</p>
                                                     </div>
+                                                    <input type="number" hidden="true" value="<%= dest.id %>" name="idDest">
                                                 </form>
                                             </div>
                                             <!-- Resumen Viaje-->
@@ -177,7 +181,7 @@
     </div>
 
     <!-- FOOTER -->
-    <%- include("footer") %>
+    <%- include("fragments/footer") %>
 </body>
 
 </html>

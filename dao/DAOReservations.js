@@ -9,7 +9,30 @@ class DAOReservations {
         this.pool = pool;
     }
 
-    // --- Métodos --- 
+    // --- Métodos ---
+    // Insertar reserva
+    create(reservation, callback) {
+        this.pool.getConnection((error, connection) => {
+            if (error) {
+                callback(-1);
+            }
+            else {
+                let querySQL = "INSERT INTO reserva (activo, id_usuario, id_destino, fecha_ini, fecha_fin, precio_total, n_personas) VALUES (true, ?, ?, ?, ?, ?, ?)";
+
+                connection.query(querySQL, 
+                    [reservation.idUser, reservation.idDest, reservation.dateStart, reservation.dateEnd, reservation.totalPrice, reservation.nPeople], (error) => {
+                    connection.release();
+                    if (error) {
+                        callback(-1);
+                    }
+                    else {
+                        callback(null);
+                    }
+                });
+            }
+        });
+    }
+
     // Leer reservas de un usuario
     readByUser(idUser, callback) {
         this.pool.getConnection((error, connection) => {
@@ -46,6 +69,35 @@ class DAOReservations {
                             reservations.push(res);
                         });
                         callback(null, reservations);
+                    }
+                });
+            }
+        });
+    }
+
+    // Obtener el número de plazas ocupadas en un destino durante unas fechas
+    getBookedPlaces(idDest, dateStart, days, callback) {
+        this.pool.getConnection((error, connection) => {
+            if (error) {
+                callback(-1);
+            }
+            else {
+                let dateEnd = new Date();
+                dateEnd.setDate(dateStart.getDate() + days);
+                let querySQL = "SELECT SUM(n_personas) AS bookedPlaces FROM reserva WHERE id_destino = ? AND activo = true AND (fecha_ini BETWEEN ? AND ? OR fecha_fin BETWEEN ? AND ?)";
+
+                connection.query(querySQL, [idDest, dateStart, dateEnd, dateStart, dateEnd], (error, rows) => {
+                    connection.release();
+                    if (error) {
+                        callback(-1);
+                    }
+                    else {
+                        if (rows.length !== 1) {
+                            callback(-1);
+                        }
+                        else {
+                            callback(null, rows[0].bookedPlaces);
+                        }                        
                     }
                 });
             }

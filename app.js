@@ -13,7 +13,7 @@ const morgan = require("morgan");
 
 // Fichero
 const mySQLconfig = require("./config");
-const errorHandler = require("./errorHandler");
+const responseHandler = require("./responseHandler");
 const DAODestinations = require("./dao/DAODestinations");
 const DAOReservations = require("./dao/DAOReservations");
 const DAOUsers = require("./dao/DAOUsers");
@@ -61,7 +61,7 @@ const DAORes = new DAOReservations(pool);
 const DAOUse = new DAOUsers(pool);
 // Crear instancias de los ASs
 const ASDes = new ASDestinations(DAODes);
-const ASRes = new ASReservations(DAORes);
+const ASRes = new ASReservations(DAORes, DAOUse, DAODes);
 const ASUse = new ASUsers(DAOUse);
 
 // --- VARIABLES GLOBALES de plantilla ---
@@ -100,30 +100,18 @@ function userLogged(request, response, next) {
 app.get(["/", "/inicio"], userLogged, (request, response, next) => {
     ASDes.getAllDestinations((error, destinations) => {
         if (error) {
-            let errorObj = errorHandler.generateError(error);
-            if (error < 0) {
-                next(errorObj); // Redirigir a error.ejs
-            }
-            else {
-                // TODO: Mostrar error por pantalla
-                response.end(errorObj.message);
-            }
+            let errorObj = responseHandler.generateRes(error);
+            next(errorObj); // Redirigir a error.ejs
         }
         else {
             ASDes.getParams(destinations, (error, params) => {
                 if (error) {
-                    let errorObj = errorHandler.generateError(error);
-                    if (error < 0) {
-                        next(errorObj); // Redirigir a error.ejs
-                    }
-                    else {
-                        // TODO: Mostrar error por pantalla
-                        response.end(errorObj.message);
-                    }
+                    let errorObj = responseHandler.generateRes(error);
+                    next(errorObj); // Redirigir a error.ejs
                 }
                 else {
                     response.status(200);
-                    response.render("index", { destinations: destinations, params: params, filters: [] });
+                    response.render("index", { destinations: destinations, params: params, filters: [], msg: undefined});
                 }
             });
         }
@@ -133,27 +121,21 @@ app.get(["/", "/inicio"], userLogged, (request, response, next) => {
 // Login
 app.get("/login", (request, response, next) => {
     response.status(200);
-    response.render("login");
+    response.render("login", { msg: undefined });
 });
 
 // SignUp
 app.get("/sign_up", (request, response, next) => {
     response.status(200);
-    response.render("sign_up");
+    response.render("sign_up", { msg: undefined });
 });
 
 // Trending
 app.get("/tendencias", userLogged, (request, response, next) => {
     ASDes.getAllDestinations((error, destinations) => {
         if (error) {
-            let errorObj = errorHandler.generateError(error);
-            if (error < 0) {
-                next(errorObj); // Redirigir a error.ejs
-            }
-            else {
-                // TODO: Mostrar error por pantalla
-                response.end(errorObj.message);
-            }
+            let errorObj = responseHandler.generateRes(error);
+            next(errorObj); // Redirigir a error.ejs
         }
         else {
             response.status(200);
@@ -174,34 +156,22 @@ app.get("/contacto", userLogged, (request, response, next) => {
     response.render("contact");
 });
 
-// User [!] Middleware "es tu usuario"
+// User
 app.get("/perfil", userLogged, (request, response, next) => {
     ASUse.getUser(request.session.currentUser.id, (error, user) => {
         if (error) {
-            let errorObj = errorHandler.generateError(error);
-            if (error < 0) {
-                next(errorObj); // Redirigir a error.ejs
-            }
-            else {
-                // TODO: Mostrar error por pantalla
-                response.end(errorObj.message);
-            }
+            let errorObj = responseHandler.generateRes(error);
+            next(errorObj); // Redirigir a error.ejs
         }
         else {
             ASRes.getReservationsByUser(user.id, (error, currentReservations, oldReservations) => {
                 if (error) {
-                    let errorObj = errorHandler.generateError(error);
-                    if (error < 0) {
-                        next(errorObj); // Redirigir a error.ejs
-                    }
-                    else {
-                        // TODO: Mostrar error por pantalla
-                        response.end(errorObj.message);
-                    }
+                    let errorObj = responseHandler.generateRes(error);
+                    next(errorObj); // Redirigir a error.ejs
                 }
                 else {
                     response.status(200);
-                    response.render("user", { user: user, currentReservations: currentReservations, oldReservations: oldReservations });
+                    response.render("user", { user: user, currentReservations: currentReservations, oldReservations: oldReservations, msg: undefined });
                 }
             })
         }
@@ -209,33 +179,31 @@ app.get("/perfil", userLogged, (request, response, next) => {
 });
 
 // Destination
-app.get("/destination/:id", userLogged, (request, response, next) => {
+app.get("/destino/:id", userLogged, (request, response, next) => {
     ASDes.getDestination(request.params.id, (error, destination) => {
         if (error) {
-            let errorObj = errorHandler.generateError(error);
-            if (error < 0) {
-                next(errorObj); // Redirigir a error.ejs
-            }
-            else {
-                // TODO: Mostrar error por pantalla
-                response.end(errorObj.message);
-            }
+            let errorObj = responseHandler.generateRes(error);
+            next(errorObj); // Redirigir a error.ejs
         }
         else {
             ASDes.getCommentsByDestination(destination.id, (error, comments) => {
                 if (error) {
-                    let errorObj = errorHandler.generateError(error);
-                    if (error < 0) {
-                        next(errorObj); // Redirigir a error.ejs
-                    }
-                    else {
-                        // TODO: Mostrar error por pantalla
-                        response.end(errorObj.message);
-                    }
+                    let errorObj = responseHandler.generateRes(error);
+                    next(errorObj); // Redirigir a error.ejs
                 }
                 else {
-                    response.status(200);
-                    response.render("destination", { dest: destination, comments: comments, user: { username: request.session.currentUser.username }});
+                    // Si hay que mostrar un modal
+                    if (request.session.msg) {
+                        let msg = request.session.msg; 
+                        delete(request.session.msg);                     
+                        response.status(msg.code);
+                        response.render("destination", { dest: destination, comments: comments, user: { username: request.session.currentUser.username }, msg: msg });
+                    }
+                    else {
+                        response.status(200);
+                        response.render("destination", { dest: destination, comments: comments, user: { username: request.session.currentUser.username }, msg: undefined});
+                    }
+                    
                 }
             })
         }
@@ -243,21 +211,51 @@ app.get("/destination/:id", userLogged, (request, response, next) => {
 });
 
 // --- Peticiones POST ---
-// Inicio de sesión
-app.post("/login", (request, response, next) => {
-    ASUse.login(request.body.username, request.body.password, (error, user) => {
+// Registro usuario
+app.post("/sign_up", (request, response, next) => {
+    let newUser = { name: request.body.name, 
+                    username: request.body.username, 
+                    email: request.body.email, 
+                    password: request.body.password,
+                    repeatPass: request.body.repeatPassword };
+    
+    ASUse.signUp(newUser, (error, user) =>{
         if (error) {
-            let errorObj = errorHandler.generateError(error);
+            let errorObj = responseHandler.generateRes(error);
             if (error < 0) {
                 next(errorObj); // Redirigir a error.ejs
             }
             else {
-                // TODO: Mostrar error por pantalla
-                response.end(errorObj.message);
+                response.render("sign_up", { msg: errorObj });
             }
         }
         else {
-            request.session.currentUser = user;
+            let res = {
+                cod: 0,
+                title: "Registro completado",
+                message: "Tu cuenta ha sido creada con éxito! Ya puedes logearte, bienvenido :)"
+            }
+            let msgObj = responseHandler.generateRes(res.cod, res.title, res.message);
+            response.status(200);
+            response.render("login", { msg: msgObj });
+        }
+    });
+});
+
+// Inicio de sesión
+app.post("/login", (request, response, next) => {
+    ASUse.login(request.body.username, request.body.password, (error, user) => {
+        if (error) {
+            let errorObj = responseHandler.generateRes(error);
+            if (error < 0) {
+                next(errorObj); // Redirigir a error.ejs
+            }
+            else {
+                response.render("login", { msg: errorObj });
+            }
+        }
+        else {
+            request.session.currentUser = user; // Actualizar sesión
             response.status(200);
             response.redirect("/inicio");
         }
@@ -271,71 +269,78 @@ app.post("/logout", userLogged, (request, response, next) => {
     response.redirect("/login");
 });
 
-// Hacer una reserva
-app.post("/book", userLogged, (request, response, next) => {
-
-});
-
-// Dejar un comentario
-app.post("/comment", userLogged, (request, response, next) => {
-
-});
-
 // Realizar una búsqueda
 app.post("/search", userLogged, (request, response, next) => {
-
+    let errorObj = responseHandler.generateRes(-5);
+    next(errorObj);
 });
 
 // Aplicar filtros
 app.post("/filter", userLogged, (request, response, next) => {
-
+    let errorObj = responseHandler.generateRes(-5);
+    next(errorObj);
 });
 
-// Registro usuario
-app.post("/sign_up", (request, response, next) => {
-    let newUser = { name: request.body.name, 
-                    username: request.body.username, 
-                    email: request.body.email, 
-                    password: request.body.password,
-                    repeatPass: request.body.repeatPassword }
-    ASUse.signUp(newUser, (error, user) =>{
+// Hacer una reserva
+app.post("/book", userLogged, (request, response, next) => {
+    let params = {
+        idUser: request.session.currentUser.id,
+        date: new Date(request.body.dateIni),
+        nPeople: request.body.nPeople,
+        idDest: request.body.idDest
+    };
+    ASRes.book(params, (error, totalPrice) => {
         if (error) {
-            let errorObj = errorHandler.generateError(error);
+            let errorObj = responseHandler.generateRes(error);
             if (error < 0) {
                 next(errorObj); // Redirigir a error.ejs
             }
             else {
-                // TODO: Mostrar error por pantalla
-                response.end(errorObj.message);
+                request.session.msg = errorObj;
+                response.redirect(`destino/${params.idDest}`);
             }
         }
         else {
-            request.session.currentUser = user;
-            response.status(200);
-            response.redirect("/inicio");
+            let msg = {
+                cod: 0,
+                title: "Reserva realizada",
+                message: `Se ha completado la reserva con éxito, por un total de ${totalPrice}€`
+            }
+            let msgObj = responseHandler.generateRes(msg.cod, msg.title, msg.message);
+            request.session.msg = msgObj;
+            response.redirect(`destino/${params.idDest}`);
         }
     });
 });
 
 // Editar perfil
 app.post("/edit_profile", userLogged, (request, response, next) => {
-
+    let errorObj = responseHandler.generateRes(-5);
+    next(errorObj);
 });
 
 // Cambiar contraseña
 app.post("/change_password", userLogged, (request, response, next) => {
-
+    let errorObj = responseHandler.generateRes(-5);
+    next(errorObj);
 });
 
 // Cancelar reserva
 app.post("/cancel", (request, response, next) => {
+    let errorObj = responseHandler.generateRes(-5);
+    next(errorObj);
+});
 
+// Dejar un comentario
+app.post("/comment", userLogged, (request, response, next) => {
+    let errorObj = responseHandler.generateRes(-5);
+    next(errorObj);
 });
 
 // --- Middlewares de error ---
 // Error 404
 app.use((request, response, next) => {
-    let error = errorHandler.generateError(-2);
+    let error = responseHandler.generateRes(-2);
     response.status(error.code);
     response.render("error", { error: error });
 });

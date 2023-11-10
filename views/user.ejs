@@ -6,12 +6,16 @@
     <!-- Importar css -->
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/user.css">
+    <!-- Importar JS -->
+    <script src="/js/user.js"></script>
 </head>
 
 <body>
     <!-- NAV -->
     <!-- [?] Pasar como parámetro foto de perfil -->
-    <%- include("nav") %>
+    <%- include("fragments/nav") %>
+    <!-- Modal avisos -->
+    <%- include("fragments/modal", { msg: msg }) %>
 
     <!-- CONTENIDO -->
     <div class="div-content d-flex">
@@ -67,7 +71,7 @@
                 <!-- ACTUALES -->
                 <div>  
                     <% currentReservations.forEach((cr, i) => { %>
-                        <div class="reservation accordion-item">
+                        <div class="reservation accordion-item my-4">
                             <!-- Exterior -->
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -90,15 +94,19 @@
                                     <div class="d-flex m-2">
                                         <!-- Lleva a destination -->
                                         <button class="submit-button rounded-pill"
-                                            onclick="location.href='/destination/<%= cr.idDest %>'">Ver destino</button>
+                                            onclick="location.href='/destino/<%= cr.idDest %>'">Ver destino</button>
                                         <!-- MODAL CANCELAR -->
                                         <button class="cancel-button rounded-pill"  data-bs-toggle="modal" data-bs-target="#cancelationModal-<%= i %>">Cancelar reserva</button>
                                         <div class="modal fade" id="cancelationModal-<%= i %>" aria-labelledby="cancelationModalLabel-<%= i %>" aria-hidden="true">
                                             <div class="modal-dialog modal-lg modal-dialog-centered">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                      </div>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" height="20" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/>
+                                                              </svg>
+                                                        </button>
+                                                    </div>
                                                     <div class="modal-body d-flex">
                                                         <!-- Resumen Viaje-->
                                                         <p>¿Estás seguro de que quieres cancelar tu reserva? No se puede deshacer esta acción.</p>
@@ -148,7 +156,7 @@
                                     <div class="d-flex align-items-end">
                                         <!-- Lleva a destination - Sección de comentarios -->
                                         <button class="comment-button rounded-pill m-2"
-                                            onclick="location.href='/destination/<%= or.id %>'">Deja tu comentario</button>
+                                            onclick="location.href='/destino/<%= or.id %>'">Deja tu comentario</button>
                                     </div>
                                 </div>
                             </div>
@@ -160,7 +168,7 @@
     </div>
 
     <!-- FOOTER -->
-    <%- include("footer") %>
+    <%- include("fragments/footer") %>
 </body>
 
 

@@ -11,7 +11,7 @@
 <body>
     <!-- NAV -->
     <!-- [?] Pasar como parámetro foto de perfil -->
-    <%- include("nav") %>
+    <%- include("fragments/nav") %>
 
     <!-- CONTENT -->
 
@@ -24,14 +24,14 @@
         <div class="my-3">
             <div class="row row-cols-3 row-cols-xl-4 row-cols-xxl-5 mx-5">
                 <% destinations.forEach(dest => { %>
-                    <%- include("card_destination", { d: dest }) %>
+                    <%- include("fragments/card_destination", { d: dest }) %>
                 <% }) %>
             </div>
         </div>
     </div>
     
     <!-- FOOTER -->
-    <%- include("footer") %>
+    <%- include("fragments/footer") %>
 </body>
 
 </html>

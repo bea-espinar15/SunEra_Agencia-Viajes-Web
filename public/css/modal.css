@@ -1,0 +1,23 @@
+/* ------------- MODAL INFO ------------- */
+
+.modal-content {
+    background-color: #f6fded;
+    color: #2a3a13;
+}
+
+.modal-content h1 {
+    font-size: 1.5em;
+}
+
+.modal-footer button {
+    width: 5em !important;
+}
+
+.ok-button {
+    font-family: sans-serif;
+    border: none;
+    height: 2.5em;
+    width: 12em !important;
+    background-color: #435724;
+    color: white;
+}

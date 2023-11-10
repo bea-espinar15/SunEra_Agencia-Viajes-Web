@@ -87,6 +87,15 @@
     width: 5em !important;
 }
 
+.modal-header {
+    background-color: #2a3a13;
+}
+
+.btn-close {
+    background: none;
+    height: auto;
+}
+
 /* - PASADAS - */
 .old {
     background-color: #dddddd;

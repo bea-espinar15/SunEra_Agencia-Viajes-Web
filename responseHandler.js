@@ -1,8 +1,8 @@
 "use strict"
 
-function generateError(err) {
-    let code, title, message;
-    switch (err) {
+function generateRes(cod, title="", message ="") {
+    let code;
+    switch (cod) {
         case -1: {
             code = 500;
             title = "Error con la Base de Datos";
@@ -22,6 +22,14 @@ function generateError(err) {
             code = 403;
             title = "Acceso no permitido";
             message = "No sé qué estabas intentando hacer, pero aquí no puedes entrar!";
+        } break;
+        case -5: {
+            code = 501;
+            title = "No implementado";
+            message = "Oops! Aún no tenemos esta funcionalidad disponible";
+        } break;
+        case 0: {
+            code = 200;
         } break;
         case 1: {
             code = 400;
@@ -48,6 +56,11 @@ function generateError(err) {
             title = "Correo no válido";
             message = "Por favor, introduce una dirección válida de correo electrónico";
         } break;
+        case 6: {
+            code = 400;
+            title = "Sin hueco";
+            message = "No quedan suficientes plazas disponibles en este destino durante estas fechas :(";
+        }
         default: {
             code = 500;
             title = "Error desconocido";
@@ -55,14 +68,14 @@ function generateError(err) {
         }
     }
 
-    let error = {
+    let res = {
         code: code,
         title: title,
         message: message
     }
-    return error;
+    return res;
 }
 
 module.exports = {
-    generateError: generateError
+    generateRes: generateRes
 }

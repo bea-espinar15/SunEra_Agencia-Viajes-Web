@@ -5,9 +5,14 @@
     <%- include("../public/head.html") %>
     <!-- Importar css -->
     <link rel="stylesheet" href="/css/account.css">
+    <!-- Importar JS -->
+    <script src="/js/account.js"></script>
 </head>
 
 <body>
+    <!-- Modal avisos -->
+    <%- include("fragments/modal", { msg: msg }) %>
+
     <!-- Principal -->
     <div class="col-8 offset-2 d-flex align-items-center vh-100">
         <!-- Columna Sign Up -->
