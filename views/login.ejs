@@ -35,7 +35,7 @@
                 <h1>Inicia sesión</h1>
                 <!-- Formulario Login -->
                 <form id="formLogin" method="post" action="/login" class="d-flex flex-column align-items-center py-4 w-50">
-                    <input id="usernameLogin" type="text" placeholder="Nombre de usuario" class="my-3 w-100" name="username">
+                    <input id="usernameLogin" type="text" value="<%= username %>" placeholder="Nombre de usuario" class="my-3 w-100" name="username">
                     <input id="passwordLogin" type="password" placeholder="Contraseña" class="w-100" name="password">
                     <input type="submit" value="Inicia sesión" class="rounded-pill submit-button mt-5 w-50">
                 </form>

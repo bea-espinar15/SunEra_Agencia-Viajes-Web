@@ -123,13 +123,13 @@ app.get(["/", "/inicio"], userLogged, (request, response, next) => {
 // Login
 app.get("/login", (request, response, next) => {
     response.status(200);
-    response.render("login", { msg: undefined });
+    response.render("login", { username:"", msg: undefined });
 });
 
 // SignUp
 app.get("/sign_up", (request, response, next) => {
     response.status(200);
-    response.render("sign_up", { msg: undefined });
+    response.render("sign_up", { name:"", username:"", email:"", msg: undefined });
 });
 
 // Trending
@@ -231,7 +231,11 @@ app.post("/sign_up", (request, response, next) => {
                 next(errorObj); // Redirigir a error.ejs
             }
             else {
-                response.render("sign_up", { msg: errorObj });
+                response.render("sign_up", { 
+                    name: newUser.name, 
+                    username: newUser.username,
+                    email: newUser.email,
+                    msg: errorObj });
             }
         }
         else {
@@ -258,7 +262,9 @@ app.post("/login", (request, response, next) => {
                 next(errorObj); // Redirigir a error.ejs
             }
             else {
-                response.render("login", { msg: errorObj });
+                response.render("login", { 
+                    username: request.body.username,
+                    msg: errorObj });
             }
         }
         else {

@@ -34,9 +34,9 @@
                 <h1 id="sign-up-title">Crea una cuenta</h1>
                 <!-- Formulario SignUp -->
                 <form id="formSignUp" method="post" action="/sign_up" class="d-flex flex-column align-items-center my-2 my-lg-4 w-50">
-                    <input id="nameSignUp" type="text" placeholder="Nombre completo" class="my-1 w-100" name="name">
-                    <input id="usernameSignUp" type="text" placeholder="Nombre de usuario" class="my-1 w-100" name="username">
-                    <input id="emailSignUp" type="email" placeholder="Correo" class="my-1 w-100" name="email">
+                    <input id="nameSignUp" type="text" value="<%= name %>" placeholder="Nombre completo" class="my-1 w-100" name="name">
+                    <input id="usernameSignUp" type="text" value="<%= username %>" placeholder="Nombre de usuario" class="my-1 w-100" name="username">
+                    <input id="emailSignUp" type="email" value="<%= email %>" placeholder="Correo" class="my-1 w-100" name="email">
                     <input id="passwordSignUp" type="password" placeholder="Contraseña" class="my-1 w-100" name="password">
                     <input id="repeatPassSignUp" type="password" placeholder="Repite la contraseña" class="my-1 w-100" name="repeatPassword">
                     <input type="submit" value="Regístrate" class="rounded-pill submit-button mt-3 mt-lg-4 w-50">
