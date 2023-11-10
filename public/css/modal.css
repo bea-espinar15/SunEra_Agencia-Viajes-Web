@@ -7,17 +7,23 @@
 
 .modal-content h1 {
     font-size: 1.5em;
+    color: white;
 }
 
-.modal-footer button {
-    width: 5em !important;
+.modal-header {
+    background-color: #2a3a13;
+}
+
+.btn-close {
+    background: none;
+    height: auto;
 }
 
 .ok-button {
     font-family: sans-serif;
     border: none;
     height: 2.5em;
-    width: 12em !important;
+    width: 5em !important;
     background-color: #435724;
     color: white;
 }

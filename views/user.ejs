@@ -113,7 +113,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <form method="post" action="/cancel">
-                                                            <input type="text" hidden="true" value="<%= cr.id %>">
+                                                            <input type="text" hidden="true" value="<%= cr.id %>" name="idRes">
                                                             <button type="button" class="submit-button cancel-button rounded-pill" data-bs-dismiss="modal">No</button>
                                                             <button type="submit" class="submit-button rounded-pill ms-3" >Sí</button>
                                                         </form>                                                        
@@ -156,7 +156,7 @@
                                     <div class="d-flex align-items-end">
                                         <!-- Lleva a destination - Sección de comentarios -->
                                         <button class="comment-button rounded-pill m-2"
-                                            onclick="location.href='/destino/<%= or.id %>'">Deja tu comentario</button>
+                                            onclick="location.href='/destino/<%= or.idDest %>'">Deja tu comentario</button>
                                     </div>
                                 </div>
                             </div>

@@ -170,8 +170,17 @@ app.get("/perfil", userLogged, (request, response, next) => {
                     next(errorObj); // Redirigir a error.ejs
                 }
                 else {
-                    response.status(200);
-                    response.render("user", { user: user, currentReservations: currentReservations, oldReservations: oldReservations, msg: undefined });
+                    // Si hay que mostrar un modal
+                    if (request.session.msg) {
+                        let msg = request.session.msg; 
+                        delete(request.session.msg);                     
+                        response.status(msg.code);
+                        response.render("user", { user: user, currentReservations: currentReservations, oldReservations: oldReservations, msg: msg });
+                    }
+                    else {
+                        response.status(200);
+                        response.render("user", { user: user, currentReservations: currentReservations, oldReservations: oldReservations, msg: undefined });
+                    }
                 }
             })
         }
@@ -297,7 +306,7 @@ app.post("/book", userLogged, (request, response, next) => {
             }
             else {
                 request.session.msg = errorObj;
-                response.redirect(`destino/${params.idDest}`);
+                response.redirect(`/destino/${params.idDest}`);
             }
         }
         else {
@@ -308,7 +317,7 @@ app.post("/book", userLogged, (request, response, next) => {
             }
             let msgObj = responseHandler.generateRes(msg.cod, msg.title, msg.message);
             request.session.msg = msgObj;
-            response.redirect(`destino/${params.idDest}`);
+            response.redirect(`/destino/${params.idDest}`);
         }
     });
 });
@@ -327,8 +336,28 @@ app.post("/change_password", userLogged, (request, response, next) => {
 
 // Cancelar reserva
 app.post("/cancel", (request, response, next) => {
-    let errorObj = responseHandler.generateRes(-5);
-    next(errorObj);
+    ASRes.cancel(request.body.idRes, request.session.currentUser.id, (error) =>{
+        if (error) {
+            let errorObj = responseHandler.generateRes(error);
+            if (error < 0) {
+                next(errorObj); // Redirigir a error.ejs
+            }
+            else {
+                request.session.msg = errorObj;
+                response.redirect("/perfil");
+            }
+        }
+        else {
+            let msg = {
+                cod: 0,
+                title: "Reserva cancelada",
+                message: `Se ha cancelado la reserva correctamente`
+            }
+            let msgObj = responseHandler.generateRes(msg.cod, msg.title, msg.message);
+            request.session.msg = msgObj;
+            response.redirect("/perfil");
+        }
+    });
 });
 
 // Dejar un comentario

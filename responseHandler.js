@@ -28,6 +28,11 @@ function generateRes(cod, title="", message ="") {
             title = "No implementado";
             message = "Oops! Aún no tenemos esta funcionalidad disponible";
         } break;
+        case -6: {
+            code = 403;
+            title = "Acción no permitida";
+            message = "No sé qué estabas intentando hacer, pero esta reserva no es tuya!";
+        } break;
         case 0: {
             code = 200;
         } break;
@@ -60,7 +65,37 @@ function generateRes(cod, title="", message ="") {
             code = 400;
             title = "Sin hueco";
             message = "No quedan suficientes plazas disponibles en este destino durante estas fechas :(";
-        }
+        } break;
+        case 7: {
+            code = 400;
+            title = "Reserva ya cancelada";
+            message = "Esta reserva ya estaba cancelada";
+        } break;
+        case 8: {
+            code = 400;
+            title = "Reserva pasada";
+            message = "No se puede cancelar una reserva que ya ha finalizado o está en curso";
+        } break;
+        case 9: {
+            code = 400;
+            title = "Contraseña no válida";
+            message = "La contraseña debe ser de, al menos, 8 caracteres, y contener al menos 1 letra y 1 número";
+        } break;
+        case 10: {
+            code = 400;
+            title = "Fecha no válida";
+            message = "Las reservas deben hacerse desde hoy en adelante.";
+        } break;
+        case 11: {
+            code = 400;
+            title = "Campos vacíos";
+            message = "Asegúrate de haber completado todos los campos para poder completar el registro.";
+        } break;
+        case 12: {
+            code = 400;
+            title = "Nombre de usuario no válido";
+            message = "El nombre de usuario no puede contener espacios en blanco ni empezar por un número, y debe tener entre 4 y 16 caracteres.";
+        } break;
         default: {
             code = 500;
             title = "Error desconocido";
