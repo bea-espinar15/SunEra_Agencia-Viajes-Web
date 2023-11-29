@@ -1,5 +1,7 @@
 "use strict"
 
+const utils = require("../utils");
+
 class DAODestinations {
     // --- Atributos ---
     pool; 
@@ -139,11 +141,40 @@ class DAODestinations {
                             let comment = {
                                  username: row.username,
                                  rate: row.valoracion,
-                                 text: row.comentario
+                                 text: row.comentario,
+                                 date: utils.formatDate(row.fecha)
                             }
                             comments.push(comment);
                         });
                         callback(null, comments);
+                    }
+                });
+            }
+        });
+    }
+
+    // Leer el comentario de un usuario
+    readCommentByUser(idDest, idUser, callback) {
+        this.pool.getConnection((error, connection) => {
+            if (error) {
+                callback(-1);
+            }
+            else {
+                // Cogemos también el nombre_usuario para no tener que llamar a daoUser.read()
+                let querySQL = "SELECT * FROM reseña WHERE id_destino = ? AND id_usuario = ?";
+                connection.query(querySQL, [idDest, idUser], (error, rows) => {
+                    connection.release();
+                    if (error) {
+                        callback(-1);
+                    }
+                    else {
+                        console.log(rows)
+                        if(rows.length === 0){
+                            callback(null, true);
+                        }
+                        else{
+                            callback(null, false);
+                        }
                     }
                 });
             }

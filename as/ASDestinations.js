@@ -104,6 +104,27 @@ class ASDestinations {
         });
     }
 
+    // Comprobas si un usuario ya ha comentado
+    hasAlreadyCommented(idUser, idDest, callback) {
+        // Comprobar que existe el destino
+        this.daoDes.read(idDest, (error, dest) => {
+            if (error) {
+                callback(error);
+            }
+            else {
+                // Obtener sus reseñas
+                this.daoDes.readCommentByUser(idUser, dest.id, (error, commented) => {
+                    if (error) {
+                        callback(error);
+                    }
+                    else {
+                        callback(null, commented);
+                    }
+                });
+            }
+        });
+    }
+
     // Buscar destino(s)
     search(searchQuery, callback) {
         if (!searchQuery || searchQuery === "") {
