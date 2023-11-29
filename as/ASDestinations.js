@@ -5,10 +5,12 @@ const utils = require("../utils");
 class ASDestinations {
     // --- Atributos ---
     daoDes;
+    daoUse;
 
     // --- Constructor ---
-    constructor(daoDes) {
+    constructor(daoDes, daoUse) {
         this.daoDes = daoDes;
+        this.daoUse = daoUse;
     }
     
     // --- Métodos ---
@@ -80,24 +82,33 @@ class ASDestinations {
     }
 
     // Leer reseñas de un destino
-    getCommentsByDestination(idDest, callback) {
+    getCommentsByDestination(idDest, idUser, callback) {
         // Comprobar que existe el destino
         this.daoDes.read(idDest, (error, dest) => {
             if (error) {
                 callback(error);
             }
             else {
-                // Obtener sus reseñas
-                this.daoDes.readCommentsByDestination(dest.id, (error, comments) => {
+                // Comprobar que el usuario existe
+                this.daoUse.read(idUser, (error, user) => {
                     if (error) {
                         callback(error);
                     }
                     else {
-                        // Construir la ruta (imagen valoración) de cada reseña
-                        comments.forEach(com => {
-                            com.ratePic = "rate-" + utils.rateCalculator(com.rate);
+                        // Obtener todas las reseñas menos la del usuario
+                        this.daoDes.readCommentsByDestination(dest.id, user.id, (error, comments) => {
+                            if (error) {
+                                callback(error);
+                            }
+                            else {
+                                // Construir la ruta (imagen valoración) de cada reseña y formatear fecha
+                                comments.forEach(com => {
+                                    com.ratePic = "rate-" + utils.rateCalculator(com.rate);
+                                    com.date = utils.formatDate(com.date);
+                                });
+                                callback(null, comments);
+                            }
                         });
-                        callback(null, comments);
                     }
                 });
             }
@@ -112,13 +123,29 @@ class ASDestinations {
                 callback(error);
             }
             else {
-                // Obtener sus reseñas
-                this.daoDes.readCommentByUser(idUser, dest.id, (error, commented) => {
+                // Comprobar que existe el usuario
+                this.daoUse.read(idUser, (error, user) => {
                     if (error) {
                         callback(error);
                     }
                     else {
-                        callback(null, commented);
+                        // Obtener su comentario, si tiene
+                        this.daoDes.readCommentByUser(user.id, dest.id, (error, comment) => {
+                            if (error) {
+                                callback(error);
+                            }
+                            else if (comment) {
+                                // Imagen valoración y formatear fecha
+                                console.log(`HOLAAAAA ${comment}`);
+                                comment.username = user.username;
+                                comment.ratePic = "rate-" + utils.rateCalculator(comment.rate);
+                                comment.date = utils.formatDate(comment.date);
+                                callback(null, comment);                              
+                            }
+                            else {
+                                callback(null, comment);
+                            }
+                        });
                     }
                 });
             }

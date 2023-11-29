@@ -1,7 +1,5 @@
 "use strict"
 
-const utils = require("../utils");
-
 class DAODestinations {
     // --- Atributos ---
     pool; 
@@ -121,15 +119,15 @@ class DAODestinations {
     }
 
     // Leer comentarios de un destino (con el usuario)
-    readCommentsByDestination(idDest, callback) {
+    readCommentsByDestination(idDest, idUser, callback) {
         this.pool.getConnection((error, connection) => {
             if (error) {
                 callback(-1);
             }
             else {
                 // Cogemos también el nombre_usuario para no tener que llamar a daoUser.read()
-                let querySQL = "SELECT reseña.*, usuario.nombre_usuario AS username FROM reseña JOIN usuario ON reseña.id_usuario = usuario.id WHERE id_destino = ? ORDER BY fecha DESC";
-                connection.query(querySQL, [idDest], (error, rows) => {
+                let querySQL = "SELECT reseña.*, usuario.nombre_usuario AS username FROM reseña JOIN usuario ON reseña.id_usuario = usuario.id WHERE id_destino = ? AND usuario.id <> ? ORDER BY fecha DESC";
+                connection.query(querySQL, [idDest, idUser], (error, rows) => {
                     connection.release();
                     if (error) {
                         callback(-1);
@@ -142,7 +140,7 @@ class DAODestinations {
                                  username: row.username,
                                  rate: row.valoracion,
                                  text: row.comentario,
-                                 date: utils.formatDate(row.fecha)
+                                 date: row.fecha
                             }
                             comments.push(comment);
                         });
@@ -154,13 +152,12 @@ class DAODestinations {
     }
 
     // Leer el comentario de un usuario
-    readCommentByUser(idDest, idUser, callback) {
+    readCommentByUser(idUser, idDest, callback) {
         this.pool.getConnection((error, connection) => {
             if (error) {
                 callback(-1);
             }
             else {
-                // Cogemos también el nombre_usuario para no tener que llamar a daoUser.read()
                 let querySQL = "SELECT * FROM reseña WHERE id_destino = ? AND id_usuario = ?";
                 connection.query(querySQL, [idDest, idUser], (error, rows) => {
                     connection.release();
@@ -168,12 +165,23 @@ class DAODestinations {
                         callback(-1);
                     }
                     else {
-                        console.log(rows)
-                        if(rows.length === 0){
-                            callback(null, true);
+                        // No tiene comentarios
+                        if (rows.length === 0){
+                            callback(null, null);
                         }
-                        else{
-                            callback(null, false);
+                        // Error de la BBDD
+                        else if (rows.length > 1) {
+                            callback(-1);
+                        }
+                        // Devolver su comentario
+                        else {
+                            // Construir comentario
+                            let comment = {
+                                rate: rows[0].valoracion,
+                                text: rows[0].comentario,
+                                date: rows[0].fecha
+                           }
+                            callback(null, comment);
                         }
                     }
                 });

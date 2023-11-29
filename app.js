@@ -60,7 +60,7 @@ const DAODes = new DAODestinations(pool);
 const DAORes = new DAOReservations(pool);
 const DAOUse = new DAOUsers(pool);
 // Crear instancias de los ASs
-const ASDes = new ASDestinations(DAODes);
+const ASDes = new ASDestinations(DAODes, DAOUse);
 const ASRes = new ASReservations(DAORes, DAOUse, DAODes);
 const ASUse = new ASUsers(DAOUse);
 
@@ -237,13 +237,13 @@ app.get("/destino/:id", userLogged, (request, response, next) => {
         }
         else {
             // Obtener las reseñas del destino
-            ASDes.getCommentsByDestination(destination.id, (error, comments) => {
+            ASDes.getCommentsByDestination(destination.id, request.session.currentUser.id, (error, comments) => {
                 if (error) {
                     let errorObj = responseHandler.generateRes(error);
                     next(errorObj); // Redirigir a error.ejs
                 }
                 else {
-                    ASDes.hasAlreadyCommented(request.session.currentUser.id, destination.id, (error, alreadyCommented) => {
+                    ASDes.hasAlreadyCommented(request.session.currentUser.id, destination.id, (error, comment) => {
                         if (error) {
                             let errorObj = responseHandler.generateRes(error);
                             next(errorObj); // Redirigir a error.ejs
@@ -252,14 +252,14 @@ app.get("/destino/:id", userLogged, (request, response, next) => {
                             // Actualizar la variable de sesión con la info del destino       
                             request.session.destination = destination;
                             request.session.comments = comments;
-                            request.session.alreadyCommented = alreadyCommented;
+                            request.session.userComment = comment;                            
                             // Renderizar   
                             response.status(200);
                             response.render("destination", {
                                 dest: destination,
                                 comments: comments,
                                 user: { username: request.session.currentUser.username },
-                                alreadyCommented: request.session.alreadyCommented,
+                                userComment: request.session.userComment,
                                 msg: undefined
                             });
                         }
@@ -364,7 +364,8 @@ app.post("/book", userLogged, (request, response, next) => {
                 response.render("destination", { 
                     dest: request.session.destination, 
                     comments: request.session.comments, 
-                    user: { username: request.session.currentUser.username }, 
+                    user: { username: request.session.currentUser.username },
+                    userComment: request.session.userComment,
                     msg: errorObj});
             }
         }
@@ -382,7 +383,7 @@ app.post("/book", userLogged, (request, response, next) => {
                 dest: request.session.destination, 
                 comments: request.session.comments, 
                 user: { username: request.session.currentUser.username },
-                alreadyCommented: request.session.alreadyCommented,
+                userComment: request.session.userComment,
                 msg: msgObj});
         }
     });
@@ -534,7 +535,7 @@ app.post("/comment", userLogged, (request, response, next) => {
                     dest: request.session.destination, 
                     comments: request.session.comments, 
                     user: { username: request.session.currentUser.username },
-                    alreadyCommented: request.session.alreadyCommented,
+                    userComment: request.session.userComment,
                     msg: errorObj});
             }
         }
@@ -548,14 +549,13 @@ app.post("/comment", userLogged, (request, response, next) => {
 
             let msgObj = responseHandler.generateRes(msg.cod, msg.title, msg.message);
             // Actualizar variables de sesión
-            request.session.comments = (request.session.comments).push(comment);
-            request.session.alreadyCommented = true;
+            request.session.userComment = comment;
             // Renderizar con las variables de sesión
             response.render("destination", { 
                 dest: request.session.destination, 
                 comments: request.session.comments, 
                 user: { username: request.session.currentUser.username },
-                alreadyCommented: request.session.alreadyCommented,
+                userComment: request.session.userComment,
                 msg: msgObj});
         }
     });

@@ -151,7 +151,7 @@
             <div id="#div-comment" class="rounded mt-4">
                 <h2>Reseñas</h2>
                 <div class="row row-cols-1 row-cols-xl-2">
-                    <% if (!alreadyCommented) { %>
+                    <% if (!userComment) { %>
                     <!-- Enviar comentario -->
                     <div class="col px-3 py-2">
                         <div class="card">
@@ -172,6 +172,22 @@
                             </form>
                         </div>
                     </div>
+                    <% } else { %>
+                    <!-- Comentario del usuario [!] para editar -->
+                    <div class="col px-3 py-2">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <!-- [!] Cargar foto de perfil dinámicamente -->
+                                    <img src="/img/profile.png" alt="Foto Usuario" height="30">
+                                    <p class="gray-text m-0 ms-2">@<%= userComment.username %></p>
+                                    <p class="gray-text m-0 ms-2"><%= userComment.date %></p>
+                                </div>
+                                <img src="/img/rate/<%= userComment.ratePic %>" alt="Valoración Usuario" height="15">
+                                <p class="card-text mt-2"><%= userComment.text %></p>
+                            </div>
+                        </div>
+                    </div>   
                     <% } %>
                     <!-- Cards comentarios -->
                     <% comments.forEach(comment => { %>
