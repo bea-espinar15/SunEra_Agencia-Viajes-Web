@@ -19,8 +19,8 @@
 
     <!-- BARRA DE BÚSQUEDA -->
     <div id="search-bar" class="d-flex align-items-center">
-        <form method="post" action="/search">
-            <input id="search-field" type="search" class="rounded" placeholder="Buscar destino...">
+        <form method="get" action="/search">
+            <input id="search-field" name="searchQuery" type="search" class="rounded" placeholder="Buscar destino...">
             <button type="submit" id="search-button" class="ms-2 search-button rounded">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-search" viewBox="0 0 16 16">
                     <path
@@ -39,36 +39,26 @@
         <!-- [?] Posible cambio dinámico -->
         <div class="col-2 d-flex flex-column">
             <h2>Filtros de búsqueda</h2>
-            <form method="post" action="/filter" class="d-flex flex-column">
-                <!-- Fecha inicio -->
-                <div class="filter d-flex flex-column">
-                    <label for="date-ini">¿Cuándo te vas?</label>
-                    <input id="date-ini" type="date" name="date-ini">
-                </div>
-                <!-- Fecha fin -->
-                <div class="filter d-flex flex-column">
-                    <label for="date-fin">¿Cuándo vuelves?</label>
-                    <input id="date-fin" type="date" name="date-fin">
-                </div>
+            <form method="get" action="/filter" class="d-flex flex-column">
                 <!-- Días -->
                 <div class="d-resp filter d-flex flex-column">
                     <label class="me-2" for="days">¿Cuántos días quieres irte?<br>(1-<%= params.maxDays %>)</label>
-                    <input id="days" type="number" name="days" value="1" min="1" max="<%= params.maxDays %>">
+                    <input id="days" type="number" name="days" min="1" max="<%= params.maxDays %>">
                 </div>
                 <!-- Nº personas -->
                 <div class="d-resp filter d-flex flex-column">
                     <label for="n-people">Viajeros (1-<%= params.maxCapacity %>)</label>
-                    <input id="n-people" type="number" name="n-people" value="1" min="1" max="<%= params.maxCapacity %>">
+                    <input id="n-people" type="number" name="nPeople" min="1" max="<%= params.maxCapacity %>">
                 </div>
                 <!-- Precio/noche -->
                 <div class="filter d-flex flex-column">
                     <label for="price">Precio/persona (<%= params.minPrice %>€-<%= params.maxPrice %>€)</label>
-                    <input id="price" type="range" name="price" value="<%= (params.maxPrice + params.minPrice) / 2 %>" min="<%= params.minPrice %>" max="<%= params.maxPrice %>">
+                    <input id="price" type="range" name="price" value="<%= params.maxPrice %>" min="<%= params.minPrice %>" max="<%= params.maxPrice %>">
                 </div>
                 <!-- Valoración -->
                 <div class="d-resp filter d-flex flex-column">
                     <label for="rate">Valoración (1-5)</label>
-                    <input id="rate" type="number" name="rate" value="0" min="0" max="5">
+                    <input id="rate" type="number" name="rate" min="0" max="5">
                 </div>
                 <!-- Submit -->
                 <div id="sb-filter" class="mt-4">

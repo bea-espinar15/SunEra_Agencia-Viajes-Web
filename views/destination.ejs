@@ -151,6 +151,7 @@
             <div id="#div-comment" class="rounded mt-4">
                 <h2>Reseñas</h2>
                 <div class="row row-cols-1 row-cols-xl-2">
+                    <% if (!alreadyCommented) { %>
                     <!-- Enviar comentario -->
                     <div class="col px-3 py-2">
                         <div class="card">
@@ -161,7 +162,8 @@
                                     <img src="/img/profile.png" alt="Foto Usuario" height="30">
                                     <p class="gray-text m-0 ms-2"><%= user.username %></p>
                                     <!-- [!] CAMBIAR, añadir funcionalidad -->
-                                    <img src="/img/rate/rate-0.png" alt="Valoración Usuario" height="20" class="ms-auto">
+                                    <img src="/img/rate/star.png" alt="Valoración Usuario" height="20" class="ms-auto">
+                                    <input class="border rounded" id="comment-rate" type="number" name="rate" min="0" max="5">
                                 </div>
                                 <!-- Comentario -->
                                 <textarea name="comment" id="comment" placeholder="Escribe tu comentario..." rows="2" class="d-block mt-3 mb-1 w-100"></textarea>
@@ -170,6 +172,7 @@
                             </form>
                         </div>
                     </div>
+                    <% } %>
                     <!-- Cards comentarios -->
                     <% comments.forEach(comment => { %>
                         <div class="col px-3 py-2">

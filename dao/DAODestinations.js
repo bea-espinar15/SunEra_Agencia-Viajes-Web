@@ -149,6 +149,125 @@ class DAODestinations {
             }
         });
     }
+
+    // Buscar destinos que coincidan con un texto de entrada
+    search(searchQuery, callback) {
+        this.pool.getConnection((error, connection) => {
+            if (error) {
+                callback(-1);
+            }
+            else {
+                let input = "%" + searchQuery + "%";
+                // Hay que traerse el destino y también su imagen principal (la que tenga el ID más pequeño)
+                let querySQL = "SELECT * FROM destino JOIN (SELECT id_destino, MIN(id), img FROM Imagen GROUP BY id_destino)" + 
+                               "AS subquery ON destino.id = subquery.id_destino WHERE nombre LIKE ? OR descripción LIKE ? OR país LIKE ?";
+                connection.query(querySQL, [input, input, input], (error, rows) => {
+                    connection.release();
+                    if (error) {
+                        callback(-1);
+                    }
+                    else {
+                        let destinations = new Array();
+                        rows.forEach(row => {
+                            // Construir cada destino
+                            let dest = {
+                                id: row.id,
+                                name: row.nombre,
+                                desc: row.descripción,
+                                price: row.precio,
+                                capacity: row.aforo,
+                                rate: row.valoración_media,
+                                country: row.país,
+                                days: row.días,
+                                pic: row.img
+                            }
+                            destinations.push(dest);
+                        });
+                        callback(null, destinations);
+                    }
+                });
+            }
+        });
+    }
+
+    // Aplicar filtros
+    filter(params, callback) {
+        this.pool.getConnection((error, connection) => {
+            if (error) {
+                callback(-1);
+            }
+            else {
+                let input = new Array();
+                let where = "";
+                // Construir condiciones
+                let res = DAODestinations.buildQuery(input, params.days, where)
+                if (res[0]) {
+                    where = where + res[1] + "días <= ?";
+                }
+                res = DAODestinations.buildQuery(input, params.nPeople, where)
+                if (res[0]) {
+                    where = where + res[1] + "aforo >= ?";
+                }
+                res = DAODestinations.buildQuery(input, params.price, where)
+                if (res[0]) {
+                    where = where + res[1] + "precio <= ?";
+                }
+                res = DAODestinations.buildQuery(input, params.rate, where)
+                if (res[0]) {
+                    where = where + res[1] + "valoración_media >= ?";
+                }
+
+                // Hay que traerse el destino y también su imagen principal (la que tenga el ID más pequeño)
+                console.log(`Hola soy el where: ${where}`);
+                let querySQL = "SELECT * FROM destino JOIN (SELECT id_destino, MIN(id), img FROM Imagen GROUP BY id_destino)" + 
+                               "AS subquery ON destino.id = subquery.id_destino" + where;
+                connection.query(querySQL, input, (error, rows) => {
+                    connection.release();
+                    if (error) {
+                        callback(-1);
+                    }
+                    else {
+                        let destinations = new Array();
+                        rows.forEach(row => {
+                            // Construir cada destino
+                            let dest = {
+                                id: row.id,
+                                name: row.nombre,
+                                desc: row.descripción,
+                                price: row.precio,
+                                capacity: row.aforo,
+                                rate: row.valoración_media,
+                                country: row.país,
+                                days: row.días,
+                                pic: row.img
+                            }
+                            destinations.push(dest);
+                        });
+                        callback(null, destinations);
+                    }
+                });
+            }
+        });
+    }
+
+    // Constuir WHERE del filter
+    static buildQuery(input, param, where) {
+        if (param) {
+            input.push(param);
+            if (where === "") {
+                return [true, " WHERE "];
+            }
+            if (where === " WHERE ") {
+                return [true, ""];
+            }
+            else {
+                return [true, "AND "];
+            }
+        }
+        else {
+            return [false, ""];
+        }        
+    }
 }
 
 module.exports = DAODestinations;

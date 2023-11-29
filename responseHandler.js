@@ -110,6 +110,11 @@ function generateRes(cod, title="", message ="") {
             title = "Datos no modificados";
             message = "No se ha modificado ninguno de tus datos.";
         } break;
+        case 15: {
+            code = 400;
+            title = "Filtros no válidos";
+            message = "Alguno de los filtros no cumple los rangos establecidos.";
+        }
         default: {
             code = 500;
             title = "Error desconocido";

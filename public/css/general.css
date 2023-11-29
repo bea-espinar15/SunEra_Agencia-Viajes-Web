@@ -154,6 +154,11 @@
     height: 1.7em;
 }
 
+#comment-rate{
+    margin-left: 0.4em;
+    width: 3em;
+}
+
 /*  --- MODAL --- */
 
 .modal-content {

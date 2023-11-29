@@ -1,5 +1,7 @@
 "use strict"
 
+const utils = require("../utils");
+
 class ASReservations {
     // --- Atributos ---
     daoRes;
@@ -28,8 +30,8 @@ class ASReservations {
                     // Es actual si fecha_fin es posterior a hoy
                     let current = new Date(res.dateEnd) >= new Date();
                     // Formatear fechas
-                    res.dateStart = ASReservations.formatDate(res.dateStart);
-                    res.dateEnd = ASReservations.formatDate(res.dateEnd);
+                    res.dateStart = utils.formatDate(res.dateStart);
+                    res.dateEnd = utils.formatDate(res.dateEnd);
                     if (current) {
                         curr.push(res);
                     }
@@ -143,14 +145,7 @@ class ASReservations {
             }
         });
     }
-
-    // Formatear fechas - Cogido de Internet
-    static formatDate(date) {
-        const day = date.getDate().toString().padStart(2, '0');
-        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // En JavaScript los meses van de 0 a 11
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
-    }
+    
 }
 
 module.exports = ASReservations;

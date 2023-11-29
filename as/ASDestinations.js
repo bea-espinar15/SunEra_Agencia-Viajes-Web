@@ -1,5 +1,7 @@
 "use strict"
 
+const utils = require("../utils");
+
 class ASDestinations {
     // --- Atributos ---
     daoDes;
@@ -17,7 +19,7 @@ class ASDestinations {
                 callback(error);
             }
             else {
-                dest.ratePic = "rate-" + ASDestinations.rateCalculator(dest.rate);
+                dest.ratePic = "rate-" + utils.rateCalculator(dest.rate);
                 // Obtener imágenes del destino
                 this.daoDes.readImagesByDestination(dest.id, (error, imgs) => {
                     if (error) {
@@ -41,7 +43,7 @@ class ASDestinations {
             else {
                 // Construir la ruta (imagen valoración) de cada destino
                 destinations.forEach(dest => {
-                    dest.ratePic = "rate-" + ASDestinations.rateCalculator(dest.rate);
+                    dest.ratePic = "rate-" + utils.rateCalculator(dest.rate);
                 });
                 callback(null, destinations);
             }
@@ -93,7 +95,7 @@ class ASDestinations {
                     else {
                         // Construir la ruta (imagen valoración) de cada reseña
                         comments.forEach(com => {
-                            com.ratePic = "rate-" + ASDestinations.rateCalculator(com.rate);
+                            com.ratePic = "rate-" + utils.rateCalculator(com.rate);
                         });
                         callback(null, comments);
                     }
@@ -102,45 +104,82 @@ class ASDestinations {
         });
     }
 
-    // --- Métodos estáticos auxiliares ---
-    // Aproximar a .00 o .50 y construir ruta imagen
-    static rateCalculator(num) {
-        let rate;
-        if (num < 0.2){
-            rate = "0";
-        }
-        else if (num >= 0.2 && num < 0.7){
-            rate = "0_5";
-        }
-        else if (num >= 0.7 && num < 1.2){
-            rate = "1";
-        }
-        else if (num >= 1.2 && num < 1.7){
-            rate = "1_5";
-        }
-        else if (num >= 1.7 && num < 2.2){
-            rate = "2";
-        }
-        else if (num >= 2.2 && num < 2.7){
-            rate = "2_5";
-        }
-        else if (num >= 2.7 && num < 3.2){
-            rate = "3";
-        }
-        else if (num >= 3.2 && num < 3.7){
-            rate = "3_5";
-        }
-        else if (num >= 3.7 && num < 4.2){
-            rate = "4";
-        }
-        else if (num >= 4.2 && num < 4.7){
-            rate = "4_5";
+    // Buscar destino(s)
+    search(searchQuery, callback) {
+        if (!searchQuery || searchQuery === "") {
+            searchQuery === "";
         }
         else {
-            rate = "5";
+            searchQuery.toLowerCase();
         }
-        return rate + ".png";
+
+        this.daoDes.search(searchQuery, (error, destinations) => {
+            if (error) {
+                callback(error);
+            }
+            else {
+                // Construir la ruta (imagen valoración) de cada destino
+                destinations.forEach(dest => {
+                    dest.ratePic = "rate-" + utils.rateCalculator(dest.rate);
+                });
+                callback(null, destinations);
+            }
+        });
     }
+
+    // Aplicar filtros
+    filter(params, callback) {
+        // Generar filtros
+        let filters = new Array();
+        // Días
+        if (params.days) {
+            if (params.days < 1 || params.days > params.maxDays) {
+                callback(15);
+            }
+            else {
+                filters.push({ range: "≤", value: params.days, name: " días"});
+            }
+        }
+        // Nº viajeros
+        if (params.nPeople) {
+            if (params.nPeople < 1 || params.nPeople > params.maxCapacity) {
+                callback(15);
+            }
+            else {
+                filters.push({ range: "≥", value: params.nPeople, name: " viajeros"});
+            }
+        }
+        // Precio
+        if (params.price < params.minPrice || params.price > params.maxPrice) {
+            callback(15);
+        }
+        else {
+            filters.push({ range: "≤", value: params.price, name: "€/p"});
+        }
+        // Valoración media
+        if (params.rate) {
+            if (params.rate < 0 || params.rate > 5) {
+                callback(15);
+            }
+            else {
+                filters.push({ range: "≥", value: params.rate, name: " estrellas"});
+            }
+        }
+
+        this.daoDes.filter(params, (error, destinations) => {
+            if (error) {
+                callback(error);
+            }
+            else {
+                // Construir la ruta (imagen valoración) de cada destino
+                destinations.forEach(dest => {
+                    dest.ratePic = "rate-" + utils.rateCalculator(dest.rate);
+                });
+                callback(null, destinations, filters);
+            }
+        });
+    }
+
 }
 
 module.exports = ASDestinations;

@@ -112,10 +112,50 @@ app.get(["/", "/inicio"], userLogged, (request, response, next) => {
                     next(errorObj); // Redirigir a error.ejs
                 }
                 else {
+                    request.session.params = params;
                     response.status(200);
                     response.render("index", { destinations: destinations, params: params, filters: [], msg: undefined});
                 }
             });
+        }
+    });
+});
+
+// Realizar una búsqueda
+app.get("/search", userLogged, (request, response, next) => {
+    ASDes.search(request.query.searchQuery, (error, destinations) => {
+        if (error) {
+            let errorObj = responseHandler.generateRes(error);
+            next(errorObj); // Redirigir a error.ejs
+        }
+        else {
+            response.status(200);
+            response.render("index", { destinations: destinations, params: request.session.params, filters: [], msg: undefined});
+        }
+    });
+});
+
+// Aplicar filtros
+app.get("/filter", userLogged, (request, response, next) => {
+    // Obtener parámetros de entrada
+    let params = {
+        days:  request.query.days,
+        nPeople:  request.query.nPeople,
+        price:  request.query.price,
+        rate: request.query.rate,
+        maxDays: request.session.params.maxDays,
+        maxCapacity: request.session.params.maxCapacity,
+        maxPrice: request.session.params.maxPrice,
+        minPrice: request.session.params.minPrice        
+    };
+    ASDes.filter(params, (error, destinations, filters) => {
+        if (error) {
+            let errorObj = responseHandler.generateRes(error);
+            next(errorObj); // Redirigir a error.ejs
+        }
+        else {
+            response.status(200);
+            response.render("index", { destinations: destinations, params: request.session.params, filters: filters, msg: undefined});
         }
     });
 });
@@ -175,6 +215,7 @@ app.get("/perfil", userLogged, (request, response, next) => {
                 }
                 else {
                     // Actualizamos las variables de sesión con la info actual del usuario
+                    request.session.currentUser = user;
                     request.session.currentReservations = currentReservations;
                     request.session.oldReservations = oldReservations;
                     // Renderizar
@@ -201,13 +242,28 @@ app.get("/destino/:id", userLogged, (request, response, next) => {
                     let errorObj = responseHandler.generateRes(error);
                     next(errorObj); // Redirigir a error.ejs
                 }
-                else {     
-                    // Actualizar la variable de sesión con la info del destino       
-                    request.session.destination = destination;
-                    request.session.comments = comments;
-                    // Renderizar   
-                    response.status(200);
-                    response.render("destination", { dest: destination, comments: comments, user: { username: request.session.currentUser.username }, msg: undefined});
+                else {
+                    ASDes.hasAlreadyCommented(request.session.currentUser.id, destination.id, (error, alreadyCommented) => {
+                        if (error) {
+                            let errorObj = responseHandler.generateRes(error);
+                            next(errorObj); // Redirigir a error.ejs
+                        }
+                        else {
+                            // Actualizar la variable de sesión con la info del destino       
+                            request.session.destination = destination;
+                            request.session.comments = comments;
+                            request.session.alreadyCommented = alreadyCommented;
+                            // Renderizar   
+                            response.status(200);
+                            response.render("destination", {
+                                dest: destination,
+                                comments: comments,
+                                user: { username: request.session.currentUser.username },
+                                alreadyCommented: request.session.alreadyCommented,
+                                msg: undefined
+                            });
+                        }
+                    });
                 }
             })
         }
@@ -287,18 +343,6 @@ app.post("/logout", userLogged, (request, response, next) => {
     response.redirect("/login");
 });
 
-// Realizar una búsqueda - TODO (por ahora, 501)
-app.post("/search", userLogged, (request, response, next) => {
-    let errorObj = responseHandler.generateRes(-5);
-    next(errorObj);
-});
-
-// Aplicar filtros - TODO (por ahora, 501)
-app.post("/filter", userLogged, (request, response, next) => {
-    let errorObj = responseHandler.generateRes(-5);
-    next(errorObj);
-});
-
 // Hacer una reserva
 app.post("/book", userLogged, (request, response, next) => {
     // Obtener parámetros de entrada
@@ -337,7 +381,8 @@ app.post("/book", userLogged, (request, response, next) => {
             response.render("destination", { 
                 dest: request.session.destination, 
                 comments: request.session.comments, 
-                user: { username: request.session.currentUser.username }, 
+                user: { username: request.session.currentUser.username },
+                alreadyCommented: request.session.alreadyCommented,
                 msg: msgObj});
         }
     });
@@ -475,10 +520,45 @@ app.post("/cancel", (request, response, next) => {
     });
 });
 
-// Dejar un comentario - TODO (por ahora, 501)
+// Dejar un comentario
 app.post("/comment", userLogged, (request, response, next) => {
-    let errorObj = responseHandler.generateRes(-5);
-    next(errorObj);
+    ASDes.comment(request.body.rate, request.body.text, (error, comment) => {
+        if (error) {
+            let errorObj = responseHandler.generateRes(error);
+            if (error < 0) {
+                next(errorObj); // Redirigir a error.ejs
+            }
+            else {
+                // Renderizar con las variables de sesión
+                response.render("destination", { 
+                    dest: request.session.destination, 
+                    comments: request.session.comments, 
+                    user: { username: request.session.currentUser.username },
+                    alreadyCommented: request.session.alreadyCommented,
+                    msg: errorObj});
+            }
+        }
+        else {
+            // Crear mensaje de respuesta y volver al destino
+            let msg = {
+                cod: 0,
+                title: "Reseña añadida",
+                message: "Se ha añadido tu reseña correctamente!"
+            }
+
+            let msgObj = responseHandler.generateRes(msg.cod, msg.title, msg.message);
+            // Actualizar variables de sesión
+            request.session.comments = (request.session.comments).push(comment);
+            request.session.alreadyCommented = true;
+            // Renderizar con las variables de sesión
+            response.render("destination", { 
+                dest: request.session.destination, 
+                comments: request.session.comments, 
+                user: { username: request.session.currentUser.username },
+                alreadyCommented: request.session.alreadyCommented,
+                msg: msgObj});
+        }
+    });
 });
 
 // --- Middlewares de error ---
