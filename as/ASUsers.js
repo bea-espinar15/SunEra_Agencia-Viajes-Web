@@ -109,7 +109,7 @@ class ASUsers {
                 }
                 else {
                     // Comprobar que algo ha cambiado
-                    if (newUser.name === user.name && newUser.username === user.username && newUser.email === user.email && newUser.img === user.img) {
+                    if (newUser.name === user.name && newUser.username === user.username && newUser.email === user.email && !newUser.img) {
                         callback(14);
                     }
                     else {

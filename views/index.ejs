@@ -52,8 +52,9 @@
                 </div>
                 <!-- Precio/noche -->
                 <div class="filter d-flex flex-column">
-                    <label for="price">Precio/persona (<%= params.minPrice %>€-<%= params.maxPrice %>€)</label>
+                    <label for="price">Precio/persona</label>
                     <input id="price" type="range" name="price" value="<%= params.maxPrice %>" min="<%= params.minPrice %>" max="<%= params.maxPrice %>">
+                    <span id="price-span" class="align-self-center"></span>
                 </div>
                 <!-- Valoración -->
                 <div class="d-resp filter d-flex flex-column">

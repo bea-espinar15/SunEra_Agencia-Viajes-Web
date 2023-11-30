@@ -4,12 +4,14 @@
 <head>
     <!-- Importar css -->
     <link rel="stylesheet" href="/css/modal.css">
+    <!-- JS -->
+    <script src="/js/modal.js"></script>
 </head>
 
 <body>
     <!-- Si hay algún mensaje que mostrar -->
     <% if (msg) { %>
-    <button id="b" type="button" hidden="true" data-bs-toggle="modal" data-bs-target="#infoModal"></button>
+    <button id="b" type="button" hidden="true" data-bs-toggle="modal" data-bs-target="#infoModal" data-msg="<%= msg %>"></button>
     <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered">
             <div class="modal-content">
@@ -43,15 +45,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Al cargarse el modal se muestra automáticamente -->
-    <!-- [!] Mirar si conseguimos hacerlo desde un JS -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let button = document.getElementById('b');
-            button.click();
-        });
-    </script>
     <% } %>
 </body>
 

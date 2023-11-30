@@ -155,19 +155,18 @@
                     <!-- Enviar comentario -->
                     <div class="col px-3 py-2">
                         <div class="card">
-                            <form method="post" action="/comment" class="card-body">
+                            <form id="comment" method="post" action="/comment" class="card-body">
                                 <!-- Usuario -->
                                 <div class="d-flex align-items-center">
                                     <% if (user.img) { %>
-                                        <img src="/imagen/<%= user.id %>" alt="Foto Usuario" width="30" height="30">
+                                        <img class="pic" src="/imagen/<%= user.id %>" alt="Foto Usuario" width="30" height="30">
                                     <% } else { %>
-                                        <img isrc="/img/profile.png" alt="Foto Usuario" width="30" height="30">
+                                        <img class="pic" src="/img/profile.png" alt="Foto Usuario" width="30" height="30">
                                     <% } %>
                                     <p class="gray-text m-0 ms-2"><%= user.username %></p>
-                                    <!-- [!] CAMBIAR, añadir funcionalidad -->
                                     <img src="/img/rate/star.png" alt="Valoración Usuario" height="20" class="ms-auto">
-                                    <input class="border rounded" id="comment-rate" type="number" name="rate" min="0" max="5">
-                                </div>
+                                    <input class="border rounded" id="comment-rate" type="number" name="rate" value="5" min="0" max="5">
+                                </div>  
                                 <!-- Comentario -->
                                 <textarea name="text" id="comment" placeholder="Escribe tu comentario..." rows="2" class="d-block mt-3 mb-1 w-100"></textarea>
                                 <!-- ID del destino -->
@@ -187,7 +186,7 @@
                                     <% if (user.img) { %>
                                         <img class="pic" src="/imagen/<%= user.id %>" alt="Foto Usuario" width="30" height="30">
                                     <% } else { %>
-                                        <img class="pic" isrc="/img/profile.png" alt="Foto Usuario" width="30" height="30">
+                                        <img class="pic" src="/img/profile.png" alt="Foto Usuario" width="30" height="30">
                                     <% } %>
                                     <p class="gray-text m-0 ms-2">@<%= userComment.username %></p>
                                     <p class="gray-text m-0 ms-2"><%= userComment.date %></p>

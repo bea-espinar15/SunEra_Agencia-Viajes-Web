@@ -27,9 +27,9 @@
                     <div class="d-flex flex-column justify-content-center mb-4">
                         <input id="user-pic-input" type="file" name="userPic" class="d-none">
                         <% if (user.img) { %>
-                            <img id="user-pic" src="/imagen/<%= user.id %>" alt="Foto Perfil" width="130" height="130" class="align-self-center mt-4">
+                            <img id="user-pic" src="/imagen/<%= user.id %>" alt="Foto Perfil" width="130" height="130" class="align-self-center mt-4 pic">
                         <% } else { %>
-                            <img id="user-pic" src="/img/profile.png" alt="Foto Perfil" width="130" height="130" class="align-self-center mt-4">
+                            <img id="user-pic" src="/img/profile.png" alt="Foto Perfil" width="130" height="130" class="align-self-center mt-4 pic">
                         <% } %>
                     </div>                        
                     <h2>Editar perfil</h2>
