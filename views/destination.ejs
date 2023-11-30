@@ -153,7 +153,7 @@
                 <div class="row row-cols-1 row-cols-xl-2">
                     <% if (!userComment) { %>
                     <!-- Enviar comentario -->
-                    <div class="col px-3 py-2">
+                    <div id="create-comment" class="col px-3 py-2">
                         <div class="card">
                             <form id="comment" method="post" action="/comment" class="card-body">
                                 <!-- Usuario -->
@@ -165,12 +165,12 @@
                                     <% } %>
                                     <p class="gray-text m-0 ms-2"><%= user.username %></p>
                                     <img src="/img/rate/star.png" alt="Valoración Usuario" height="20" class="ms-auto">
-                                    <input class="border rounded" id="comment-rate" type="number" name="rate" value="5" min="0" max="5">
+                                    <input id="comment-rate" class="border rounded" type="number" value="5" min="0" max="5">
                                 </div>  
                                 <!-- Comentario -->
-                                <textarea name="text" id="comment" placeholder="Escribe tu comentario..." rows="2" class="d-block mt-3 mb-1 w-100"></textarea>
+                                <textarea id="text" placeholder="Escribe tu comentario..." rows="2" class="d-block mt-3 mb-1 w-100"></textarea>
                                 <!-- ID del destino -->
-                                <input hidden="true" type="number" value="<%= dest.id %>" name="idDest">
+                                <input id="id-dest" hidden="true" type="number" value="<%= dest.id %>">
                                 <!-- Submit -->                                
                                 <input id="comment-button" type="submit" value="Enviar comentario" class="mt-2 rounded-pill">
                             </form>
@@ -178,7 +178,7 @@
                     </div>
                     <% } else { %>
                     <!-- Comentario del usuario [!] para editar -->
-                    <div class="col px-3 py-2">
+                    <div id="edit-comment" class="col px-3 py-2">
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex align-items-center">

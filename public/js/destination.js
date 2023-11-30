@@ -76,8 +76,12 @@ $(() => {
     const minPeople = parseInt($("#n-people").min);
     const maxPeople = parseInt($("#n-people").max);
     // Formulario comentario
-    const formComment = document.getElementById("comment");
+    const formComment = $("#comment");
     const commentRate = $("#comment-rate");
+    const text = $("#text");
+    const idDest = $("#id-dest");
+    const createComment = $("#create-comment");
+    const editComment = $("#edit-comment");
 
     // Navegar por las imágenes con las teclas izq-dcha
     window.addEventListener('keydow', (e) => {
@@ -108,14 +112,37 @@ $(() => {
         }
     });
 
+    // Obtener comentario del usuario (o formulario de enviar si no tiene)
+    $.ajax({
+        // GET 
+    });
+
     // Formulario comentario
-    formComment.addEventListener("submit", function (event) {
+    formComment.on("submit", function (event) {
         event.preventDefault();
         let params = {
             rate: commentRate.val()
         };
         if (validateComment(params)) {
-            formComment.submit();
+            $.ajax({
+                method: "POST",
+                url: "/comment",
+                data: {
+                    rate: commentRate.val(),
+                    text: text.val(),
+                    idDest: idDest.val()
+                },
+                success: (com) => {
+                    // Sweet alert todo ok
+                    createComment.hide();
+                    editComment.empty();
+                    editComment.append(buildUserComment(data));
+                    editComment.show();
+                },
+                error: (jqXHR, textStatus, errorThrown) => {
+                    // Sweet alert error
+                }
+            });
         }
     });
 
