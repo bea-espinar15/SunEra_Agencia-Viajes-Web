@@ -248,31 +248,34 @@ app.get("/destino/:id", userLogged, (request, response, next) => {
                     next(errorObj); // Redirigir a error.ejs
                 }
                 else {
-                    ASDes.hasAlreadyCommented(request.session.currentUser.id, destination.id, (error, comment) => {
-                        if (error) {
-                            let errorObj = responseHandler.generateRes(error);
-                            next(errorObj); // Redirigir a error.ejs
-                        }
-                        else {
-                            // Actualizar la variable de sesión con la info del destino       
-                            request.session.destination = destination;
-                            request.session.comments = comments;
-                            request.session.userComment = comment;                            
-                            // Renderizar   
-                            response.status(200);
-                            response.render("destination", {
-                                dest: destination,
-                                comments: comments,
-                                user: request.session.currentUser,
-                                userComment: request.session.userComment,
-                                msg: undefined
-                            });
-                        }
+                    // Actualizar la variable de sesión con la info del destino       
+                    request.session.destination = destination;
+                    request.session.comments = comments;
+                    // Renderizar   
+                    response.status(200);
+                    response.render("destination", {
+                        dest: destination,
+                        comments: comments,
+                        user: request.session.currentUser,
+                        msg: undefined
                     });
                 }
             })
         }
     })
+});
+
+// Obtener comentario del usuario (null si no tiene)
+app.get("/comentUsuario/:id", (request, response, next) => {
+    ASDes.hasAlreadyCommented(request.session.currentUser.id, request.params.id, (error, comment) => {
+        if (error) {
+            let errorObj = responseHandler.generateRes(error);
+            next(errorObj); // Redirigir a error.ejs
+        }
+        else {
+            response.json(comment);
+        }
+    });
 });
 
 // Obtener imagen del usuario
@@ -383,7 +386,6 @@ app.post("/book", userLogged, (request, response, next) => {
                     dest: request.session.destination, 
                     comments: request.session.comments, 
                     user: { username: request.session.currentUser.username },
-                    userComment: request.session.userComment,
                     msg: errorObj});
             }
         }
@@ -401,7 +403,6 @@ app.post("/book", userLogged, (request, response, next) => {
                 dest: request.session.destination, 
                 comments: request.session.comments, 
                 user: { username: request.session.currentUser.username },
-                userComment: request.session.userComment,
                 msg: msgObj});
         }
     });
@@ -554,32 +555,12 @@ app.post("/comment", userLogged, (request, response, next) => {
             }
             else {
                 // Renderizar con las variables de sesión
-                response.render("destination", { 
-                    dest: request.session.destination, 
-                    comments: request.session.comments, 
-                    user: { username: request.session.currentUser.username },
-                    userComment: request.session.userComment,
-                    msg: errorObj});
+                response.status(400).send(errorObj.message);
+                response.end();
             }
         }
         else {
-            // Crear mensaje de respuesta y volver al destino
-            let msg = {
-                cod: 0,
-                title: "Reseña añadida",
-                message: "Se ha añadido tu reseña correctamente!"
-            }
-
-            let msgObj = responseHandler.generateRes(msg.cod, msg.title, msg.message);
-            // Actualizar variables de sesión
-            request.session.userComment = comment;
-            // Renderizar con las variables de sesión
-            response.render("destination", { 
-                dest: request.session.destination, 
-                comments: request.session.comments, 
-                user: { username: request.session.currentUser.username },
-                userComment: request.session.userComment,
-                msg: msgObj});
+            response.json(comment);
         }
     });
 });

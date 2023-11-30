@@ -7,8 +7,7 @@ function validateReservation(params) {
         Swal.fire({
             icon: "error",
             title: "¡Atención!",
-            text: "Asegúrate de seleccionar qué día te irás.",
-            confirmButtonClass: "sweet-alert-button"
+            text: "Asegúrate de seleccionar qué día te irás."
         });
         return false;
     }
@@ -16,8 +15,7 @@ function validateReservation(params) {
         Swal.fire({
             icon: "error",
             title: "¡Atención!",
-            text: "Asegúrate de introducir cuántos vais a viajar.",
-            confirmButtonClass: "sweet-alert-button"
+            text: "Asegúrate de introducir cuántos vais a viajar."
         });
         return false;
     }
@@ -26,8 +24,7 @@ function validateReservation(params) {
         Swal.fire({
             icon: "error",
             title: "¡Atención!",
-            text: "La reserva debe ser de hoy en adelante.",
-            confirmButtonClass: "sweet-alert-button"
+            text: "La reserva debe ser de hoy en adelante."
         });
         return false;
     }
@@ -36,8 +33,7 @@ function validateReservation(params) {
         Swal.fire({
             icon: "error",
             title: "¡Atención!",
-            text: `Sólo podéis viajar entre ${params.minPeople} y ${params.maxPeople} personas.`,
-            confirmButtonClass: "sweet-alert-button"
+            text: `Sólo podéis viajar entre ${params.minPeople} y ${params.maxPeople} personas.`
         });
         return false;
     }
@@ -53,14 +49,36 @@ function validateComment(params) {
         Swal.fire({
             icon: "error",
             title: "¡Atención!",
-            text: "Debes dar una valoración entre 0 y 5",
-            confirmButtonClass: "sweet-alert-button"
+            text: "Debes dar una valoración entre 0 y 5"
         });
         return false;
     }
     else {
         return true;
     }
+}
+
+// Crear div comentario usuario
+function buildUserComment(comment) {
+    let imgSrc = "";
+    if (comment.img) {
+        imgSrc = `/imagen/${comment.idUser}`;
+    }
+    else {
+        imgSrc = "/img/profile.png";
+    }
+    
+    return `<div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <img class="pic" src="${imgSrc}" alt="Foto Usuario" width="30" height="30">
+                        <p class="gray-text m-0 ms-2">@${comment.username}</p>
+                        <p class="gray-text m-0 ms-2">${comment.date}</p>
+                    </div>
+                    <img src="/img/rate/${comment.ratePic}" alt="Valoración Usuario" height="15">
+                    <p class="card-text mt-2">${comment.text}</p>
+                </div>
+            </div>`;
 }
 
 $(() => {
@@ -76,6 +94,7 @@ $(() => {
     const minPeople = parseInt($("#n-people").min);
     const maxPeople = parseInt($("#n-people").max);
     // Formulario comentario
+    const divComment = $("#div-comment");
     const formComment = $("#comment");
     const commentRate = $("#comment-rate");
     const text = $("#text");
@@ -114,7 +133,27 @@ $(() => {
 
     // Obtener comentario del usuario (o formulario de enviar si no tiene)
     $.ajax({
-        // GET 
+        method: "GET",
+        url: `/comentUsuario/${divComment.data("iddest")}`,
+        success: (comment) => {
+            if (comment) {
+                editComment.empty();
+                editComment.append(buildUserComment(comment));
+                createComment.hide();
+                editComment.show();
+            }
+            else {
+                editComment.hide();
+                createComment.show();
+            }
+        },
+        error: (jqXHR, textStatus, errorThrown) => {
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: errorThrown
+            });
+        }
     });
 
     // Formulario comentario
@@ -133,14 +172,22 @@ $(() => {
                     idDest: idDest.val()
                 },
                 success: (com) => {
-                    // Sweet alert todo ok
                     createComment.hide();
                     editComment.empty();
-                    editComment.append(buildUserComment(data));
+                    editComment.append(buildUserComment(com));
                     editComment.show();
+                    Swal.fire({
+                        title: "Reseña añadida!",
+                        text: "Tu comentario se ha añadido con éxito, gracias!",
+                        icon: "success"
+                      });
                 },
                 error: (jqXHR, textStatus, errorThrown) => {
-                    // Sweet alert error
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: errorThrown
+                    });
                 }
             });
         }

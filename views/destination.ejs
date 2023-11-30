@@ -148,14 +148,13 @@
                 <!-- [!] TODO -->
             </div>
             <!-- Comentarios -->
-            <div id="#div-comment" class="rounded mt-4">
+            <div id="div-comment" class="rounded mt-4" data-iddest="<%= dest.id %>">
                 <h2>Reseñas</h2>
                 <div class="row row-cols-1 row-cols-xl-2">
-                    <% if (!userComment) { %>
                     <!-- Enviar comentario -->
                     <div id="create-comment" class="col px-3 py-2">
                         <div class="card">
-                            <form id="comment" method="post" action="/comment" class="card-body">
+                            <form id="comment" class="card-body">
                                 <!-- Usuario -->
                                 <div class="d-flex align-items-center">
                                     <% if (user.img) { %>
@@ -163,40 +162,23 @@
                                     <% } else { %>
                                         <img class="pic" src="/img/profile.png" alt="Foto Usuario" width="30" height="30">
                                     <% } %>
-                                    <p class="gray-text m-0 ms-2"><%= user.username %></p>
+                                    <p class="gray-text m-0 ms-2">
+                                        <%= user.username %>
+                                    </p>
                                     <img src="/img/rate/star.png" alt="Valoración Usuario" height="20" class="ms-auto">
                                     <input id="comment-rate" class="border rounded" type="number" value="5" min="0" max="5">
-                                </div>  
+                                </div>
                                 <!-- Comentario -->
                                 <textarea id="text" placeholder="Escribe tu comentario..." rows="2" class="d-block mt-3 mb-1 w-100"></textarea>
                                 <!-- ID del destino -->
                                 <input id="id-dest" hidden="true" type="number" value="<%= dest.id %>">
-                                <!-- Submit -->                                
+                                <!-- Submit -->
                                 <input id="comment-button" type="submit" value="Enviar comentario" class="mt-2 rounded-pill">
                             </form>
                         </div>
                     </div>
-                    <% } else { %>
                     <!-- Comentario del usuario [!] para editar -->
-                    <div id="edit-comment" class="col px-3 py-2">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <!-- [!] Cargar foto de perfil dinámicamente -->
-                                    <% if (user.img) { %>
-                                        <img class="pic" src="/imagen/<%= user.id %>" alt="Foto Usuario" width="30" height="30">
-                                    <% } else { %>
-                                        <img class="pic" src="/img/profile.png" alt="Foto Usuario" width="30" height="30">
-                                    <% } %>
-                                    <p class="gray-text m-0 ms-2">@<%= userComment.username %></p>
-                                    <p class="gray-text m-0 ms-2"><%= userComment.date %></p>
-                                </div>
-                                <img src="/img/rate/<%= userComment.ratePic %>" alt="Valoración Usuario" height="15">
-                                <p class="card-text mt-2"><%= userComment.text %></p>
-                            </div>
-                        </div>
-                    </div>   
-                    <% } %>
+                    <div id="edit-comment" class="col px-3 py-2"></div> 
                     <!-- Cards comentarios -->
                     <% comments.forEach(comment => { %>
                         <div class="col px-3 py-2">
