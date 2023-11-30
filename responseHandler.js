@@ -34,6 +34,11 @@ function generateRes(cod, title="", message ="") {
             title = "Acción no permitida";
             message = "No sé qué estabas intentando hacer, pero esta reserva no es tuya!";
         } break;
+        case -7: {
+            code = 403;
+            title = "Acción no permitida";
+            message = "No puedes hacer más de 1 reseña en un mismo destino";
+        }
         // Todo correcto
         case 0: {
             code = 200;
@@ -114,7 +119,12 @@ function generateRes(cod, title="", message ="") {
             code = 400;
             title = "Filtros no válidos";
             message = "Alguno de los filtros no cumple los rangos establecidos.";
-        }
+        } break;
+        case 16: {
+            code = 400;
+            title = "Valoración no válida";
+            message = "La valoración debe ser un número entre 0 y 5";
+        } break;
         default: {
             code = 500;
             title = "Error desconocido";

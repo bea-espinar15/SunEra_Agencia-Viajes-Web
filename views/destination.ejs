@@ -13,7 +13,7 @@
 <body id="d">
     <!-- NAV -->
     <!-- [?] Pasar como parámetro foto de perfil -->
-    <%- include("fragments/nav") %>
+    <%- include("fragments/nav", { user: user }) %>
     <!-- Modal avisos -->
     <%- include("fragments/modal", { msg: msg }) %>
 
@@ -158,16 +158,21 @@
                             <form method="post" action="/comment" class="card-body">
                                 <!-- Usuario -->
                                 <div class="d-flex align-items-center">
-                                    <!-- [!] Cargar foto de perfil dinámicamente -->
-                                    <img src="/img/profile.png" alt="Foto Usuario" height="30">
+                                    <% if (user.img) { %>
+                                        <img src="/imagen/<%= user.id %>" alt="Foto Usuario" width="30" height="30">
+                                    <% } else { %>
+                                        <img isrc="/img/profile.png" alt="Foto Usuario" width="30" height="30">
+                                    <% } %>
                                     <p class="gray-text m-0 ms-2"><%= user.username %></p>
                                     <!-- [!] CAMBIAR, añadir funcionalidad -->
                                     <img src="/img/rate/star.png" alt="Valoración Usuario" height="20" class="ms-auto">
                                     <input class="border rounded" id="comment-rate" type="number" name="rate" min="0" max="5">
                                 </div>
                                 <!-- Comentario -->
-                                <textarea name="comment" id="comment" placeholder="Escribe tu comentario..." rows="2" class="d-block mt-3 mb-1 w-100"></textarea>
-                                <!-- Submit -->
+                                <textarea name="text" id="comment" placeholder="Escribe tu comentario..." rows="2" class="d-block mt-3 mb-1 w-100"></textarea>
+                                <!-- ID del destino -->
+                                <input hidden="true" type="number" value="<%= dest.id %>" name="idDest">
+                                <!-- Submit -->                                
                                 <input id="comment-button" type="submit" value="Enviar comentario" class="mt-2 rounded-pill">
                             </form>
                         </div>
@@ -179,7 +184,11 @@
                             <div class="card-body">
                                 <div class="d-flex align-items-center">
                                     <!-- [!] Cargar foto de perfil dinámicamente -->
-                                    <img src="/img/profile.png" alt="Foto Usuario" height="30">
+                                    <% if (user.img) { %>
+                                        <img class="pic" src="/imagen/<%= user.id %>" alt="Foto Usuario" width="30" height="30">
+                                    <% } else { %>
+                                        <img class="pic" isrc="/img/profile.png" alt="Foto Usuario" width="30" height="30">
+                                    <% } %>
                                     <p class="gray-text m-0 ms-2">@<%= userComment.username %></p>
                                     <p class="gray-text m-0 ms-2"><%= userComment.date %></p>
                                 </div>
@@ -195,8 +204,11 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
-                                        <!-- [!] Cargar foto de perfil dinámicamente -->
-                                        <img src="/img/profile.png" alt="Foto Usuario" height="30">
+                                        <% if (comment.img) { %>
+                                            <img class="pic" src="/imagen/<%= comment.idUser %>" alt="Foto Usuario" width="30" height="30">
+                                        <% } else { %>
+                                            <img class="pic" src="/img/profile.png" alt="Foto Usuario" width="30" height="30">
+                                        <% } %>
                                         <p class="gray-text m-0 ms-2">@<%= comment.username %></p>
                                         <p class="gray-text m-0 ms-2"><%= comment.date %></p>
                                     </div>

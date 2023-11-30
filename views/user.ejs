@@ -13,7 +13,7 @@
 <body>
     <!-- NAV -->
     <!-- [?] Pasar como parámetro foto de perfil -->
-    <%- include("fragments/nav") %>
+    <%- include("fragments/nav", { user: user }) %>
     <!-- Modal avisos -->
     <%- include("fragments/modal", { msg: msg }) %>
 
@@ -22,10 +22,16 @@
         <!-- PERFIL -->
         <div class="col-3">
             <div id="profile" class="d-flex flex-column">
-                <!-- [!] CAMBIAR añadir funcionalidad -->
-                <img src="/img/profile.png" alt="Foto Perfil" width="130" class="align-self-center mt-4">
                 <!-- Editar perfil -->
-                <form id="formEditUser" method="post" action="/edit_profile" class="form-profile">
+                <form id="formEditUser" method="post" action="/edit_profile" class="form-profile" enctype="multipart/form-data">
+                    <div class="d-flex flex-column justify-content-center mb-4">
+                        <input id="user-pic-input" type="file" name="userPic" class="d-none">
+                        <% if (user.img) { %>
+                            <img id="user-pic" src="/imagen/<%= user.id %>" alt="Foto Perfil" width="130" height="130" class="align-self-center mt-4">
+                        <% } else { %>
+                            <img id="user-pic" src="/img/profile.png" alt="Foto Perfil" width="130" height="130" class="align-self-center mt-4">
+                        <% } %>
+                    </div>                        
                     <h2>Editar perfil</h2>
                     <!-- Nombre completo -->
                     <div class="d-flex flex-column">

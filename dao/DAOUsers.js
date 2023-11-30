@@ -60,9 +60,41 @@ class DAOUsers {
                                 name: rows[0].nombre,
                                 username: rows[0].nombre_usuario,
                                 email: rows[0].correo,
-                                password: rows[0].contraseña
+                                password: rows[0].contraseña,
+                                img: (rows[0].foto ? true : false)
                             }
                             callback(null, user);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    // Obtener foto de un usuario
+    getPic(idUser, callback) {
+        this.pool.getConnection((error, connection) => {
+            if (error) {
+                callback(-1);
+            }
+            else {
+                let querySQL = "SELECT foto FROM usuario WHERE id = ?";
+                connection.query(querySQL, [idUser], (error, rows) => {
+                    connection.release();
+                    if (error) {
+                        callback(-1);
+                    }
+                    else {
+                        // No existe
+                        if (rows.length === 0) {
+                            callback(-4);
+                        }
+                        // Error en la BBDD
+                        else if (rows.length > 1) {
+                            callback(-1);
+                        }
+                        else {
+                            callback(null, rows[0].foto);
                         }
                     }
                 });
@@ -96,7 +128,8 @@ class DAOUsers {
                                 user = {
                                     id: rows[0].id,
                                     username: rows[0].nombre_usuario,
-                                    password: rows[0].contraseña
+                                    password: rows[0].contraseña,
+                                    img: (rows[0].foto ? true : false)
                                 }
                             }
                             callback(null, user);
@@ -114,8 +147,8 @@ class DAOUsers {
                 callback(-1);
             }
             else {
-                let querySQL = "UPDATE usuario SET nombre = ?, correo = ?, nombre_usuario = ?, contraseña = ? WHERE id = ?";
-                connection.query(querySQL, [newUser.name, newUser.email, newUser.username, newUser.password, newUser.id], (error) => {
+                let querySQL = "UPDATE usuario SET nombre = ?, correo = ?, nombre_usuario = ?, contraseña = ?, foto = ? WHERE id = ?";
+                connection.query(querySQL, [newUser.name, newUser.email, newUser.username, newUser.password, newUser.img, newUser.id], (error) => {
                     connection.release();
                     if (error) {
                         callback(-1);

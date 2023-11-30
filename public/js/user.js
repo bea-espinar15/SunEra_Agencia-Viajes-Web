@@ -2,6 +2,14 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
+    const userPicInput = document.getElementById("user-pic-input");
+    const userPic = document.getElementById("user-pic");
+
+    // Funcionalidad cambiar foto de perfil
+    userPic.addEventListener("click", () => {
+        userPicInput.click();
+    });
+
     // Validación formulario Editar Perfil
     const formEditUser = document.getElementById("formEditUser");
     

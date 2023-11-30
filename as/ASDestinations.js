@@ -1,5 +1,6 @@
 "use strict"
 
+const DAOUsers = require("../dao/DAOUsers");
 const utils = require("../utils");
 
 class ASDestinations {
@@ -136,7 +137,6 @@ class ASDestinations {
                             }
                             else if (comment) {
                                 // Imagen valoración y formatear fecha
-                                console.log(`HOLAAAAA ${comment}`);
                                 comment.username = user.username;
                                 comment.ratePic = "rate-" + utils.rateCalculator(comment.rate);
                                 comment.date = utils.formatDate(comment.date);
@@ -226,6 +226,58 @@ class ASDestinations {
                 callback(null, destinations, filters);
             }
         });
+    }
+
+    // Comentar
+    comment(idUser, idDest, rate, text, callback) {
+        // Comprobar valoración entre 0-5
+        if (rate < 0 || rate > 5) {
+            callback(16);
+        }
+        else {
+            // Comprobar que el destino existe
+            this.daoDes.read(idDest, (error, dest) => {
+                if (error) {
+                    callback(error);
+                }
+                else {
+                    // Comprobar que el usuario existe
+                    this.daoUse.read(idUser, (error, user) => {
+                        if (error) {
+                            callback(error);
+                        }
+                        else {
+                            // Comprobar que el usuario no había comentado ya
+                            this.daoDes.readCommentByUser(user.id, dest.id, (error, comment) => {
+                                if (error) {
+                                    callback(error);
+                                }
+                                else if (comment) {
+                                    callback(-7);
+                                }
+                                else {
+                                    this.daoDes.comment(user.id, dest.id, rate, text, (error) => {
+                                        if (error) {
+                                            callback(error);
+                                        }
+                                        else {
+                                            // Construir comentario
+                                            let com = {
+                                                username: user.username,
+                                                ratePic: "rate-" + utils.rateCalculator(rate),
+                                                text: text,
+                                                date: utils.formatDate(new Date())
+                                            }
+                                            callback(null, com);
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
     }
 
 }

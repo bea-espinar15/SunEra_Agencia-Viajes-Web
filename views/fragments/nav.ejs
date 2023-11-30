@@ -22,9 +22,12 @@
         </ul>
         <!-- Perfil + Cerrar sesión -->
         <div id="div-end" class="d-flex">
-            <!-- [!] Cargar foto de perfil dinámicamente -->
             <a href="/perfil">
-                <img id="profile-pic" src="/img/profile.png" alt="Foto Perfil" height="40">
+                <% if (user.img) { %>
+                    <img id="profile-pic" class="pic" src="/imagen/<%= user.id %>" alt="Foto Perfil" width="40" height="40">
+                <% } else { %>
+                    <img id="profile-pic" class="pic" src="/img/profile.png" alt="Foto Perfil" width="40" height="40">
+                <% } %>
             </a>
             <form method="post" action="/logout" >   
                 <button id="logout-button" type="submit">

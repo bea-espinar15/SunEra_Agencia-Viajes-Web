@@ -7,7 +7,7 @@ CREATE TABLE usuario (
     correo VARCHAR(255) NOT NULL,
     nombre_usuario VARCHAR(255) UNIQUE NOT NULL,
     contraseña VARCHAR(255) NOT NULL,
-    foto VARCHAR(255)
+    foto BLOB
 );
 
 -- DESTINOS

@@ -82,6 +82,18 @@ class ASUsers {
             }
         });
     }
+
+    // Obtener imagen de un usuario
+    getPic(idUser, callback) {
+        this.daoUse.getPic(idUser, (error, img) => {
+            if (error) {
+                callback(error);
+            }
+            else {
+                callback(null, img);
+            }
+        });
+    }
     
     // Editar perfil
     updateUser(newUser, callback) {
@@ -97,7 +109,7 @@ class ASUsers {
                 }
                 else {
                     // Comprobar que algo ha cambiado
-                    if (newUser.name === user.name && newUser.username === user.username && newUser.email === user.email) {
+                    if (newUser.name === user.name && newUser.username === user.username && newUser.email === user.email && newUser.img === user.img) {
                         callback(14);
                     }
                     else {

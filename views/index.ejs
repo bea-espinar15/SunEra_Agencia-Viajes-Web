@@ -13,7 +13,7 @@
 <body>
     <!-- NAV -->
     <!-- [?] Pasar como parámetro foto de perfil -->
-    <%- include("fragments/nav") %>
+    <%- include("fragments/nav", { user: user }) %>
     <!-- Modal avisos -->
     <%- include("fragments/modal", { msg: msg }) %>
 

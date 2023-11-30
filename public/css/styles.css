@@ -60,6 +60,10 @@ hr {
     box-shadow: none;
 }
 
+.pic{
+    object-fit: cover;
+}
+
 /* ---------- BARRA DE NAVEGACIÓN ---------- */
 
 #nav-bar {

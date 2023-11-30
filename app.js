@@ -10,6 +10,7 @@ const mySQL = require("mysql");
 const session = require("express-session");
 const mySQLsession = require("express-mysql-session");
 const morgan = require("morgan");
+const multer = require("multer");
 
 // Fichero
 const mySQLconfig = require("./config");
@@ -20,6 +21,7 @@ const DAOUsers = require("./dao/DAOUsers");
 const ASDestinations = require("./as/ASDestinations");
 const ASReservations = require("./as/ASReservations");
 const ASUsers = require("./as/ASUsers");
+const { callbackify } = require("util");
 
 // --- Crear aplicación Express ---
 const app = express();
@@ -27,6 +29,9 @@ const app = express();
 // --- EJS ---
 app.set("view engine", "ejs"); // Configurar EJS como motor de plantillas
 app.set("views", path.join(__dirname, "views")); // Definir el directorio de plantillas
+
+// --- Multer ---
+const multerFactory = multer({ storage: multer.memoryStorage() });
 
 // --- BodyParser (Express) ---
 app.use(express.urlencoded({extended: true}));
@@ -114,7 +119,7 @@ app.get(["/", "/inicio"], userLogged, (request, response, next) => {
                 else {
                     request.session.params = params;
                     response.status(200);
-                    response.render("index", { destinations: destinations, params: params, filters: [], msg: undefined});
+                    response.render("index", { user: request.session.currentUser, destinations: destinations, params: params, filters: [], msg: undefined});
                 }
             });
         }
@@ -130,7 +135,7 @@ app.get("/search", userLogged, (request, response, next) => {
         }
         else {
             response.status(200);
-            response.render("index", { destinations: destinations, params: request.session.params, filters: [], msg: undefined});
+            response.render("index", { user: request.session.currentUser, destinations: destinations, params: request.session.params, filters: [], msg: undefined});
         }
     });
 });
@@ -155,7 +160,7 @@ app.get("/filter", userLogged, (request, response, next) => {
         }
         else {
             response.status(200);
-            response.render("index", { destinations: destinations, params: request.session.params, filters: filters, msg: undefined});
+            response.render("index", { user: request.session.currentUser, destinations: destinations, params: request.session.params, filters: filters, msg: undefined});
         }
     });
 });
@@ -181,7 +186,7 @@ app.get("/tendencias", userLogged, (request, response, next) => {
         }
         else {
             response.status(200);
-            response.render("trending", { destinations: destinations });
+            response.render("trending", { user: request.session.currentUser, destinations: destinations });
         }
     });
 });
@@ -189,13 +194,13 @@ app.get("/tendencias", userLogged, (request, response, next) => {
 // About Us
 app.get("/quienes_somos", userLogged, (request, response, next) => {
     response.status(200);
-    response.render("about_us");
+    response.render("about_us", { user: request.session.currentUser });
 });
 
 // Contact
 app.get("/contacto", userLogged, (request, response, next) => {
     response.status(200);
-    response.render("contact");
+    response.render("contact", { user: request.session.currentUser });
 });
 
 // User
@@ -258,7 +263,7 @@ app.get("/destino/:id", userLogged, (request, response, next) => {
                             response.render("destination", {
                                 dest: destination,
                                 comments: comments,
-                                user: { username: request.session.currentUser.username },
+                                user: request.session.currentUser,
                                 userComment: request.session.userComment,
                                 msg: undefined
                             });
@@ -268,6 +273,19 @@ app.get("/destino/:id", userLogged, (request, response, next) => {
             })
         }
     })
+});
+
+// Obtener imagen del usuario
+app.get("/imagen/:id", (request, response) => {
+    ASUse.getPic(request.params.id, (error, img) => {
+        if (error) {
+            let errorObj = responseHandler.generateRes(error);
+            next(errorObj); // Redirigir a error.ejs
+        }
+        else {
+            response.end(img);
+        }
+    });
 });
 
 // --- Peticiones POST ---
@@ -390,13 +408,18 @@ app.post("/book", userLogged, (request, response, next) => {
 });
 
 // Editar perfil
-app.post("/edit_profile", userLogged, (request, response, next) => {
+app.post("/edit_profile", userLogged, multerFactory.single("userPic"), (request, response, next) => {
     // Obtener parámetros de entrada
+    let image = null;
+    if (request.file) {
+        image = request.file.buffer;
+    }
     let newUser = {
         id: request.session.currentUser.id,
         name: request.body.name,
         username: request.body.username,
-        email: request.body.email
+        email: request.body.email,
+        img: image
     };
 
     ASUse.updateUser(newUser, (error, user) => {
@@ -523,7 +546,7 @@ app.post("/cancel", (request, response, next) => {
 
 // Dejar un comentario
 app.post("/comment", userLogged, (request, response, next) => {
-    ASDes.comment(request.body.rate, request.body.text, (error, comment) => {
+    ASDes.comment(request.session.currentUser.id, request.body.idDest, request.body.rate, request.body.text, (error, comment) => {
         if (error) {
             let errorObj = responseHandler.generateRes(error);
             if (error < 0) {

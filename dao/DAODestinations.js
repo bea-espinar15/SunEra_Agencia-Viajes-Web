@@ -126,7 +126,7 @@ class DAODestinations {
             }
             else {
                 // Cogemos también el nombre_usuario para no tener que llamar a daoUser.read()
-                let querySQL = "SELECT reseña.*, usuario.nombre_usuario AS username FROM reseña JOIN usuario ON reseña.id_usuario = usuario.id WHERE id_destino = ? AND usuario.id <> ? ORDER BY fecha DESC";
+                let querySQL = "SELECT reseña.*, usuario.id AS idUser, usuario.nombre_usuario AS username, usuario.foto AS foto FROM reseña JOIN usuario ON reseña.id_usuario = usuario.id WHERE id_destino = ? AND usuario.id <> ? ORDER BY fecha DESC";
                 connection.query(querySQL, [idDest, idUser], (error, rows) => {
                     connection.release();
                     if (error) {
@@ -137,10 +137,12 @@ class DAODestinations {
                         rows.forEach(row => {
                             // Reconstruimos cada comentario
                             let comment = {
-                                 username: row.username,
-                                 rate: row.valoracion,
-                                 text: row.comentario,
-                                 date: row.fecha
+                                idUser: row.idUser, 
+                                username: row.username,
+                                rate: row.valoracion,
+                                text: row.comentario,
+                                date: row.fecha,
+                                img: (row.foto ? true : false)
                             }
                             comments.push(comment);
                         });
@@ -289,6 +291,27 @@ class DAODestinations {
         });
     }
 
+    // Comentar
+    comment(idUser, idDest, rate, text, callback) {
+        this.pool.getConnection((error, connection) => {
+            if (error) {
+                callback(-1);
+            }
+            else {
+                let querySQL = "INSERT INTO reseña (valoracion, comentario, id_usuario, id_destino) VALUES (?, ?, ?, ?)";
+                connection.query(querySQL, [rate, text, idUser, idDest], (error) => {
+                    connection.release();
+                    if (error) {
+                        callback(-1);
+                    }
+                    else {
+                        callback(null);
+                    }
+                });
+            }
+        });
+    }
+
     // Constuir WHERE del filter
     static buildQuery(input, param, where) {
         if (param) {
@@ -306,7 +329,8 @@ class DAODestinations {
         else {
             return [false, ""];
         }        
-    }
+    } 
+    
 }
 
 module.exports = DAODestinations;
