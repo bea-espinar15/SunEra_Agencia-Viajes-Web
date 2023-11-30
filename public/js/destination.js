@@ -93,6 +93,9 @@ $(() => {
     const nPeople = $("#n-people");
     const minPeople = parseInt($("#n-people").min);
     const maxPeople = parseInt($("#n-people").max);
+    // Itinerario
+    const itinerarioButton = $("#itinerario-button");
+    const itinerarioList = $("#itinerario-list");
     // Formulario comentario
     const divComment = $("#div-comment");
     const formComment = $("#comment");
@@ -129,6 +132,37 @@ $(() => {
         if (validateReservation(params)) {
             formBook.submit();
         }
+    });
+
+    // Itinerario
+    itinerarioList.hide();
+    itinerarioButton.on("click", () => {
+        $.ajax({
+            method: "GET",
+            url: `/itinerario/${itinerarioButton.data("iddest")}`,
+            success: (data) => {
+                itinerarioList.empty();
+                data.forEach((d, i) => {
+                    let day = ` <div class="d-flex align-items-center">
+                                    <img src="/img/bullet-point.png" alt="Punto del día" class="align-self-start">
+                                    <div>
+                                        <h3>Día ${i + 1}</h3>
+                                        <p>${d.city}</p>
+                                        <p>${d.desc}</p>
+                                    </div>
+                                </div>`;
+                    itinerarioList.append(day);
+                });
+                itinerarioList.show();
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: errorThrown
+                });
+            }
+        });
     });
 
     // Obtener comentario del usuario (o formulario de enviar si no tiene)
