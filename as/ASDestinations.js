@@ -280,6 +280,18 @@ class ASDestinations {
         }
     }
 
+    // Leer itinerario de un destino
+    getItinerario(idDest, callback) {
+        this.daoDes.readItinerario(idDest, (error, iti) => {
+            if (error) {
+                callback(error);
+            }
+            else {
+                callback(null, iti);
+            }
+        });
+    }
+
 }
 
 module.exports = ASDestinations;

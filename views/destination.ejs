@@ -116,15 +116,16 @@
                                             <!-- Resumen Viaje-->
                                             <div id="summary" class="col my-1 mx-3">
                                                 <h2 class="mb-4">Resumen de tu viaje</h2>
-                                                <p>Oops! Parece que aún no podemos mostrar el resumen de tu viaje :&#40</p>
-                                                <p>Pásatelo genial!</p>
-                                                <!-- [!] Actualizar automáticamente JQuery
-                                                <p class="m-0">Ida: 21/02/2001</p>
-                                                <p>Vuelta: 15/10/2001</p>
-                                                <p class="m-0">2 personas</p>
-                                                <p>56,00€/persona</p>
-                                                <p>Precio total: 112,00€</p>
-                                                -->
+                                                <!-- Ida -->
+                                                <p id="dateStartSummary" class="m-0"></p>
+                                                <!-- Vuelta -->
+                                                <p id="dateEndSummary" data-days="<%= dest.days %>"></p>
+                                                <!-- Nº viajeros -->
+                                                <p id="nPeopleSummary" class="m-0"></p>
+                                                <!-- Precio por persona -->
+                                                <p><%= dest.price %>€/persona</p>
+                                                <!-- Precio total -->
+                                                <p id="totalPriceSummary" data-price="<%= dest.price %>"></p>
                                             </div>
                                         </div>
                                         <!-- Footer -->
@@ -146,7 +147,7 @@
             <!-- Itinerario -->
             <div>
                 <button id="itinerario-button" class="book-button rounded-pill" data-iddest="<%= dest.id %>">Ver Itinierario</button>
-                <div id="itinerario-list"></div>
+                <div id="itinerario-list" class="mt-4"></div>
             </div>
             <!-- Comentarios -->
             <div id="div-comment" class="rounded mt-4" data-iddest="<%= dest.id %>">

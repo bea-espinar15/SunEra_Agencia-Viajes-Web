@@ -136,6 +136,15 @@
     text-align: justify;
 }
 
+.iti-day {
+    color: #573704 !important;
+}
+
+.p-city {
+    color: #ad6e07;
+    font-weight: bold;
+}
+
 #div-comment .card {
     height: 11em;
     overflow-y: auto;

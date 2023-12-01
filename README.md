@@ -27,9 +27,9 @@ En esta carpeta se encuentran las vistas y los recursos estáticos. Incluye los 
     - error : aplicable a error.ejs (que es distinta a todas las demás)
 - img/ : En esta carpeta se encuentran las imágenes utilizadas por la app. Dividida en subcarpetas según la naturaleza de las imágenes
 - js/ : En esta carpeta se encuentran los ficheros JS de cliente
-    - account : JS que valida el formulario de registro de usuario
-    - destination : JS que valida el formulario de reserva y el formulario de hacer una reseña (este último aún no implementado)
-    - index : JS que valida los formularios de búsqueda y filtros (aún no implementado)
+    - account : JS que valida los formularios de registro de usuario e inicio de sesión
+    - destination : JS que valida el formulario de reserva y el formulario de hacer una reseña, y que manipula el DOM para mostrar los itinerarios
+    - index : JS que manipula el DOM para mostrar el filtro de precio seleccionado
     - user : JS que valida los formularios de editar perfil y cambiar contraseña
 
 #### SERVIDOR
@@ -39,7 +39,7 @@ En la carpeta as/ se encuentran los servicios de aplicación o AS (Application S
 
 __DAO__
 
-En la carpeta dao/ se encuentran los DAO (Data Access Object), encargados de la capa de integración. Esto es, su trabajo es realizar las consultas a la Base de Datos. Implementan las funciones CRUD (Create Read Update Delete) necesarias en la aplicación. De nuevo, existe un DAO por cada módulo mencionado anteriormente.
+En la carpeta dao/ se encuentran los DAO (Data Access Object), encargados de la capa de integración. Esto es, su trabajo es realizar las consultas a la Base de Datos. Implementan las funciones CRUD (Create Read Update Delete) necesarias en la aplicación, y alguna otra adicional. De nuevo, existe un DAO por cada módulo mencionado anteriormente.
 
 __Otros ficheros JS__
 
@@ -47,14 +47,14 @@ Contamos también con una serie de ficheros en la carpeta raíz:
 - app.js : es el punto inicial de la aplicación, el MAIN. Este hace de manejador de rutas, crea el pool de conexiones, e invoca a los Application Service cada vez que se hace una petición, además de tener otras responsabilidades.
 - config.js : contiene la configuración de la BBDD
 - responseHandler.js : es el manejador de mensajes de respuesta (error o confirmación) que transforma los códigos en un objeto response con el código correspondiente (200, 400, 404, 500...), el título principal del evento y el mensaje más elaborado de qué ha ocurrido
+- utils.js : exporta dos funciones auxiliares utilizadas desde los AS
 
 #### OTROS
 Existen otros ficheros en la carpeta raíz del proyecto:
 - import.sql : es el fichero script que debe introducirse en phpMyAdmin para crear la Base de Datos de la aplicación. Contiene los correspondientes CREATE TABLE, además de múltiples INSERT para añadir destinos a la BBDD así como datos de prueba para testear la aplicación
-- Otros: se incluyen también la licencia software, los package.json del proyecto y este fichero READ.ME
-
+- Otros: se incluyen también la licencia software, los package.json del proyecto y este fichero README.md
 #### DOCUMENTACIÓN
-Por último, tenemos la carpeta doc/, donde se encuentra toda la documentación utilizada en esta primera práctica. Esta consiste en:
+Por último, tenemos la carpeta doc/, donde se encuentra toda la documentación utilizada en la práctica. Consiste en:
 - Modelo_Datos : Modelo que seguirá la BBDD, con las tablas y sus correspondientes atributos
 - Modelo_Dominio : Modelo del dominio inicial con las entidades y sus atributos
 - Diseño_SRS : Es la Especificación de Requisitos Software (SRS). Incluye los diferentes casos de uso (con entrada/salida, requisitos...) y un diseño borrador inicial que se realizó de cada vista antes de implementarla
@@ -69,13 +69,13 @@ Las vistas que existen en el proyecto son:
 - about_us (/quienes-somos) : "Quiénes somos", donde se explican algunas cuestiones de la agencia de viajes
 - contact (/contacto) : Contiene preguntas frecuentes resueltas (FAQ) y la información de contacto
 - user (/perfil) : Perfil del usuario, donde puede editar su información personal y gestionar sus reservas (actuales y pasadas)
-- destination (/destino/:id) : Página de un destino concreto, donde se muestra la información detallada, así como los comentarios, y será desde donde el usuario realice la reserva
+- destination (/destino/:id) : Página de un destino concreto, donde se muestra la información detallada y los itinerarios, así como los comentarios, y será desde donde el usuario realice la reserva y haga su reseña
 - error : Página de errores mayores (403, 404, 500) que no se gestionan en cliente con modales o alertas como se gestionan los clásicos 400
 
-Además, se ha creado un fichero nav.ejs y footer.ejs para poder incluirse en los demás HTML y evitar la repetición de código. De igual manera se ha creado el card_destination.ejs, que representa la tarjeta de un destino, pues es utilizado tanto en index como en trending. Por último, el modal.ejs representa los modales donde se muestran los mensajes de confirmación o error, y que se muestran tanto en 
+Además, se ha creado un fichero nav.ejs y footer.ejs para poder incluirse en los demás HTML y evitar la repetición de código. De igual manera se ha creado el card_destination.ejs, que representa la tarjeta de un destino, pues es utilizado tanto en index como en trending. Por último, el modal.ejs representa los modales donde se muestran los mensajes de confirmación o error, y que se muestran en las distintas vistas cuando se hace una petición POST.
 
 ### Funcionalidades
-Para esta segunda entrega de la práctica se han implementado las siguientes funcionalidades:
+Actualmente están implementadas las siguientes funcionalidades:
 - SignUp: El usuario puede crearse una cuenta
 - Login : El usuario puede iniciar sesión y, de no estar logeado, se le redirige a la página de login
 - Logout : El usuario puede cerrar su sesión y volver a la página de login
@@ -83,9 +83,7 @@ Para esta segunda entrega de la práctica se han implementado las siguientes fun
 - Cancel : El usuario puede cancelar una reserva que aún no haya sucedido
 - EditProfile : El usuario puede modificar sus datos personales
 - ChangePass : El usuario puede modificar su contraseña
-
-Esto implica que han quedado sin implementar las siguientes funcionalidades:
-- Search : Aún no se puede buscar un destino en la página de Inicio
-- Filter : Aún no funcionan los filtros de la página de Inicio
-- Comment : Aún no puede hacer una reseña en un destino un usuario
-- *Foto de perfil : Aún no puede ponerse (ni cambiar su) foto de perfil el usuario
+- Search : El usuario puede buscar un destino en la página de Inicio (se buscan coincidencias en el nombre, la descripción y el país del destino)
+- Filter : El usuario puede filtrar los destinos según una serie de parámetros, y ver qué filtros hay aplicados en cada momento
+- Comment : El usuario puede hacer 1 comentario/reseña por cada destino (AJAX)
+- Foto de perfil : El usuario puede establecer su propia foto de perfil

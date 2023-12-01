@@ -279,7 +279,7 @@ app.get("/comentUsuario/:id", (request, response, next) => {
 });
 
 // Obtener imagen del usuario
-app.get("/imagen/:id", (request, response) => {
+app.get("/imagen/:id", (request, response, next) => {
     ASUse.getPic(request.params.id, (error, img) => {
         if (error) {
             let errorObj = responseHandler.generateRes(error);
@@ -290,6 +290,19 @@ app.get("/imagen/:id", (request, response) => {
         }
     });
 });
+
+// Obtener itinerario de un destino
+app.get("/itinerario/:id", (request, response, next) => {
+    ASDes.getItinerario(request.params.id, (error, iti) => {
+        if (error) {
+            let errorObj = responseHandler.generateRes(error);
+            next(errorObj); // Redirigir a error.ejs
+        }
+        else {
+            response.json(iti);
+        }
+    });
+})
 
 // --- Peticiones POST ---
 // Registro usuario

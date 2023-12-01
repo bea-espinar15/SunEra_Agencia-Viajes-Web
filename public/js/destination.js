@@ -81,6 +81,11 @@ function buildUserComment(comment) {
             </div>`;
 }
 
+// Formatear fecha
+function formatDate(date) {
+    return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+}
+
 $(() => {
 
     // Obtener elementos
@@ -93,6 +98,10 @@ $(() => {
     const nPeople = $("#n-people");
     const minPeople = parseInt($("#n-people").min);
     const maxPeople = parseInt($("#n-people").max);
+    const dateStartSum = $("#dateStartSummary");
+    const dateEndSum = $("#dateEndSummary");
+    const nPeopleSum = $("#nPeopleSummary");
+    const totalPriceSum = $("#totalPriceSummary");
     // Itinerario
     const itinerarioButton = $("#itinerario-button");
     const itinerarioList = $("#itinerario-list");
@@ -142,18 +151,20 @@ $(() => {
             url: `/itinerario/${itinerarioButton.data("iddest")}`,
             success: (data) => {
                 itinerarioList.empty();
-                data.forEach((d, i) => {
-                    let day = ` <div class="d-flex align-items-center">
-                                    <img src="/img/bullet-point.png" alt="Punto del día" class="align-self-start">
-                                    <div>
-                                        <h3>Día ${i + 1}</h3>
-                                        <p>${d.city}</p>
-                                        <p>${d.desc}</p>
-                                    </div>
-                                </div>`;
-                    itinerarioList.append(day);
-                });
                 itinerarioList.show();
+                data.forEach((d, i) => {
+                    let day = $(`<div id="day-${d.nDia}" class="d-flex align-items-center my-4" style="display: none;">
+                                    <img src="/img/bullet-point.png" alt="Punto del día" width="40" class="align-self-start">
+                                    <div class="ms-3">
+                                        <h3 class="iti-day m-0">Día ${d.nDia}</h3>
+                                        <p class="p-city m-0">${d.city}</p>
+                                        <p class="mt-2">${d.desc}</p>
+                                    </div>
+                                </div>`);
+                    setTimeout(() => {
+                        itinerarioList.append(day.hide().fadeIn(600)); // Transición suave al aparecer
+                    }, i * 80); // Esperar antes de mostrar el siguiente día                     
+                });
             },
             error: (jqXHR, textStatus, errorThrown) => {
                 Swal.fire({
@@ -163,6 +174,40 @@ $(() => {
                 });
             }
         });
+    });
+
+    // Actualizar valores de la reserva automáticamente
+    dateStartSum.text(" Ida: ");
+    dateEndSum.text("Vuelta: ");
+    nPeopleSum.text(`${nPeople.val()} persona`);
+    totalPriceSum.text(`Precio total: ${totalPriceSum.data("price") * nPeople.val()}€`);
+
+    nPeople.on("change", () => {
+        if (dateStart.val() && nPeople.val()) {
+            nPeopleSum.text(`${nPeople.val()} personas`);
+            totalPriceSum.text(`Precio total: ${totalPriceSum.data("price") * nPeople.val()}€`);
+        }
+        else if (!nPeople.val()) {
+            nPeopleSum.text("0 personas");
+            totalPriceSum.text("Precio total: 0€");
+        }
+    });
+
+    dateStart.on("change", () => {
+        if (dateStart.val() && nPeople.val()) {
+            // Formatear fecha
+            let formatDateStart = formatDate(new Date(dateStart.val()));
+            dateStartSum.text(`Ida: ${formatDateStart}`);
+
+            // Obtener la fecha de vuelta y formatear
+            let formatDateEnd = formatDate(new Date(new Date(dateStart.val()).getTime() + dateEndSum.data("days") * 24 * 60 * 60 * 1000));
+            dateEndSum.text(`Vuelta: ${formatDateEnd}`);
+        }
+        else if (!dateStart.val()) {
+            dateStartSum.text(" Ida: ");
+            dateEndSum.text("Vuelta: ");
+            totalPriceSum.text("Precio total: 0€");
+        }
     });
 
     // Obtener comentario del usuario (o formulario de enviar si no tiene)
@@ -206,7 +251,7 @@ $(() => {
                     idDest: idDest.val()
                 },
                 success: (com) => {
-                    createComment.hide();
+                    createComment.hide(); // Ya no puede comentar más
                     editComment.empty();
                     editComment.append(buildUserComment(com));
                     editComment.show();

@@ -26,7 +26,7 @@ class DAODestinations {
                     else {
                         // No existe el destino
                         if (rows.length === 0) {
-                            callback(-3)
+                            callback(-3);
                         }
                         // Error en la BBDD, IDs duplicados
                         else if (rows.length > 1) {
@@ -306,6 +306,42 @@ class DAODestinations {
                     }
                     else {
                         callback(null);
+                    }
+                });
+            }
+        });
+    }
+
+    // Obtener itinerario
+    readItinerario(idDest, callback) {
+        this.pool.getConnection((error, connection) => {
+            if (error) {
+                callback(-1);
+            }
+            else {
+                let querySQL = "SELECT * FROM itinerario WHERE id_destino = ?";
+                connection.query(querySQL, [idDest], (error, rows) => {
+                    connection.release();
+                    if (error) {
+                        callback(-1);
+                    }
+                    else {
+                        // No existe el destino
+                        if (rows.length === 0) {
+                            callback(-3);
+                        }
+                        else {
+                            let iti = new Array();
+                            rows.forEach(row => {
+                                let day = {
+                                    nDia: row.n_dia,
+                                    city: row.ciudad,
+                                    desc: row.descripción
+                                };
+                                iti.push(day);
+                            });
+                            callback(null, iti);
+                        }
                     }
                 });
             }
