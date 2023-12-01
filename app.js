@@ -337,7 +337,7 @@ app.post("/sign_up", (request, response, next) => {
 
             let msgObj = responseHandler.generateRes(res.cod, res.title, res.message);
             response.status(200);
-            response.render("login", { msg: msgObj });
+            response.render("login", { username: newUser.username, msg: msgObj });
         }
     });
 });
