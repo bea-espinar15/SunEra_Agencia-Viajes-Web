@@ -256,8 +256,7 @@ app.get("/destino/:id", userLogged, (request, response, next) => {
                     response.render("destination", {
                         dest: destination,
                         comments: comments,
-                        user: request.session.currentUser,
-                        msg: undefined
+                        user: request.session.currentUser
                     });
                 }
             })
@@ -394,29 +393,12 @@ app.post("/book", userLogged, (request, response, next) => {
                 next(errorObj); // Redirigir a error.ejs
             }
             else {
-                // Renderizar con las variables de sesión
-                response.render("destination", { 
-                    dest: request.session.destination, 
-                    comments: request.session.comments, 
-                    user: { username: request.session.currentUser.username },
-                    msg: errorObj});
+                response.status(400).send(errorObj.message);
+                response.end();
             }
         }
         else {
-            // Crear mensaje de respuesta y volver al destino
-            let msg = {
-                cod: 0,
-                title: "Reserva realizada",
-                message: `Se ha completado la reserva con éxito, por un total de ${totalPrice}€`
-            }
-
-            let msgObj = responseHandler.generateRes(msg.cod, msg.title, msg.message);
-            // Renderizar con las variables de sesión
-            response.render("destination", { 
-                dest: request.session.destination, 
-                comments: request.session.comments, 
-                user: { username: request.session.currentUser.username },
-                msg: msgObj});
+            response.json(totalPrice);
         }
     });
 });

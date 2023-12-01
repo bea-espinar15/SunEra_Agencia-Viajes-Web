@@ -12,10 +12,7 @@
 
 <body id="d">
     <!-- NAV -->
-    <!-- [?] Pasar como parámetro foto de perfil -->
     <%- include("fragments/nav", { user: user }) %>
-    <!-- Modal avisos -->
-    <%- include("fragments/modal", { msg: msg }) %>
 
     <!-- CONTENT -->
     <div class="div-content d-flex justify-content-center mx-4">
@@ -99,18 +96,18 @@
                                                     <!-- Fecha inicio -->
                                                     <div class="filter filter-res d-flex flex-column mb-3">
                                                         <label for="date-ini">¿Qué día te vas?</label>
-                                                        <input id="date-ini" type="date" name="dateIni">
+                                                        <input id="date-ini" type="date">
                                                     </div>
                                                     <!-- Viajeros -->
                                                     <div class="d-resp filter filter-res d-flex flex-column">
                                                         <label for="n-people">¿Cuántos vais a ser? (1-<%= dest.capacity %>)</label>
-                                                        <input id="n-people" type="number" name="nPeople" value="1" min="1" max="<%= dest.capacity %>">
+                                                        <input id="n-people" type="number" value="1" min="1" max="<%= dest.capacity %>">
                                                     </div>
                                                     <!-- Precio -->
                                                     <div class="d-resp filter filter-res d-flex flex-column">
                                                         <p>Precio: <%= dest.price %>€/persona</p>
                                                     </div>
-                                                    <input type="number" hidden="true" value="<%= dest.id %>" name="idDest">
+                                                    <input id="idDest" type="number" hidden="true" value="<%= dest.id %>">
                                                 </form>
                                             </div>
                                             <!-- Resumen Viaje-->
@@ -130,7 +127,7 @@
                                         </div>
                                         <!-- Footer -->
                                         <div class="modal-footer">
-                                            <button type="button" class="cancel-button rounded-pill" data-bs-dismiss="modal">Cancelar</button>
+                                            <button id="close-modal-res" type="button" class="cancel-button rounded-pill" data-bs-dismiss="modal">Cancelar</button>
                                             <button type="submit" class="book-button rounded-pill ms-3" form="formBook">Reservar</button>
                                         </div>
                                     </div>

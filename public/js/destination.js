@@ -86,6 +86,11 @@ function formatDate(date) {
     return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
 }
 
+// Calcular precio total
+function calculateTotalPrice(price, n) {
+    return (price * n).toFixed(2);
+}
+
 $(() => {
 
     // Obtener elementos
@@ -93,7 +98,7 @@ $(() => {
     const prev = $("#p");
     const next = $("#n");
     // Formulario reserva
-    const formBook = document.getElementById("formBook");
+    const formBook = $("#formBook");
     const dateStart = $("#date-ini");
     const nPeople = $("#n-people");
     const minPeople = parseInt($("#n-people").min);
@@ -102,6 +107,7 @@ $(() => {
     const dateEndSum = $("#dateEndSummary");
     const nPeopleSum = $("#nPeopleSummary");
     const totalPriceSum = $("#totalPriceSummary");
+    const closeModal = $("#close-modal-res")
     // Itinerario
     const itinerarioButton = $("#itinerario-button");
     const itinerarioList = $("#itinerario-list");
@@ -129,20 +135,6 @@ $(() => {
 
     });
 
-    // Formulario reserva
-    formBook.addEventListener("submit", function (event) {
-        event.preventDefault();
-        let params = {
-            dateStart: dateStart.val(),
-            nPeople: nPeople.val(),
-            minPeople: minPeople,
-            maxPeople: maxPeople
-        };
-        if (validateReservation(params)) {
-            formBook.submit();
-        }
-    });
-
     // Itinerario
     itinerarioList.hide();
     itinerarioButton.on("click", () => {
@@ -166,11 +158,11 @@ $(() => {
                     }, i * 80); // Esperar antes de mostrar el siguiente día                     
                 });
             },
-            error: (jqXHR, textStatus, errorThrown) => {
+            error: (error) => {
                 Swal.fire({
                     icon: "error",
                     title: "Error",
-                    text: errorThrown
+                    text: error.responseText
                 });
             }
         });
@@ -180,14 +172,14 @@ $(() => {
     dateStartSum.text(" Ida: ");
     dateEndSum.text("Vuelta: ");
     nPeopleSum.text(`${nPeople.val()} persona`);
-    totalPriceSum.text(`Precio total: ${totalPriceSum.data("price") * nPeople.val()}€`);
+    totalPriceSum.text(`Precio total: ${calculateTotalPrice(totalPriceSum.data("price"), nPeople.val())}€`);
 
     nPeople.on("change", () => {
-        if (dateStart.val() && nPeople.val()) {
+        if (nPeople.val() !== "") {
             nPeopleSum.text(`${nPeople.val()} personas`);
-            totalPriceSum.text(`Precio total: ${totalPriceSum.data("price") * nPeople.val()}€`);
+            totalPriceSum.text(`Precio total: ${calculateTotalPrice(totalPriceSum.data("price"), nPeople.val())}€`);
         }
-        else if (!nPeople.val()) {
+        else {
             nPeopleSum.text("0 personas");
             totalPriceSum.text("Precio total: 0€");
         }
@@ -210,6 +202,44 @@ $(() => {
         }
     });
 
+    // Formulario reserva
+    formBook.on("submit", (event) => {
+        event.preventDefault();
+        let params = {
+            dateStart: dateStart.val(),
+            nPeople: nPeople.val(),
+            minPeople: minPeople,
+            maxPeople: maxPeople
+        };
+        if (validateReservation(params)) {
+            $.ajax({
+                method: "POST",
+                url: "/book",
+                data: {
+                    dateIni: dateStart.val(),
+                    nPeople: nPeople.val(),
+                    idDest: idDest.val()
+                },
+                success: (totalPrice) => {
+                    closeModal.click();
+                    Swal.fire({
+                        title: "Reserva realizada!",
+                        text: `Se ha completado la reserva con éxito, por un total de ${totalPrice.toFixed(2)}€`,
+                        icon: "success"
+                      });
+                },
+                error: (error) => {
+                    closeModal.click();
+                    Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: error.responseText
+                    });
+                }
+            });
+        }
+    });
+
     // Obtener comentario del usuario (o formulario de enviar si no tiene)
     $.ajax({
         method: "GET",
@@ -226,11 +256,11 @@ $(() => {
                 createComment.show();
             }
         },
-        error: (jqXHR, textStatus, errorThrown) => {
+        error: (error) => {
             Swal.fire({
                 icon: "error",
                 title: "Error",
-                text: errorThrown
+                text: error.responseText
             });
         }
     });
@@ -261,11 +291,11 @@ $(() => {
                         icon: "success"
                       });
                 },
-                error: (jqXHR, textStatus, errorThrown) => {
+                error: (error) => {
                     Swal.fire({
                         icon: "error",
                         title: "Error",
-                        text: errorThrown
+                        text: error.responseText
                     });
                 }
             });
