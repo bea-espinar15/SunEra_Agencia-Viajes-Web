@@ -70,11 +70,7 @@
                             <h2><%= dest.country %></h2>
                             <div class="d-flex">
                                 <img src="/img/rate/<%= dest.ratePic %>" alt="Valoración media" height="20">
-                                <% if(comments.length === 1) { %>
-                                    <p class="gray-text my-0 ms-2"><%= comments.length %> reseña</p>
-                                <% } else { %>
-                                    <p class="gray-text my-0 ms-2"><%= comments.length %> reseñas</p>
-                                <% } %>
+                                <p id="p-comment" class="gray-text my-0 ms-2" data-num="<%= comments.length %>"></p>
                             </div>
                             <p class="mt-5 mb-0"><strong>Capacidad:</strong> <%= dest.capacity %> personas</p>
                             <p class="mb-4"><strong>Duración:</strong> <%= dest.days %> días</p>

@@ -119,6 +119,7 @@ $(() => {
     const idDest = $("#id-dest");
     const createComment = $("#create-comment");
     const editComment = $("#edit-comment");
+    const pComment = $("#p-comment")
 
     // Navegar por las imágenes con las teclas izq-dcha
     window.addEventListener('keydow', (e) => {
@@ -245,15 +246,29 @@ $(() => {
         method: "GET",
         url: `/comentUsuario/${divComment.data("iddest")}`,
         success: (comment) => {
+            let nComments = pComment.data("num");
             if (comment) {
                 editComment.empty();
                 editComment.append(buildUserComment(comment));
                 createComment.hide();
                 editComment.show();
+                nComments++;
+                if(nComments != 1){
+                    pComment.text(`${nComments} reseñas`);
+                }
+                else {
+                    pComment.text(`${nComments} reseña`);
+                }
             }
             else {
                 editComment.hide();
                 createComment.show();
+                if(nComments != 1){
+                    pComment.text(`${nComments} reseñas`);
+                }
+                else {
+                    pComment.text(`${nComments} reseña`);
+                }
             }
         },
         error: (error) => {
@@ -285,6 +300,10 @@ $(() => {
                     editComment.empty();
                     editComment.append(buildUserComment(com));
                     editComment.show();
+                    // Actualizar nº reseñas
+                    let nComments = pComment.data("num") + 1;
+                    if (nComments === 1) { pComment.text("1 reseña"); }
+                    else { pComment.text(`${nComments} reseñas`); }
                     Swal.fire({
                         title: "Reseña añadida!",
                         text: "Tu comentario se ha añadido con éxito, gracias!",
@@ -292,6 +311,9 @@ $(() => {
                       });
                 },
                 error: (error) => {
+                    // Actualizar nº reseñas
+                    if (pComment.data("num") === 1) { pComment.text("1 reseña"); }
+                    else { pComment.text(`${pComment.data("num")} reseñas`); }
                     Swal.fire({
                         icon: "error",
                         title: "Error",
